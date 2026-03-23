@@ -1,17 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getMovieDetails } from "@/services/movieService";
+import { getMovieDetails, getMoviesByCategory } from "@/services/movieService";
 import Image from "next/image";
 import { Play, Smartphone, Share2, Facebook, Twitter, Linkedin, Send, Radio, Tv, DownloadIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getMovieCast } from "@/services/getMovieCast";
+import CastSlider from "@/components/movie/CastSlider";
+import MovieCard from "@/components/home/MovieCard";
+import MovieInteractions from "@/components/movie/MovieInteractions";
+import ReviewSection from "@/components/movie/ReviewSection";
+import { userService } from "@/services/userService";
 
 async function MovieDetails({ params }: { params: Promise<{ customid: string }> }) {
   const { customid } = await params;
   const response = await getMovieDetails(customid);
-  // console.log(response)
   const casts = await getMovieCast(response.tmdb_id);
   const movie = response;
+
+  const categoryMovies = await getMoviesByCategory(movie.categories ? movie.categories[0].name : "TRENDING");
+  const catMovies = categoryMovies.data
+
+  const user = await userService.getSession();
+  const userId = user?.user?.id;
   if (!movie) return <div className="text-white text-center p-20">Loading...</div>;
 
   return (
@@ -90,64 +100,55 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-          {/* Left Side: Episodes & Cast */}
           <div className="lg:col-span-3 space-y-12">
+            {/* Cast Section */}
+            <div>
+              {/* Top Cast Section */}
+              <section>
+                <div className="">
+                  <CastSlider casts={casts} />
+                </div>
+              </section>
+            </div>
+            {/* Movie Interactions and Reviews */}
+            <div>
+              <MovieInteractions
+                movieId={movie.id}
+                userId={userId}
+                initialLikes={movie._count?.likes || 0}
+                isLiked={movie.likes?.some((l: any) => l.userId === userId)}
+              />
 
+              {/* কাস্ট সেকশনের নিচে রিভিউ সেকশন বসান */}
+              <ReviewSection
+                movieId={movie.id}
+                userId={userId}
+                reviews={movie.reviews || []}
+              />
+            </div>
 
-            {/* Top Cast Section */}
-            <section>
-              <h2 className="text-xl font-bold text-white mb-6">Top Cast({casts.length})</h2>
-              <div className="grid grid-cols-6 gap-4">
-                {casts && casts.slice(0, 12).map((member: any) => (
-                  <div
-                    key={member.id}
-                    className="group bg-zinc-900 rounded-xl overflow-hidden border border-white/5 hover:border-emerald-500/50 transition-all duration-300 shadow-lg"
-                  >
-                    {/* অভিনেতা/অভিনেত্রীর ছবি */}
-                    <div className="relative aspect-[2/3] w-full bg-zinc-800">
-                      {member.profile_path ? (
-                        <Image
-                          src={`https://image.tmdb.org/t/p/w500${member.profile_path}` || '/cast-not-found.svg'}
-                          alt={member.name}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center h-full text-zinc-500 text-xs">
-                          No Image
-                        </div>
-                      )}
-                    </div>
-
-                    {/* টেক্সট ডিটেইলস */}
-                    <div className="p-3">
-                      <h2 className="font-bold text-sm text-white truncate">
-                        {member.name}
-                      </h2>
-                      <p className="text-xs text-zinc-400 mt-1 truncate">
-                        {member.character}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
           </div>
-
           {/* Right Side: More like this */}
           <aside className="space-y-6">
             <h2 className="text-xl font-bold text-white">More like this</h2>
             <div className="grid grid-cols-2 gap-4">
-              {/* এখানে সিমিলার মুভির জন্য ম্যাপ করবেন */}
-              <div className="aspect-[2/3] bg-zinc-900 rounded-lg overflow-hidden relative border border-zinc-800">
-                <p className="absolute bottom-2 left-2 text-[10px] bg-black/60 p-1">Similar Movie 1</p>
-              </div>
-              <div className="aspect-[2/3] bg-zinc-900 rounded-lg overflow-hidden relative border border-zinc-800">
-                <p className="absolute bottom-2 left-2 text-[10px] bg-black/60 p-1">Similar Movie 2</p>
-              </div>
+              {
+                catMovies?.length === 0 && <div className="text-zinc-500 col-span-2 text-center py-10">No similar movies found.</div>
+              }
+              {
+                catMovies?.slice(0, 8).map((catMovie: any) => (
+                  <MovieCard key={catMovie.id} movie={catMovie} />
+                ))
+              }
+
             </div>
           </aside>
         </div>
+
+
+
+
+
       </div>
     </div>
   );

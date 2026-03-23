@@ -5,9 +5,9 @@ export const userService = {
         try {
             const cookieStore = await cookies();
             const accessToken = cookieStore.get("accessToken")?.value;
- 
-            const { email, role, status, isPremium } = decode(accessToken || "") as JwtPayload;
-            return { user: { email, role, status, isPremium }, error: null }
+
+            const { email, role, status, isPremium, id, token } = decode(accessToken || "") as JwtPayload;
+            return { user: { email, role, status, isPremium, id, token }, error: null }
 
         } catch (err) {
             return { data: null, error: { message: "Something Went Wrong..." } }

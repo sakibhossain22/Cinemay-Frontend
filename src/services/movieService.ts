@@ -47,3 +47,13 @@ export const getMovieDetails = async (customid: string) => {
         return [];
     }
 }
+
+export const getMoviesByCategory = async (category: string) => {
+    try {
+        const response = await axiosInstance.get(`/media/all-media?category=${category}`);
+        return response.data.data;
+    } catch (error) {
+        console.error('Error fetching trending movies:', error);
+        return [];
+    }
+}

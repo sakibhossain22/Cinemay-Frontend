@@ -38,7 +38,7 @@ const LoginPage = () => {
     try {
       // Better Auth-এর সেশন ম্যানেজমেন্টের জন্য সাধারণত authClient.signIn ব্যবহার করা ভালো
       // তবে আপনি যেহেতু সরাসরি fetch ব্যবহার করছেন:
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const LoginPage = () => {
         credentials: "include",
         body: JSON.stringify(data),
       });
-
+      console.log(response)
       if (!response.ok) {
         const errorData = await response.json();
         setError(errorData.message || "Invalid email or password");
