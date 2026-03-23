@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getMovieDetails } from "@/services/movieService";
 import Image from "next/image";
-import { Play, Smartphone, Share2, Facebook, Twitter, Linkedin, Send, Radio, Tv, DownloadIcon  } from "lucide-react";
+import { Play, Smartphone, Share2, Facebook, Twitter, Linkedin, Send, Radio, Tv, DownloadIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { getMovieCast } from "@/services/getMovieCast";
 
 async function MovieDetails({ params }: { params: Promise<{ customid: string }> }) {
   const { customid } = await params;
   const response = await getMovieDetails(customid);
+  // console.log(response)
+  const casts = await getMovieCast(response.tmdb_id);
   const movie = response;
-  console.log(movie, customid)
   if (!movie) return <div className="text-white text-center p-20">Loading...</div>;
 
   return (
@@ -28,7 +31,7 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center gap-6">
+        <div className="relative z-10 max-w-8xl mx-auto px-6 h-full flex flex-col justify-center gap-6">
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
             {/* Small Poster */}
             <div className="w-32 md:w-44 aspect-[2/3] relative rounded-lg overflow-hidden border border-zinc-800 shadow-2xl">
@@ -80,7 +83,7 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
       </div>
 
       {/* --- Tabs Section (Episodes, Cast etc) --- */}
-      <div className="max-w-7xl mx-auto px-6 py-2">
+      <div className="max-w-8xl mx-auto px-6 py-2">
         <div className="flex gap-8 border-b border-zinc-800 mb-8">
           <button className="pb-3 text-zinc-500 font-bold uppercase text-sm hover:text-zinc-300">Top Cast</button>
           <button className="pb-3 text-zinc-500 font-bold uppercase text-sm hover:text-zinc-300">User Review</button>
@@ -90,31 +93,41 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
           {/* Left Side: Episodes & Cast */}
           <div className="lg:col-span-3 space-y-12">
 
-            {/* Episodes List */}
-            <section>
-              <h2 className="text-xl font-bold text-white mb-4">Episodes</h2>
-              <div className="flex gap-2">
-                {['film', 'Iklk', 'Netflix', 'Plex'].map((tag) => (
-                  <Badge key={tag} className="bg-zinc-800 text-zinc-400 hover:bg-zinc-700 cursor-pointer px-4 py-1">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </section>
 
             {/* Top Cast Section */}
             <section>
-              <h2 className="text-xl font-bold text-white mb-6">Top Cast({movie.cast.length})</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {movie.cast.map((actor: string, i: number) => (
-                  <div key={actor} className="space-y-2">
-                    <div className="aspect-[4/5] relative rounded-lg overflow-hidden bg-zinc-900 border border-zinc-800">
-                      {/* যদি ইমেজ না থাকে তবে প্লেসহোল্ডার */}
-                      <div className="flex items-center justify-center h-full text-zinc-700">
-                        {/* এখানে ডামি প্রোফাইল আইকন বসাতে পারেন */}
-                      </div>
+              <h2 className="text-xl font-bold text-white mb-6">Top Cast({casts.length})</h2>
+              <div className="grid grid-cols-6 gap-4">
+                {casts && casts.slice(0, 12).map((member: any) => (
+                  <div
+                    key={member.id}
+                    className="group bg-zinc-900 rounded-xl overflow-hidden border border-white/5 hover:border-emerald-500/50 transition-all duration-300 shadow-lg"
+                  >
+                    {/* অভিনেতা/অভিনেত্রীর ছবি */}
+                    <div className="relative aspect-[2/3] w-full bg-zinc-800">
+                      {member.profile_path ? (
+                        <Image
+                          src={`https://image.tmdb.org/t/p/w500${member.profile_path}` || '/cast-not-found.svg'}
+                          alt={member.name}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full text-zinc-500 text-xs">
+                          No Image
+                        </div>
+                      )}
                     </div>
-                    <p className="text-sm font-medium text-zinc-300">{actor}</p>
+
+                    {/* টেক্সট ডিটেইলস */}
+                    <div className="p-3">
+                      <h2 className="font-bold text-sm text-white truncate">
+                        {member.name}
+                      </h2>
+                      <p className="text-xs text-zinc-400 mt-1 truncate">
+                        {member.character}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
