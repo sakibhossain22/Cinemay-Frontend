@@ -1,15 +1,19 @@
+import { userService } from "@/services/userService";
 
 
 interface LayoutProps {
-    customer: React.ReactNode;
+    user: React.ReactNode;
     admin: React.ReactNode;
-    provider: React.ReactNode;
 }
-export default function DashboardLayout({ customer, admin, provider }: LayoutProps) {
+export default async function DashboardLayout({ user, admin }: LayoutProps) {
+    const { user: currentUser } = await userService.getSession()
+
+    const role = currentUser?.role
     return (
         <>
             <div>
-                {customer}
+                {role === "USER" && user}
+                {role === "ADMIN" && admin}
             </div>
         </>
 

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { userService } from "./services/userService";
-import { cookies } from "next/headers";
-import { decode } from "jsonwebtoken";
-import { JWTPayload } from "better-auth";
+
 
 
 export async function proxy(request: NextRequest) {
@@ -19,21 +17,15 @@ export async function proxy(request: NextRequest) {
             return NextResponse.redirect(new URL("/dashboard/admin/admin-stats", request?.url));
         }
         if (role === "PROVIDER") {
-            return NextResponse.redirect(new URL("/dashboard/provider/provider-stats", request?.url));
-        }
-        if (role === "CUSTOMER") {
-            return NextResponse.redirect(new URL("/dashboard/customer/customer-stats", request?.url));
+            return NextResponse.redirect(new URL("/dashboard/profile", request?.url));
         }
     }
 
     if (pathName.startsWith("/dashboard/admin") && role !== "ADMIN") {
         return NextResponse.redirect(new URL("/dashboard", request?.url));
     }
-    if (pathName.startsWith("/dashboard/provider") && role !== "PROVIDER") {
-        return NextResponse.redirect(new URL("/dashboard", request?.url));
-    }
-    if (pathName.startsWith("/dashboard/customer") && role !== "CUSTOMER") {
-        return NextResponse.redirect(new URL("/dashboard", request?.url));
+    if (pathName.startsWith("/dashboard/") && role !== "USER") {
+        return NextResponse.redirect(new URL("/dashboard/admin/admin-stats", request?.url));
     }
 
     return NextResponse.next();
