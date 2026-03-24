@@ -73,3 +73,37 @@ export async function submitReview(formData: FormData) {
   }
 
 }
+
+
+export async function addComment(formData: FormData) {
+  const cookieStore = await cookies();
+
+  const reviewId = formData.get("reviewId") as string;
+  const content = formData.get("content") as string;
+  const customId = formData.get("customId") as string; // revalidate করার জন্য
+
+  if (!reviewId || !content) {
+    return { success: false, error: "Comment content is required" };
+  }
+
+  try {
+    const response = await fetch(`${process.env.API_URL}/comments/add-comment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString(),
+      },
+      body: JSON.stringify({ reviewId, content }),
+    });
+
+    const res = await response.json();
+
+    if (res.ok) {
+      revalidatePath(`/movies/details/${customId}`);
+      return { success: true };
+    }
+    return { success: false, error: res.message };
+  } catch (error) {
+    return { success: false, error: "Failed to post comment" };
+  }
+}
