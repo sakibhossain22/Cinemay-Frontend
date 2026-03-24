@@ -1,31 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { userService } from "./services/userService";
 
-
-
+// middleware.ts
 export async function proxy(request: NextRequest) {
-    const pathName = request.nextUrl.pathname;
+    const { pathname } = request.nextUrl;
     const { user } = await userService.getSession();
-
     const role = user?.role;
+
     if (!user) {
-        return NextResponse.redirect(new URL("/login", request?.url));
+        return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    if (pathName === "/dashboard" || pathName === "/dashboard/") {
-        if (role === "ADMIN") {
-            return NextResponse.redirect(new URL("/dashboard/admin/admin-stats", request?.url));
-        }
-        if (role === "PROVIDER") {
-            return NextResponse.redirect(new URL("/dashboard/profile", request?.url));
-        }
+    // ১. রুট ড্যাশবোর্ডে থাকলে সঠিক জায়গায় পাঠানো
+    if (pathname === "/dashboard") {
+        const target = role === "ADMIN" ? "/dashboard/admin/admin-profile" : "/dashboard/profile";
+        return NextResponse.redirect(new URL(target, request.url));
     }
 
-    if (pathName.startsWith("/dashboard/admin") && role !== "ADMIN") {
-        return NextResponse.redirect(new URL("/dashboard", request?.url));
-    }
-    if (pathName.startsWith("/dashboard/") && role !== "USER") {
-        return NextResponse.redirect(new URL("/dashboard/admin/admin-stats", request?.url));
+    // ২. রোল বেজড প্রটেকশন (লুপ ছাড়া)
+    if (pathname.startsWith("/dashboard/")) {
+        // অ্যাডমিন পেজে ইউজার ঢুকতে পারবে না
+        if (pathname.includes("/admin") && role !== "ADMIN") {
+            return NextResponse.redirect(new URL("/dashboard/profile", request.url));
+        }
     }
 
     return NextResponse.next();
