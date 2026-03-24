@@ -78,32 +78,43 @@ export async function submitReview(formData: FormData) {
 export async function addComment(formData: FormData) {
   const cookieStore = await cookies();
 
+  // ফর্ম ডাটা থেকে ভ্যালুগুলো নেওয়া
   const reviewId = formData.get("reviewId") as string;
   const content = formData.get("content") as string;
-  const customId = formData.get("customId") as string; // revalidate করার জন্য
-
+  const customId = formData.get("customId") as string;
+  const parentId = formData.get("parentId") as string | null; // নেস্টেড কমেন্টের জন্য
+  console.log(reviewId, content, customId, parentId)
+  // ভ্যালিডেশন
   if (!reviewId || !content) {
-    return { success: false, error: "Comment content is required" };
+    return { success: false, error: "Content is required" };
   }
 
   try {
+    // আপনার ব্যাকএন্ড এপিআই-তে ডাটা পাঠানো
     const response = await fetch(`${process.env.API_URL}/comments/add-comment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Cookie": cookieStore.toString(),
+        "Cookie": cookieStore.toString(), // অথেনটিকেশন সেশন পাঠানোর জন্য
       },
-      body: JSON.stringify({ reviewId, content }),
+      body: JSON.stringify({
+        content,
+        reviewId,
+        parentId: parentId || null // যদি parentId থাকে তবেই পাঠাবে
+      }),
     });
 
     const res = await response.json();
 
-    if (res.ok) {
+    if (response.ok) {
+      // পেজ রিvalidation যাতে নতুন কমেন্ট সাথে সাথে দেখা যায়
       revalidatePath(`/movies/details/${customId}`);
-      return { success: true };
+      return { success: true, ok: res.ok };
     }
-    return { success: false, error: res.message };
+
+    return { success: false, error: res.message || "Failed to post comment" };
   } catch (error) {
-    return { success: false, error: "Failed to post comment" };
+    console.error("ADD_COMMENT_ERROR", error);
+    return { success: false, error: "Internal server error" };
   }
 }

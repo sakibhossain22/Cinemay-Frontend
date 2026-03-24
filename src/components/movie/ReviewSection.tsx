@@ -194,7 +194,12 @@ function ReviewCard({ review, userId, customid }: any) {
         </form>
       )}
 
-      <CommentSection comments={review.comments} />
+      <CommentSection
+        comments={review.comments} 
+        userId={userId}
+        customid={customid}
+        reviewId={review.id}
+      />
     </div>
   );
 }
