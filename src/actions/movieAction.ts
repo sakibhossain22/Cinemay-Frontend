@@ -118,3 +118,27 @@ export async function addComment(formData: FormData) {
     return { success: false, error: "Internal server error" };
   }
 }
+
+export async function toggleWatchlist(movieId: string) {
+  try {
+    // আপনার backend API কল করুন
+    const cookieStore = await cookies();
+    const response = await fetch(`${process.env.API_URL}/watchlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString()
+      },
+      body: JSON.stringify({ movieId }),
+    });
+    const res = await response.json();
+    console.log(res)
+    if (response.ok) {
+      // revalidatePath(`/movies/${movieId}`);
+      return { success: true };
+    }
+    return { success: false };
+  } catch (error) {
+    return { success: false };
+  }
+}

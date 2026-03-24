@@ -147,11 +147,6 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
             </div>
           </aside>
         </div>
-
-
-
-
-
       </div>
     </div>
   );
