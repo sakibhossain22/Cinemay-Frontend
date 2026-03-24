@@ -15,7 +15,6 @@ async function MultiHomeSection() {
     const series = seriesRes || [];
     const animations = animationRes || [];
 
-    console.log(movies)
     return (
         <div className="space-y-12">
             {/* --- Trending Movies Section --- */}

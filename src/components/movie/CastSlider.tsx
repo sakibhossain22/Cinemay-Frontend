@@ -40,7 +40,8 @@ export default function CastSlider({ casts }: { casts: any[] }) {
                                     <Image
                                         src={`https://image.tmdb.org/t/p/w500${member.profile_path}`}
                                         alt={member.name}
-                                        fill
+                                        width={768}
+                                        height={432}
                                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                                     />
                                 ) : (

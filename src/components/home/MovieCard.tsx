@@ -9,7 +9,8 @@ export default function MovieCard({ movie }: { movie: IMovieDetail }) {
         <Image
           src={movie.posterUrl || '/placeholder-poster.png'}
           alt={movie.title}
-          fill
+          width={768}
+          height={432}
           className="object-cover transition-opacity group-hover:opacity-80"
         />
         {/* Rating Badge */}

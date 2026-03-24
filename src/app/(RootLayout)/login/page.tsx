@@ -46,7 +46,6 @@ const LoginPage = () => {
         credentials: "include",
         body: JSON.stringify(data),
       });
-      console.log(response)
       if (!response.ok) {
         const errorData = await response.json();
         setError(errorData.message || "Invalid email or password");

@@ -28,7 +28,8 @@ export default function MovieSlider({ movies }: { movies: IMovie }) {
                         <Image
                             src={movie.posterUrl}
                             alt={movie.title}
-                            fill
+                            width={768}
+                            height={432}
                             className="object-cover brightness-[0.4]"
                             priority
                         />

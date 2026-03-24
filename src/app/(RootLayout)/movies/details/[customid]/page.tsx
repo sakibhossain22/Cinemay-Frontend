@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getMovieDetails, getMoviesByCategory } from "@/services/movieService";
 import Image from "next/image";
-import { Play, Smartphone, Share2, Facebook, Twitter, Linkedin, Send, Radio, Tv, DownloadIcon } from "lucide-react";
+import { Play, Tv, DownloadIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getMovieCast } from "@/services/getMovieCast";
@@ -34,7 +34,8 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
           <Image
             src={movie.posterUrl}
             alt="backdrop"
-            fill
+            width={768}
+            height={432}
             className="object-cover opacity-30 blur-[2px]"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
@@ -45,7 +46,8 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
             {/* Small Poster */}
             <div className="w-32 md:w-44 aspect-[2/3] relative rounded-lg overflow-hidden border border-zinc-800 shadow-2xl">
-              <Image src={movie.posterUrl} alt={movie.title} fill className="object-cover" />
+              <Image src={movie.posterUrl} alt={movie.title} width={768}
+                height={432} className="object-cover" />
             </div>
 
             {/* Info */}
@@ -122,6 +124,7 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
               {/* কাস্ট সেকশনের নিচে রিভিউ সেকশন বসান */}
               <ReviewSection
                 movieId={movie.id}
+                customid={movie.customid}
                 userId={userId}
                 reviews={movie.reviews || []}
               />

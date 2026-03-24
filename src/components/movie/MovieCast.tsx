@@ -21,12 +21,13 @@ async function HomePage() {
                         className="group bg-zinc-900 rounded-xl overflow-hidden border border-white/5 hover:border-emerald-500/50 transition-all duration-300 shadow-lg"
                     >
                         {/* অভিনেতা/অভিনেত্রীর ছবি */}
-                        <div className="relative aspect-[2/3] w-full bg-zinc-800">
+                        <div className="relative aspect-[2/3] h-auto w-auto bg-zinc-800">
                             {member.profile_path ? (
                                 <Image
                                     src={`https://image.tmdb.org/t/p/w500${member.profile_path}`}
                                     alt={member.name}
-                                    fill
+                                    width={768}
+                                    height={432}
                                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                                 />
                             ) : (
