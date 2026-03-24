@@ -15,18 +15,9 @@ interface LayoutProps {
 
 
 export default async function DashboardLayout({ user, admin }: LayoutProps) {
-
-
-
     const { user: currentUser } = await userService.getSession();
 
-    console.log(currentUser)
-
     const role = currentUser?.role as "USER" | "ADMIN";
-
-    console.log(role)
-
-
 
     return (
 

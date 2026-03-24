@@ -7,13 +7,13 @@ const API_URL = process.env.API_URL
 
 export const getAllUsers = async () => {
     try {
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
 
         const res = await fetch(`${API_URL}/admin/all-users`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                cookie: cookieStore.toString(),
+                "Cookie": cookieStore.toString(),
             },
             credentials: "include",
         });
@@ -27,13 +27,13 @@ export const getAllUsers = async () => {
 
 export const getAllReviews = async () => {
     try {
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
 
         const res = await fetch(`${API_URL}/admin/all-reviews`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                cookie: cookieStore.toString(),
+                "Cookie": cookieStore.toString(),
             },
             credentials: "include",
         });
@@ -47,13 +47,13 @@ export const getAllReviews = async () => {
 
 export const getAllPayments = async () => {
     try {
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
 
         const res = await fetch(`${API_URL}/admin/all-payments`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                cookie: cookieStore.toString(),
+                "Cookie": cookieStore.toString(),
             },
             credentials: "include",
         });
@@ -67,13 +67,13 @@ export const getAllPayments = async () => {
 
 export const getAllMedia = async () => {
     try {
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
 
         const res = await fetch(`${API_URL}/admin/all-media`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                cookie: cookieStore.toString(),
+                "Cookie": cookieStore.toString(),
             },
             credentials: "include",
         });
@@ -86,13 +86,13 @@ export const getAllMedia = async () => {
 };
 export const getAllComments = async () => {
     try {
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
 
         const res = await fetch(`${API_URL}/admin/all-comments`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                cookie: cookieStore.toString(),
+                "Cookie": cookieStore.toString(),
             },
             credentials: "include",
         });
@@ -106,13 +106,13 @@ export const getAllComments = async () => {
 
 export const getAllUWatchlist = async () => {
     try {
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
 
         const res = await fetch(`${API_URL}/admin/all-watchlists`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                cookie: cookieStore.toString(),
+                "Cookie": cookieStore.toString(),
             },
             credentials: "include",
         });
