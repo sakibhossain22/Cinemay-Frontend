@@ -142,3 +142,24 @@ export async function toggleWatchlist(movieId: string) {
     return { success: false };
   }
 }
+
+
+export async function getWatchListByUser(userId: string) {
+  try {
+    const cookieStore = await cookies();
+    const response = await fetch(`${process.env.API_URL}/watchlist`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString()
+      },
+    });
+    const res = await response.json();
+    if (response.ok) {
+      return { success: true, data: res.data };
+    }
+    return { success: false, data: [] };
+  } catch (error) {
+    return { success: false, data: [] };
+  }
+}

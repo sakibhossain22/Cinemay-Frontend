@@ -3,32 +3,61 @@
 
 import { Bookmark, Share2 } from "lucide-react";
 import { toast } from "sonner";
-import { useState, useTransition } from "react";
-import { toggleWatchlist } from "@/actions/movieAction";
+import { useEffect, useState, useTransition, useMemo } from "react";
+import { getWatchListByUser, toggleWatchlist } from "@/actions/movieAction";
 
-export default function MovieInteractions({ movieId, userId, isAddedToWatchlist }: any) {
+export default function MovieInteractions({ movieId, userId }: any) {
   const [isPending, startTransition] = useTransition();
-  const [inWatchlist, setInWatchlist] = useState(isAddedToWatchlist);
+  const [watchLists, setWatchLists] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  console.log(watchLists)
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      try {
+        setLoading(true);
+        const result = await getWatchListByUser(userId);
+        if (result.success) {
+          setWatchLists(result.data || []);
+        }
+      } catch (err) {
+        console.error("Watchlist fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // ওয়াচলিস্ট হ্যান্ডলার
+    if (userId) {
+      fetchWatchlist();
+    } else {
+      setLoading(false);
+    }
+  }, [userId]);
+
+  const inWatchlist = useMemo(() => {
+    return watchLists.some((item: any) => item.movieId === movieId);
+  }, [watchLists, movieId]);
+
   const handleWatchlist = () => {
     if (!userId) {
       return toast.error("Please login to add to watchlist");
     }
 
-    startTransition(async () => {
-      // Optimistic Update: সার্ভার রেসপন্সের আগেই UI চেঞ্জ করে দেওয়া
-      setInWatchlist((prev: boolean) => !prev);
+    // মুভিটি অলরেডি অ্যাড করা থাকলে আর সার্ভার কল হবে না
+    if (inWatchlist) {
+      return toast.info("Movie already added to watchlist");
+    }
 
+    startTransition(async () => {
       const result = await toggleWatchlist(movieId);
-      
+
       if (result.success) {
-        toast.success(inWatchlist ? "Removed from Watchlist" : "Added to Watchlist", {
-            icon: <Bookmark className="w-4 h-4 fill-current" />
+        // শুধুমাত্র অ্যাড হওয়ার পর লোকাল স্টেট আপডেট
+        setWatchLists((prev) => [...prev, { movieId }]);
+
+        toast.success("Added to Watchlist", {
+          icon: <Bookmark className="w-4 h-4 fill-current" />
         });
       } else {
-        // ফেইল করলে আগের অবস্থায় ফেরত নেওয়া
-        setInWatchlist((prev: boolean) => !prev);
         toast.error("Something went wrong!");
       }
     });
@@ -43,26 +72,28 @@ export default function MovieInteractions({ movieId, userId, isAddedToWatchlist 
     }
   };
 
+  const isLoadingState = loading || isPending;
+
   return (
     <div className="flex items-center gap-6 py-4">
-      {/* Watchlist Button */}
-      <button 
+      <button
         onClick={handleWatchlist}
-        disabled={isPending}
+        disabled={isLoadingState}
         className={`flex items-center gap-2 transition-all duration-300 ${
           inWatchlist ? "text-emerald-400" : "text-zinc-400 hover:text-emerald-400"
-        }`}
+        } ${isLoadingState ? "opacity-50 cursor-not-allowed" : ""}`}
       >
-        <Bookmark 
-          className={`w-6 h-6 transition-all ${inWatchlist ? "fill-emerald-400 scale-110" : "fill-none"}`} 
+        <Bookmark
+          className={`w-6 h-6 transition-all ${
+            inWatchlist ? "fill-emerald-400 scale-110" : "fill-none"
+          }`}
         />
         <span className="text-sm font-medium">
-          {inWatchlist ? "In Watchlist" : "Watchlist"}
+          {loading ? "Checking..." : inWatchlist ? "In Watchlist" : "Watchlist"}
         </span>
       </button>
 
-      {/* Share Button */}
-      <button 
+      <button
         onClick={handleShare}
         className="flex items-center gap-2 text-zinc-400 hover:text-blue-400 transition-colors"
       >
