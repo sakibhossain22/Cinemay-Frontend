@@ -82,7 +82,7 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
 
 
             </div>
-
+          
             {/* Rating Section */}
             <div className="hidden lg:flex flex-col items-end pt-4">
               <div className="flex items-center gap-2 text-yellow-500 text-4xl font-bold">
@@ -96,17 +96,14 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
 
       {/* --- Tabs Section (Episodes, Cast etc) --- */}
       <div className="max-w-8xl mx-auto px-6 py-2">
-        <div className="flex gap-8 border-b border-zinc-800 mb-8">
-          <button className="pb-3 text-zinc-500 font-bold uppercase text-sm hover:text-zinc-300">Top Cast</button>
-          <button className="pb-3 text-zinc-500 font-bold uppercase text-sm hover:text-zinc-300">User Review</button>
-        </div>
+      
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           <div className="lg:col-span-3 space-y-12">
             {/* Cast Section */}
             <div>
               {/* Top Cast Section */}
-              <section>
+              <section id="cast-section" className="scroll-mt-20">
                 <div className="">
                   <CastSlider casts={casts} />
                 </div>
@@ -122,12 +119,14 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
               />
 
               {/* কাস্ট সেকশনের নিচে রিভিউ সেকশন বসান */}
-              <ReviewSection
-                movieId={movie.id}
-                customid={movie.customid}
-                userId={userId}
-                reviews={movie.reviews || []}
-              />
+              <div id="review-section" className="scroll-mt-20">
+                <ReviewSection
+                  movieId={movie.id}
+                  customid={movie.customid}
+                  userId={userId}
+                  reviews={movie.reviews || []}
+                />
+              </div>
             </div>
 
           </div>
