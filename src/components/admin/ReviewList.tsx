@@ -14,7 +14,7 @@ import {
 import { toast } from 'sonner';
 import Image from 'next/image';
 import { format } from 'date-fns';
-import { updateReviewStatus } from '@/actions/review.admin.action';
+import { deleteReview, updateReviewStatus } from '@/actions/review.admin.action';
 
 export default function ReviewList({ initialReviews }: { initialReviews: any[] }) {
     const [reviews, setReviews] = useState(initialReviews);
@@ -26,7 +26,7 @@ export default function ReviewList({ initialReviews }: { initialReviews: any[] }
             toast.error("Failed to approve review");
             return;
         }
-        
+
         setReviews(reviews.map(rev => rev.id === id ? { ...rev, isApproved: true } : rev));
         toast.success("Review approved successfully");
     };
@@ -34,8 +34,13 @@ export default function ReviewList({ initialReviews }: { initialReviews: any[] }
     const handleDelete = async (id: string) => {
         if (!confirm("Delete this review forever?")) return;
         // await deleteReview(id);
+        const res = await deleteReview(id);
+        if (!res.success) {
+            toast.error("Failed to delete review");
+            return;
+        }
         setReviews(reviews.filter(rev => rev.id !== id));
-        toast.error("Review deleted");
+        toast.success("Review deleted");
     };
 
     return (

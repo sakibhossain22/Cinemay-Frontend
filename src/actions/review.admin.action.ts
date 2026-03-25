@@ -30,7 +30,7 @@ export async function getAllReviews() {
 export async function deleteReview(reviewId: string) {
     try {
         const cookieStore = await cookies();
-        const response = await fetch(`${API_URL}/admin/review/${reviewId}`, {
+        const response = await fetch(`${API_URL}/admin/delete-review/${reviewId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
