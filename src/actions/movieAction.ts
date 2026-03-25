@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { revalidatePath } from "next/cache";
@@ -163,3 +164,75 @@ export async function getWatchListByUser(userId: string) {
     return { success: false, data: [] };
   }
 }
+
+export async function getTheMovieDB(id: number) {
+  try {
+    const cookieStore = await cookies();
+    const response = await fetch(`${process.env.API_URL}/admin/tmdb-movie/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString()
+      },
+    });
+    const res = await response.json();
+    console.log(res.data)
+
+    if (response.ok) {
+      return { success: true, ok: res.ok, data: res.data };
+    }
+    return { success: false, data: [] };
+  } catch (error) {
+    return { success: false, data: [] };
+  }
+}
+
+
+export async function addMovie(movie: any) {
+  const cookieStore = await cookies();
+
+  try {
+    const response = await fetch(`${process.env.API_URL}/media/add-media`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString(), // অথেনটিকেশন সেশন পাঠানোর জন্য
+      },
+      body: JSON.stringify(movie),
+    });
+
+    const res = await response.json();
+
+    if (response.ok) {
+
+      return { success: true, ok: res.ok };
+    }
+    return { success: false, error: res.message || "Failed to post comment" };
+  } catch (error) {
+    console.error("ADD_MOVIE_ERROR", error);
+    return { success: false, error: "Internal server error" };
+  }
+}
+
+export async function getCategory() {
+  try {
+    const cookieStore = await cookies();
+
+    const response = await fetch(`${process.env.API_URL}/category`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString() // অথেনটিকেশন সেশন পাঠানোর জন্য
+      },
+    });
+
+    const res = await response.json();
+    if (response.ok) {
+      return { success: true, data: res.data };
+    }
+    return { success: false, data: [] };
+  } catch (error) {
+    return { success: false, data: [] };
+  }
+}
+

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Film, Star, Calendar, Tag } from "lucide-react";
 import MovieActions from "@/components/admin/MovieActions";
 import { getAllMedia } from "@/actions/adminAction";
+import { getTheMovieDB } from "@/actions/movieAction";
 
 export default async function ManageMovies() {
   const res = await getAllMedia();
