@@ -8,7 +8,7 @@ import {
   MoreVertical, CheckCircle2, Ban, ChevronDown 
 } from "lucide-react";
 import { toast } from "sonner";
-import { getAllUsers } from "@/actions/adminAction";
+import { getAllUsers, updateUserStatus } from "@/actions/adminAction";
 
 export default function ManageUser() {
   const [users, setUsers] = useState<any[]>([]);
@@ -39,12 +39,14 @@ export default function ManageUser() {
   const handleStatusChange = async (userId: string, newStatus: string) => {
     setUpdatingId(userId);
     try {
-      // এখানে আপনার updateUserStatus সার্ভার অ্যাকশন কল করবেন
-      // await updateUserStatus(userId, newStatus);
-      
-      // লোকাল স্টেট আপডেট (সিমুলেশন)
-      setUsers(users.map(u => u.id === userId ? { ...u, status: newStatus } : u));
-      toast.success(`User is now ${newStatus.toLowerCase()}`);
+      const response = await updateUserStatus(userId, newStatus);
+      if (response.success) {
+        // লোকাল স্টেট আপডেট 
+        setUsers(users.map(u => u.id === userId ? { ...u, status: newStatus } : u));
+        toast.success(`User status updated to ${newStatus.toLowerCase()}`);
+      } else {
+        toast.error(response.message || "Failed to update user status");
+      }
     } catch (error) {
       toast.error("Failed to update status");
     } finally {

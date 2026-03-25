@@ -19,10 +19,7 @@ export const adminRoutes = [
                 title: "Manage Movies",
                 url: "/dashboard/admin/manage-movies",
             },
-            {
-                title: "Update Movies",
-                url: "/dashboard/admin/update-movies",
-            },
+
             {
                 title: "Add Movies",
                 url: "/dashboard/admin/add-movies",

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { cookies } from "next/headers";
@@ -123,3 +124,81 @@ export const getAllUWatchlist = async () => {
         throw error;
     }
 };
+
+export const updateUserStatus = async (userId: string, newStatus: string) => {
+    try {
+        const cookieStore = await cookies();
+        const res = await fetch(`${API_URL}/admin/update-user-status/${userId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Cookie": cookieStore.toString(),
+            },
+            credentials: "include",
+            body: JSON.stringify({ status: newStatus }),
+        });
+        const data = await res.json();
+        return data;
+    }
+    catch (error) {
+        console.error("Error updating user status:", error);
+        throw error;
+    }
+}
+
+export const deleteMovie = async (movieId: string) => {
+    try {
+        const cookieStore = await cookies();
+        const res = await fetch(`${API_URL}/admin/delete-media/${movieId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Cookie": cookieStore.toString(),
+            },
+            credentials: "include",
+        });
+        const data = await res.json();
+        return { success: data.success, message: data.message, ok: res.ok };
+    }
+    catch (error) {
+        console.error("Error deleting movie:", error);
+        throw error;
+    }
+}
+
+export const updateMovie = async (movieId: string, body: FormData) => {
+    try {
+        const cookieStore = await cookies();
+        
+        // FormData theke data-gulu extract kora
+        const updatedData = {
+            title: body.get('title'),
+            type: body.get('type'),
+            tmdb_id: body.get('tmdb_id'),
+            synopsis: body.get('synopsis'),
+            streamingLink: body.get('streamingLink'),
+            downloadLink: body.get('downloadLink'),
+            posterUrl: body.get('posterUrl'),
+            contentType: body.get('contentType'),
+            // Price gulu string e ashe, tai Number e convert kora safe
+            buyPrice: Number(body.get('buyPrice')),
+            rentPrice: Number(body.get('rentPrice'))
+        }
+        // console.log(updatedData)
+        const res = await fetch(`${API_URL}/admin/edit-media/${movieId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Cookie": cookieStore.toString(),
+            },
+            body: JSON.stringify(updatedData), // Extract kora object-ti pathate hobe
+        });
+
+        const data = await res.json();
+        return { success: data.success, message: data.message, ok: res.ok };
+    }
+    catch (error) {
+        console.error("Error updating movie:", error);
+        throw error;
+    }
+}
