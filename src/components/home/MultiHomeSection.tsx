@@ -9,12 +9,10 @@ async function MultiHomeSection() {
     const moviesRes = await getTrendingMovies();
     const seriesRes = await getTrendingSeries();
     const animationRes = await getTrendingAnimations()
-
     // ধরি আপনার রেসপন্সে ডাটা 'data' ফিল্ডে থাকে
     const movies = moviesRes || [];
     const series = seriesRes || [];
     const animations = animationRes || [];
-
     return (
         <div className="space-y-12">
             {/* --- Trending Movies Section --- */}

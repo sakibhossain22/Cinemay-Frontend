@@ -145,8 +145,10 @@ export default function AddMovies() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                     <div>
-                        <h1 className="text-5xl font-black tracking-tighter italic uppercase">Add <span className="text-emerald-500">Media</span></h1>
-                        <p className="text-zinc-500 font-bold mt-2 uppercase text-xs tracking-widest">Cinema Management System</p>
+                        <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
+                            <Film className="text-emerald-500" />Add <span className="text-emerald-500">Movie</span>
+                        </h2>
+                        <p className="text-zinc-500 mt-1 font-medium">Add new movies to your collection.</p>
                     </div>
                     <button
                         form="movie-form"
@@ -228,8 +230,8 @@ export default function AddMovies() {
                                         type="button"
                                         onClick={() => toggleCategory(cat.name)}
                                         className={`px-5 py-3 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all border ${formData.category.includes(cat.name)
-                                                ? "bg-emerald-500 border-emerald-500 text-black shadow-lg shadow-emerald-500/20"
-                                                : "bg-zinc-900 border-white/5 text-zinc-500 hover:border-white/20"
+                                            ? "bg-emerald-500 border-emerald-500 text-black shadow-lg shadow-emerald-500/20"
+                                            : "bg-zinc-900 border-white/5 text-zinc-500 hover:border-white/20"
                                             }`}
                                     >
                                         {cat.name}

@@ -236,3 +236,79 @@ export async function getCategory() {
   }
 }
 
+export async function addCategory(name: string) {
+  console.log(name)
+  const cookieStore = await cookies();
+  try {
+    const response = await fetch(`${process.env.API_URL}/admin/add-category`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString()
+      },
+      body: JSON.stringify({ name }),
+    });
+    const res = await response.json();
+
+    if (res.ok) {
+      revalidatePath(`/admin/dashboard/manage-categories`);
+      return { success: true, ok: res.ok, data: res.data };
+    }
+    return { success: false, data: null, error: res.error || "Failed to add category" };
+  }
+  catch (error) {
+    console.error("ADD_CATEGORY_ERROR", error);
+    return { success: false, error: "Internal server error" };
+  }
+}
+
+export async function updateCategory(id: string, name: string) {
+  console.log(id, name)
+  const cookieStore = await cookies();
+  try {
+    const response = await fetch(`${process.env.API_URL}/admin/update-category/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString()
+      },
+      body: JSON.stringify({ name })
+    })
+    const res = await response.json();
+
+    if (res.ok) {
+      revalidatePath(`/admin/dashboard/manage-categories`);
+      return { success: true, ok: res.ok };
+    }
+    return { success: false, data: null, error: res.error || "Failed to update category" };
+  }
+  catch (error) {
+    console.error("UPDATE_CATEGORY_ERROR", error);
+    return { success: false, error: "Internal server error" };
+  }
+}
+
+export async function deleteCategory(id: string) {
+  const cookieStore = await cookies();
+  try {
+    const response = await fetch(`${process.env.API_URL}/admin/delete-category/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Cookie": cookieStore.toString()
+      },
+    })
+    const res = await response.json();
+    console.log(res)
+    if (res.ok) {
+      revalidatePath(`/admin/dashboard/manage-categories`);
+      return { success: true, ok: res.ok }
+    }
+    return { success: false, data: null, error: res.error || "Failed to delete category" }
+  }
+  catch (error) {
+    console.error("DELETE_CATEGORY_ERROR", error);
+    return { success: false, error: "Internal server error" }
+
+  }
+}

@@ -4,7 +4,7 @@ import MovieSlider from "./EmblaCarousel";
 export default async function HomePageCarousel() {
 
     const movies = await getTrendingMoviesForCarousel();
-    
+    console.log(movies)
     return (
         <div className="w-full h-[400px] md:h-[600px] relative group">
             <MovieSlider movies={movies} />

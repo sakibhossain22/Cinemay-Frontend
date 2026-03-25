@@ -3,9 +3,10 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image"; // Next.js Image component
-import { 
-  Shield, User, Mail, Star, Loader2, 
-  MoreVertical, CheckCircle2, Ban, ChevronDown 
+import {
+  Shield, User, Mail, Star, Loader2,
+  MoreVertical, CheckCircle2, Ban, ChevronDown,
+  UsersIcon
 } from "lucide-react";
 import { toast } from "sonner";
 import { getAllUsers, updateUserStatus } from "@/actions/adminAction";
@@ -68,8 +69,10 @@ export default function ManageUser() {
       {/* Header */}
       <div className="flex justify-between items-center bg-zinc-900/30 p-6 rounded-2xl border border-white/5 backdrop-blur-md">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">User Directory</h2>
-          <p className="text-zinc-500 text-sm">Manage user access, roles, and status.</p>
+          <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
+            <UsersIcon className="text-emerald-500" /> Manage <span className="text-emerald-500">Users</span>
+          </h2>
+          <p className="text-zinc-500 mt-1 font-medium">Manage Your User Account And Status.</p>
         </div>
         <div className="text-right">
           <p className="text-[10px] uppercase text-zinc-500 font-bold tracking-[0.2em] mb-1">Total Members</p>
@@ -128,11 +131,10 @@ export default function ManageUser() {
                   {/* Role & Premium Badge */}
                   <td className="px-6 py-4">
                     <div className="flex flex-col gap-1.5">
-                      <span className={`inline-flex items-center gap-1 w-fit px-2 py-0.5 rounded text-[10px] font-bold border ${
-                        user.role === "ADMIN" 
-                          ? "bg-purple-500/10 text-purple-400 border-purple-500/20" 
+                      <span className={`inline-flex items-center gap-1 w-fit px-2 py-0.5 rounded text-[10px] font-bold border ${user.role === "ADMIN"
+                          ? "bg-purple-500/10 text-purple-400 border-purple-500/20"
                           : "bg-blue-500/10 text-blue-400 border-blue-500/20"
-                      }`}>
+                        }`}>
                         {user.role === "ADMIN" ? <Shield size={10} /> : <User size={10} />}
                         {user.role}
                       </span>
@@ -146,11 +148,10 @@ export default function ManageUser() {
 
                   {/* Status Dropdown Indicator */}
                   <td className="px-6 py-4 text-center">
-                    <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold border ${
-                      user.status === "ACTIVE" 
-                        ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" 
+                    <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold border ${user.status === "ACTIVE"
+                        ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
                         : "bg-red-500/10 text-red-500 border-red-500/20"
-                    }`}>
+                      }`}>
                       <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${user.status === "ACTIVE" ? "bg-emerald-500" : "bg-red-500"}`} />
                       {user.status}
                     </div>

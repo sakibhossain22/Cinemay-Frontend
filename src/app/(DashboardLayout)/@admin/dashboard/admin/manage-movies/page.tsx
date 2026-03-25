@@ -16,7 +16,7 @@ export default async function ManageMovies() {
         <div className="relative z-10 flex justify-between items-center">
           <div>
             <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
-              <Film className="text-emerald-500" /> Cinema Inventory
+              <Film className="text-emerald-500" /> Cinema <span className="text-emerald-500">Inventory</span>
             </h2>
             <p className="text-zinc-500 mt-1 font-medium">Manage your premium movie collection and pricing.</p>
           </div>
