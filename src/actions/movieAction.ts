@@ -205,7 +205,7 @@ export async function addMovie(movie: any) {
 
     if (response.ok) {
 
-      return { success: true, ok: res.ok };
+      return { success: true, ok: res.ok, data: res.data };
     }
     return { success: false, error: res.message || "Failed to post comment" };
   } catch (error) {
@@ -218,11 +218,11 @@ export async function getCategory() {
   try {
     const cookieStore = await cookies();
 
-    const response = await fetch(`${process.env.API_URL}/category`, {
+    const response = await fetch(`${process.env.API_URL}/admin/all-categories`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Cookie": cookieStore.toString() // অথেনটিকেশন সেশন পাঠানোর জন্য
+        "Cookie": cookieStore.toString()
       },
     });
 

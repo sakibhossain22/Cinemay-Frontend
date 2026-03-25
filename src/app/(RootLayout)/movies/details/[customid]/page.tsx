@@ -17,7 +17,11 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
   const casts = await getMovieCast(response.tmdb_id);
   const movie = response;
 
-  const categoryMovies = await getMoviesByCategory(movie.categories ? movie.categories[0].name : "TRENDING");
+  // const categoryName = (movie.categories && movie.categories.length > 0)
+  //   ? movie.categories[0].name
+  //   : "TRENDING";
+
+  const categoryMovies = await getMoviesByCategory(movie.categories?.[0]?.name ?? "TRENDING");
   const catMovies = categoryMovies.data
 
   const user = await userService.getSession();
@@ -82,7 +86,7 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
 
 
             </div>
-          
+
             {/* Rating Section */}
             <div className="hidden lg:flex flex-col items-end pt-4">
               <div className="flex items-center gap-2 text-yellow-500 text-4xl font-bold">
@@ -96,7 +100,7 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
 
       {/* --- Tabs Section (Episodes, Cast etc) --- */}
       <div className="max-w-8xl mx-auto px-6 py-2">
-      
+
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           <div className="lg:col-span-3 space-y-12">
