@@ -7,7 +7,6 @@ import { cookies } from "next/headers";
 export async function toggleLike(reviewId: string, userId: string, customid: string) {
   const cookieStore = await cookies();
 
-  console.log(customid, reviewId)
   const likeStatus = await fetch(`${process.env.API_URL}/review/like-review`, {
     method: "POST",
     headers: {
@@ -17,7 +16,6 @@ export async function toggleLike(reviewId: string, userId: string, customid: str
     body: JSON.stringify({ reviewId, userId })
   });
   const res = await likeStatus.json();
-  console.log("Like Action Response", res);
   if (!res.success) {
     throw new Error("Failed to update like status");
   }
@@ -45,14 +43,12 @@ export async function submitReview(formData: FormData) {
   if (!movieId || !userId || !content) {
     throw new Error("Missing required fields");
   }
-  // console.log(customid)
   const reviewData = {
     movieId,
     content,
     rating,
     hasSpoiler: isSpoiler,
   };
-  // console.log(reviewData)
   const response = await fetch(`${process.env.API_URL}/review/add-review`, {
     method: "POST",
     headers: {
@@ -84,7 +80,6 @@ export async function addComment(formData: FormData) {
   const content = formData.get("content") as string;
   const customId = formData.get("customId") as string;
   const parentId = formData.get("parentId") as string | null; // নেস্টেড কমেন্টের জন্য
-  console.log(reviewId, content, customId, parentId)
   // ভ্যালিডেশন
   if (!reviewId || !content) {
     return { success: false, error: "Content is required" };
@@ -295,7 +290,6 @@ export async function deleteCategory(id: string) {
       },
     })
     const res = await response.json();
-    console.log(res)
     if (res.ok) {
       revalidatePath(`/admin/dashboard/manage-categories`);
       return { success: true, ok: res.ok }

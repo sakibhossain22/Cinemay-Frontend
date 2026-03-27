@@ -36,8 +36,6 @@ export async function POST(req: Request) {
     const session = event.data.object as Stripe.Checkout.Session;
 
     if (event.type === "checkout.session.completed") {
-        console.log("✅ Payment Successful for:", session.id);
-        // এখানে আপনার ডাটাবেস লজিক (Prisma/DB)
     }
 
     // ৪. স্ট্রাইপকে দ্রুত ২০০ রেসপন্স দিন

@@ -11,7 +11,6 @@ import 'swiper/css/navigation';
 import { IMovie } from '@/interfaces/movie.interface';
 
 export default function MovieSlider({ movies }: { movies: IMovie }) {
-    // console.log(movies)
     return (
         <Swiper
             spaceBetween={0}

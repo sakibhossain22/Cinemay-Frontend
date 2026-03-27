@@ -11,7 +11,6 @@ async function TrendingNow() {
     const trendingData = await res.json();
     const items = trendingData?.data?.data || [];
     const meta = trendingData?.data?.meta || {};
-    console.log(meta)
 
     return (
         <section className="py-8 px-4 sm:px-6 lg:px-8 bg-black text-white">

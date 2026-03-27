@@ -14,6 +14,7 @@ export default async function MediaPage({
     if (params.page) queryString.set("page", params.page as string);
     if (params.category) queryString.set("category", params.category as string);
     if (params.type) queryString.set("type", params.type as string);
+    if (params.genre) queryString.set("genre", params.genre as string);
 
     queryString.set("limit", "10");
 
@@ -21,6 +22,6 @@ export default async function MediaPage({
         cache: 'no-store'
     });
     const initialData = await res.json();
-
+    console.log()
     return <AdminMediaLibrary initialData={initialData} />;
 }

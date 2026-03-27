@@ -8,7 +8,6 @@ function ClearHistory() {
     const handleClearHistory = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const result = await clearAllHistory();
-        console.log(result)
         if (result.success) {
             // Optionally, you can add a success message or refresh the page to reflect changes
             toast.success("History cleared successfully!");

@@ -184,7 +184,6 @@ export const updateMovie = async (movieId: string, body: FormData) => {
             buyPrice: Number(body.get('buyPrice')),
             rentPrice: Number(body.get('rentPrice'))
         }
-        // console.log(updatedData)
         const res = await fetch(`${API_URL}/admin/edit-media/${movieId}`, {
             method: "PATCH",
             headers: {

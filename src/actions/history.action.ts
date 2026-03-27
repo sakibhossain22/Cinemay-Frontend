@@ -9,7 +9,6 @@ const API_URL = process.env.API_URL
 
 export async function trackMovieView(mediaId: string) {
     try {
-        console.log(mediaId)
         const cookieStore = await cookies();
        const res = await fetch(`${API_URL}/history`, {
             method: 'POST',

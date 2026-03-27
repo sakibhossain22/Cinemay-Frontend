@@ -36,15 +36,13 @@ const menuItems = [
 const libraryItems = [
   { title: "Watchlist", url: "/watchlist", icon: Heart },
   { title: "History", url: "/history", icon: History },
-  { title: "My Collection", url: "/collection", icon: Library },
 ];
 
 const genreItems = [
-  { title: "Action", url: "/movies?genre=action" },
-  { title: "Sci-Fi", url: "/movies?genre=sci-fi" },
-  { title: "Comedy", url: "/movies?genre=comedy" },
-  { title: "Horror", url: "/movies?genre=horror" },
-  { title: "Animation", url: "/movies?genre=animation" },
+  { title: "Action", url: "/movies?genre=Action" },
+  { title: "Sci-Fi", url: "/movies?genre=Science Fiction" },
+  { title: "Comedy", url: "/movies?genre=Comedy" },
+  { title: "Thriller", url: "/movies?genre=Thriller" },
 ];
 
 export function AppSidebar({ ...props }) {

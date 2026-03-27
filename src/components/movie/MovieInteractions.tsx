@@ -10,7 +10,6 @@ export default function MovieInteractions({ movieId, userId }: any) {
   const [isPending, startTransition] = useTransition();
   const [watchLists, setWatchLists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  console.log(watchLists)
   useEffect(() => {
     const fetchWatchlist = async () => {
       try {

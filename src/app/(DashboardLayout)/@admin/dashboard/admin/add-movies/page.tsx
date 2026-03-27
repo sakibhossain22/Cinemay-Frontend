@@ -76,7 +76,6 @@ export default function AddMovies() {
         setFetching(true);
         try {
             const result = await getTheMovieDB(Number(formData.tmdb_id), formData.type);
-            console.log(result)
             if (result.success && result.data) {
                 const movie = result.data;
                 setFormData((prev) => ({

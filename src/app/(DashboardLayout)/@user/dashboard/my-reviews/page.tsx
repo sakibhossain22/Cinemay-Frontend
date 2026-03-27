@@ -5,7 +5,7 @@ import { Star } from 'lucide-react';
 async function MyReviews() {
   const response = await getMyReviews();
   const reviews = response?.data || [];
-  console.log(reviews)
+
   return (
     <div className="p-6 bg-black min-h-screen">
       <div className="max-w-5xl mx-auto">
