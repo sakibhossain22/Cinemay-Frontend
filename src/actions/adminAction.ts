@@ -202,3 +202,24 @@ export const updateMovie = async (movieId: string, body: FormData) => {
         throw error;
     }
 }
+
+
+export const adminStatistics = async () => {
+    try {
+        const cookieStore = await cookies();
+        const res = await fetch(`${API_URL}/admin/admin-dashboard-stats`, {
+            method: "GET",
+            headers: {  
+                "Content-Type": "application/json",
+                "Cookie": cookieStore.toString(),
+            },
+            credentials: "include",
+        });
+        const data = await res.json();
+        return data;
+    }
+    catch (error) {
+        console.error("Error fetching statistics:", error);
+        throw error;
+    }
+}
