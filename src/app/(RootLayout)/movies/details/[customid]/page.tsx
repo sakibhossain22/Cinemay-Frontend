@@ -10,6 +10,7 @@ import MovieCard from "@/components/home/MovieCard";
 import MovieInteractions from "@/components/movie/MovieInteractions";
 import ReviewSection from "@/components/movie/ReviewSection";
 import { userService } from "@/services/userService";
+import { trackMovieView } from "@/actions/history.action";
 
 async function MovieDetails({ params }: { params: Promise<{ customid: string }> }) {
   const { customid } = await params;
@@ -26,6 +27,9 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
 
   const user = await userService.getSession();
   const userId = user?.user?.id;
+  await trackMovieView(movie.id);
+
+
   if (!movie) return <div className="text-white text-center p-20">Loading...</div>;
 
   return (
