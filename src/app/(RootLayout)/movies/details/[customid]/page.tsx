@@ -11,23 +11,29 @@ import MovieInteractions from "@/components/movie/MovieInteractions";
 import ReviewSection from "@/components/movie/ReviewSection";
 import { userService } from "@/services/userService";
 import { trackMovieView } from "@/actions/history.action";
+import Link from "next/link";
+import MovieDetailsAction from "@/components/movie/MovieDetailsAction";
+import { getPurchaseHistory } from "@/actions/user.action";
 
 async function MovieDetails({ params }: { params: Promise<{ customid: string }> }) {
   const { customid } = await params;
   const response = await getMovieDetails(customid);
   const casts = await getMovieCast(response.tmdb_id, response.type === "MOVIE" ? "movie" : "tv");
   const movie = response;
+  const data = await getPurchaseHistory();
+  const purchasedMovies = data?.data?.movies.map((item: any) => item.movie);
+  let hasPurchased = purchasedMovies?.some((m: any) => m.id === movie.id);
 
-
-  // const categoryName = (movie.categories && movie.categories.length > 0)
-  //   ? movie.categories[0].name
-  //   : "TRENDING";
+  if (movie.contentType === "FREE") {
+    hasPurchased = true;
+  }
 
   const categoryMovies = await getMoviesByCategory(movie.categories?.[0]?.name ?? "TRENDING");
   const catMovies = categoryMovies.data
 
   const user = await userService.getSession();
   const userId = user?.user?.id;
+
   await trackMovieView(movie.id);
 
 
@@ -80,15 +86,7 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-6">
-                <Button className="bg-emerald-500 cursor-pointer hover:bg-emerald-600 text-black font-bold h-12 px-8 rounded-md transition-transform active:scale-95">
-                  <Play className="mr-2 fill-current " size={20} /> Watch Online
-                </Button>
-                <Button variant="secondary" className="bg-zinc-800 cursor-pointer hover:bg-zinc-700 text-white h-12 px-8 rounded-md">
-                  <DownloadIcon className="mr-2" size={20} /> Download
-                </Button>
-              </div>
-
+              <MovieDetailsAction hasPurchased={hasPurchased} movie={movie} />
 
             </div>
 
