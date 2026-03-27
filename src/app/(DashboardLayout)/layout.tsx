@@ -31,7 +31,7 @@ export default async function DashboardLayout({ user, admin }: LayoutProps) {
 
             {/* Main Content Area */}
 
-            <main className="flex-1 lg:ml-64 p-6 lg:p-10">
+            <main className="flex-1 lg:ml-64 lg:p-10">
 
                 <div className="max-w-6xl mx-auto">
 

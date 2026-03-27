@@ -169,7 +169,7 @@ export const deleteMovie = async (movieId: string) => {
 export const updateMovie = async (movieId: string, body: FormData) => {
     try {
         const cookieStore = await cookies();
-        
+
         // FormData theke data-gulu extract kora
         const updatedData = {
             title: body.get('title'),
@@ -209,7 +209,7 @@ export const adminStatistics = async () => {
         const cookieStore = await cookies();
         const res = await fetch(`${API_URL}/admin/admin-dashboard-stats`, {
             method: "GET",
-            headers: {  
+            headers: {
                 "Content-Type": "application/json",
                 "Cookie": cookieStore.toString(),
             },
@@ -220,6 +220,28 @@ export const adminStatistics = async () => {
     }
     catch (error) {
         console.error("Error fetching statistics:", error);
+        throw error;
+    }
+}
+export const getAllPaymentHistory = async () => {
+    try {
+        const cookieStore = await cookies();
+        const res = await fetch(`${API_URL}/admin/all-payments`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Cookie": cookieStore.toString(),
+            },
+            credentials: "include",
+        });
+        const data = await res.json();
+        if (data.success) {
+            return { success: data.success, message: data.message, ok: res.ok, data: data.data };
+        }
+        return { success: false, data: null, error: data.error || "Failed to fetch payment history" };
+    }
+    catch (error) {
+        console.error("Error fetching payment history:", error);
         throw error;
     }
 }

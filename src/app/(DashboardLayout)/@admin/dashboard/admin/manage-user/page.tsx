@@ -69,7 +69,7 @@ export default function ManageUser() {
       {/* Header */}
       <div className="flex justify-between items-center bg-zinc-900/30 p-6 rounded-2xl border border-white/5 backdrop-blur-md">
         <div>
-          <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
+          <h2 className="text-3xl font-black uppercase text-white tracking-tight flex items-center gap-3">
             <UsersIcon className="text-emerald-500" /> Manage <span className="text-emerald-500">Users</span>
           </h2>
           <p className="text-zinc-500 mt-1 font-medium">Manage Your User Account And Status.</p>

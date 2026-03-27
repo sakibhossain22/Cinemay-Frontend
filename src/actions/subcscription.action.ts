@@ -18,7 +18,6 @@ export async function subscribeToPlan(planType: string) {
             body: JSON.stringify({ "subscriptionType": planType }),
         });
         const res = await response.json();
-        console.log(res)
         return res;
 
     }
@@ -40,7 +39,6 @@ export async function confirmPayment (paymentIntentId: string) {
             body: JSON.stringify({ transactionId : paymentIntentId }),
         });
         const res = await response.json();
-        console.log(res)
         return res;
     }
     catch (error) {

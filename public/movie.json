@@ -391,6 +391,7 @@
       "duration": "2h 23m",
       "subtitle": "https://drive.google.com/file/d/1T_p9fvQ5aYKSnTD4L2-LGqj4JYkm_Ryl/view?usp=drive_link"
     },
+
     {
       "_id": "64dc890e355563ecbb672ce3",
       "hollywoodMovieName": "John Wick: Chapter 2",
@@ -999,6 +1000,8 @@
       "subtitle": "https://drive.google.com/file/d/1MtRp8C09RkuS5jmg5k3yfre_ZO-Xt6oL/view?usp=sharing"
     }
   ],
+
+  
   [
     {
       "_id": "64fc17d26fa7413187eebd17",
@@ -2439,7 +2442,25 @@
       "duration": "2h 45m",
       "genre": "Drama, Family"
     }
-  ],[
+  ],
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  [
     {
       "_id": "64f6c41ae4ee43dbdd6c8c8c",
       "englishSeriesName": "One Piece",
@@ -2740,6 +2761,11 @@
       "genre": "Action, Adventure, Drama",
       "duration": "1h (Per Episode)"
     },
+
+
+
+
+    
     {
       "_id": "654bcbd27250bbc4875400b9",
       "englishSeriesName": "Loki",

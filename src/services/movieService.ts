@@ -57,3 +57,13 @@ export const getMoviesByCategory = async (category: string) => {
         return [];
     }
 }
+
+export const getAllMovies = async () => {
+    try {
+        const response = await axiosInstance.get('/media/all-media');
+        return response.data.data;
+    } catch (error) {
+        console.error('Error fetching all movies:', error);
+        return [];
+    }
+}

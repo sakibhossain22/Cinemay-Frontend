@@ -14,7 +14,7 @@ async function ManageCategories() {
         {/* Header Section - More Compact */}
         <div className="flex justify-between items-center border-b border-white/5 pb-6">
           <div>
-            <h1 className="text-3xl flex items-center gap-3 font-black tracking-tighter ">
+            <h1 className="text-3xl flex items-center gap-3 font-black uppercase tracking-tighter ">
               <PenBoxIcon /> Manage <span className="text-emerald-500">Categories</span>
             </h1>
 

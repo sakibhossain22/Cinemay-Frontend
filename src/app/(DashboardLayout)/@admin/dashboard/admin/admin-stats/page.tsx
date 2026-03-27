@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { adminStatistics } from '@/actions/adminAction';
 import React from 'react';
-import { 
-  Users, 
-  Film, 
-  DollarSign, 
-  TrendingUp, 
-  MessageSquare, 
-  PlayCircle, 
+import {
+  Users,
+  Film,
+  DollarSign,
+  TrendingUp,
+  MessageSquare,
+  PlayCircle,
   Star,
   Smartphone
 } from 'lucide-react';
 
 async function AdminStats() {
   const response = await adminStatistics();
-  
+
   // API response structure অনুযায়ী ডাটা এক্সট্রাক্ট করা
   const stats = response?.data?.data;
 
@@ -24,37 +24,41 @@ async function AdminStats() {
 
   return (
     <div className="p-6 space-y-8 bg-black min-h-screen text-white">
-      <header>
-        <h1 className="text-2xl font-black uppercase tracking-tight">Dashboard Overview</h1>
-        <p className="text-zinc-500 text-sm">Real-time platform performance and insights.</p>
+      <header className='flex items-center gap-3'>
+        <TrendingUp className="text-emerald-500 mb-4" size={40} />
+        <div>
+          <h1 className="text-3xl uppercase font-black uppercase tracking-tight">
+            Dashboard Overview</h1>
+          <p className="text-zinc-500 text-sm">Real-time platform performance and insights.</p>
+        </div>
       </header>
 
       {/* 1. Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard 
-          title="Total Users" 
-          value={summary.totalUsers} 
+        <StatCard
+          title="Total Users"
+          value={summary.totalUsers}
           subValue={`${summary.premiumUsers} Premium`}
-          icon={<Users className="text-blue-500" />} 
+          icon={<Users className="text-blue-500" />}
         />
-        <StatCard 
-          title="Total Revenue" 
-          value={`$${summary.totalRevenue}`} 
+        <StatCard
+          title="Total Revenue"
+          value={`$${summary.totalRevenue}`}
           subValue={`${summary.revenueGrowth} Growth`}
-          icon={<DollarSign className="text-emerald-500" />} 
+          icon={<DollarSign className="text-emerald-500" />}
           isTrend={true}
         />
-        <StatCard 
-          title="Total Movies" 
-          value={summary.totalMovies} 
+        <StatCard
+          title="Total Movies"
+          value={summary.totalMovies}
           subValue={contentInsights.distribution[0]?.type || "Content"}
-          icon={<Film className="text-purple-500" />} 
+          icon={<Film className="text-purple-500" />}
         />
-        <StatCard 
-          title="Active Rentals" 
-          value={summary.activeRentals} 
+        <StatCard
+          title="Active Rentals"
+          value={summary.activeRentals}
           subValue="Current streams"
-          icon={<PlayCircle className="text-rose-500" />} 
+          icon={<PlayCircle className="text-rose-500" />}
         />
       </div>
 
@@ -63,20 +67,20 @@ async function AdminStats() {
         <div className="bg-zinc-900/40 border border-white/5 p-6 rounded-3xl space-y-6">
           <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-400">User Engagement</h2>
           <div className="space-y-4">
-            <EngagementItem 
-              label="Watchlist Items" 
-              value={engagement.totalWatchlistItems} 
-              icon={<Star size={16} />} 
+            <EngagementItem
+              label="Watchlist Items"
+              value={engagement.totalWatchlistItems}
+              icon={<Star size={16} />}
             />
-            <EngagementItem 
-              label="Total Reviews" 
-              value={engagement.totalReviews} 
-              icon={<MessageSquare size={16} />} 
+            <EngagementItem
+              label="Total Reviews"
+              value={engagement.totalReviews}
+              icon={<MessageSquare size={16} />}
             />
-            <EngagementItem 
-              label="Total Comments" 
-              value={summary.totalComments} 
-              icon={<MessageSquare size={16} />} 
+            <EngagementItem
+              label="Total Comments"
+              value={summary.totalComments}
+              icon={<MessageSquare size={16} />}
             />
           </div>
         </div>
@@ -102,12 +106,12 @@ async function AdminStats() {
 
         {/* 4. Quick Actions/Status */}
         <div className="bg-gradient-to-br from-emerald-600/20 to-transparent border border-emerald-500/10 p-6 rounded-3xl flex flex-col justify-center items-center text-center">
-            <TrendingUp className="text-emerald-500 mb-4" size={40} />
-            <h3 className="font-bold text-lg">System Health</h3>
-            <p className="text-zinc-500 text-xs px-4">All services are running smoothly. Database synchronized.</p>
-            <button className="mt-6 px-6 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold uppercase hover:bg-emerald-500 transition-all">
-                Refresh Data
-            </button>
+          <TrendingUp className="text-emerald-500 mb-4" size={40} />
+          <h3 className="font-bold text-lg">System Health</h3>
+          <p className="text-zinc-500 text-xs px-4">All services are running smoothly. Database synchronized.</p>
+          <button className="mt-6 px-6 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold uppercase hover:bg-emerald-500 transition-all">
+            Refresh Data
+          </button>
         </div>
       </div>
     </div>

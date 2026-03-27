@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Film, Star, Calendar, Tag } from "lucide-react";
 import MovieActions from "@/components/admin/MovieActions";
 import { getAllMedia } from "@/actions/adminAction";
-import { getTheMovieDB } from "@/actions/movieAction";
 
 export default async function ManageMovies() {
   const res = await getAllMedia();
@@ -15,7 +14,7 @@ export default async function ManageMovies() {
       <div className="relative overflow-hidden bg-zinc-900/40 border border-white/5 p-8 rounded-3xl backdrop-blur-xl">
         <div className="relative z-10 flex justify-between items-center">
           <div>
-            <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
+            <h2 className="text-3xl font-black uppercase text-white tracking-tight flex items-center gap-3">
               <Film className="text-emerald-500" /> Cinema <span className="text-emerald-500">Inventory</span>
             </h2>
             <p className="text-zinc-500 mt-1 font-medium">Manage your premium movie collection and pricing.</p>

@@ -133,7 +133,6 @@ export async function toggleWatchlist(movieId: string) {
       body: JSON.stringify({ movieId }),
     });
     const res = await response.json();
-    console.log(res)
     if (response.ok) {
       // revalidatePath(`/movies/${movieId}`);
       return { success: true };
@@ -165,20 +164,19 @@ export async function getWatchListByUser(userId: string) {
   }
 }
 
-export async function getTheMovieDB(id: number) {
+export async function getTheMovieDB(id: number, type : string) {
   try {
     const cookieStore = await cookies();
-    const response = await fetch(`${process.env.API_URL}/admin/tmdb-movie/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/admin/tmdb-movie/${id}/${type}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Cookie": cookieStore.toString()
-      },
+      }
     });
     const res = await response.json();
-    console.log(res.data)
-
-    if (response.ok) {
+    
+    if (res.ok) {
       return { success: true, ok: res.ok, data: res.data };
     }
     return { success: false, data: [] };
@@ -237,7 +235,6 @@ export async function getCategory() {
 }
 
 export async function addCategory(name: string) {
-  console.log(name)
   const cookieStore = await cookies();
   try {
     const response = await fetch(`${process.env.API_URL}/admin/add-category`, {
@@ -263,7 +260,6 @@ export async function addCategory(name: string) {
 }
 
 export async function updateCategory(id: string, name: string) {
-  console.log(id, name)
   const cookieStore = await cookies();
   try {
     const response = await fetch(`${process.env.API_URL}/admin/update-category/${id}`, {

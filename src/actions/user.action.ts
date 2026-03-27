@@ -30,7 +30,6 @@ export async function getUserProfile() {
 
 export async function updateUserProfile(profileData: { name?: string; phone?: string; image?: string }) {
     try {
-        // console.log(profileData)
         const cookieStore = await cookies();
         const response = await fetch(`${API_URL}/user/profile/update`, {
             method: "PATCH",
@@ -183,11 +182,33 @@ export const removeFromWatchlist = async (id: string) => {
             revalidatePath("/dashboard/watchlist");
             return { success: res.success, message: res.message, ok: res.ok };
 
-        }   
+        }
         return { success: false, error: res.error || "Failed to remove from watchlist" };
     }
     catch (error) {
         console.error("Error removing from watchlist:", error);
         return { success: false, error: "An error occurred while removing from watchlist" };
+    }
+}
+export async function getPurchaseHistory() {
+    try {
+        const cookieStore = await cookies();
+        const response = await fetch(`${API_URL}/purchase`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Cookie": cookieStore.toString(),
+            },
+            credentials: "include",
+        });
+        const res = await response.json();
+        if (res.ok) {
+            return { success: res.success, ok: res.ok, data: res.data };
+        }
+        return { success: false, data: null, error: res.error || "Failed to fetch purchase history" };
+    }
+    catch (error) {
+        console.error("Error fetching purchase history:", error);
+        return { success: false, data: null, error: "An error occurred while fetching purchase history" };
     }
 }

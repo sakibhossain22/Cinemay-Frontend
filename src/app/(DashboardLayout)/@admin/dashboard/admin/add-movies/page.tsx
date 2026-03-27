@@ -27,7 +27,7 @@ export default function AddMovies() {
         releaseYear: new Date().getFullYear(),
         director: "",
         cast: "",
-        streamingLink: "",
+        streamingLink: "youtube.com/embed/", // ডিফল্ট ভ্যালু সেট করা হয়েছে
         downloadLink: "",
         episodeLinks: "", // UI-তে কমা দিয়ে ইনপুট নিবে
         contentType: "FREE", // FREE | PREMIUM
@@ -75,7 +75,8 @@ export default function AddMovies() {
         if (!formData.tmdb_id) return toast.error("Enter TMDB ID first!");
         setFetching(true);
         try {
-            const result = await getTheMovieDB(Number(formData.tmdb_id));
+            const result = await getTheMovieDB(Number(formData.tmdb_id), formData.type);
+            console.log(result)
             if (result.success && result.data) {
                 const movie = result.data;
                 setFormData((prev) => ({
@@ -120,7 +121,6 @@ export default function AddMovies() {
 
         try {
             const response = await addMovie(finalData);
-            console.log(response.data)
             if (!response.success) {
                 toast.error(response.error || "Failed to save");
                 return;
@@ -145,7 +145,7 @@ export default function AddMovies() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                     <div>
-                        <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
+                        <h2 className="text-3xl font-black uppercase text-white tracking-tight flex items-center gap-3">
                             <Film className="text-emerald-500" />Add <span className="text-emerald-500">Movie</span>
                         </h2>
                         <p className="text-zinc-500 mt-1 font-medium">Add new movies to your collection.</p>

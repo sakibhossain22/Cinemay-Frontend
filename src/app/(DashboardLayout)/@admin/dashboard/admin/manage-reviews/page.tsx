@@ -15,7 +15,7 @@ async function ManageReviews() {
         {/* Header Section */}
         <div className="flex justify-between items-center border-b border-white/5 pb-6">
           <div>
-            <h1 className="text-2xl flex gap-2 items-center font-black tracking-tighter uppercase">
+            <h1 className="text-3xl flex gap-2 items-center font-black tracking-tighter uppercase">
               <StarIcon size={30} fill='#FFD700' className="inline-block  -translate-y-1" />
               User <span className="text-emerald-500">Reviews</span>
             </h1>

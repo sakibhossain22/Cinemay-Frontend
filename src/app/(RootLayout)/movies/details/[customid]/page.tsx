@@ -14,7 +14,7 @@ import { userService } from "@/services/userService";
 async function MovieDetails({ params }: { params: Promise<{ customid: string }> }) {
   const { customid } = await params;
   const response = await getMovieDetails(customid);
-  const casts = await getMovieCast(response.tmdb_id);
+  const casts = await getMovieCast(response.tmdb_id, response.contentType === "MOVIE" ? "movie" : "tv");
   const movie = response;
 
   // const categoryName = (movie.categories && movie.categories.length > 0)
