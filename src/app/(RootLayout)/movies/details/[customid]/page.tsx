@@ -1,25 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getMovieDetails, getMoviesByCategory } from "@/services/movieService";
 import Image from "next/image";
-import { Play, Tv, DownloadIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Tv } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getMovieCast } from "@/services/getMovieCast";
 import CastSlider from "@/components/movie/CastSlider";
 import MovieCard from "@/components/home/MovieCard";
 import MovieInteractions from "@/components/movie/MovieInteractions";
 import ReviewSection from "@/components/movie/ReviewSection";
-import { userService } from "@/services/userService";
 import { trackMovieView } from "@/actions/history.action";
-import Link from "next/link";
 import MovieDetailsAction from "@/components/movie/MovieDetailsAction";
-import { getPurchaseHistory } from "@/actions/user.action";
+import { confirmMoviePurchase, getPurchaseHistory } from "@/actions/user.action";
+import { getSession } from "@/services/userService";
+import { toast } from "sonner";
 
-async function MovieDetails({ params }: { params: Promise<{ customid: string }> }) {
+async function MovieDetails({ params, searchParams }: { params: Promise<{ customid: string, paymentStatus: string }>, searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const { customid } = await params;
+  const sParams = await searchParams;
+
+  const paymentStatus = sParams.paymentStatus;
+  const transactionId = sParams.transactionId as string;
+  const type = sParams.type as string;
+
+
+
+
   const response = await getMovieDetails(customid);
   const casts = await getMovieCast(response.tmdb_id, response.type === "MOVIE" ? "movie" : "tv");
   const movie = response;
+
+  if (paymentStatus === "success") {
+    await confirmMoviePurchase(movie.id, type, transactionId, customid);
+  }
+
+
   const data = await getPurchaseHistory();
   const purchasedMovies = data?.data?.movies.map((item: any) => item.movie);
   let hasPurchased = purchasedMovies?.some((m: any) => m.id === movie.id);
@@ -31,7 +45,7 @@ async function MovieDetails({ params }: { params: Promise<{ customid: string }> 
   const categoryMovies = await getMoviesByCategory(movie.categories?.[0]?.name ?? "TRENDING");
   const catMovies = categoryMovies.data
 
-  const user = await userService.getSession();
+  const user = await getSession();
   const userId = user?.user?.id;
 
   await trackMovieView(movie.id);

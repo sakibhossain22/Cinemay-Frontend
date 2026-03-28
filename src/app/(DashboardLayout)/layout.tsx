@@ -1,6 +1,6 @@
 import Sidebar from "@/components/dashboard/Sidebar";
+import { getSession } from "@/services/userService";
 
-import { userService } from "@/services/userService";
 
 
 
@@ -15,7 +15,7 @@ interface LayoutProps {
 
 
 export default async function DashboardLayout({ user, admin }: LayoutProps) {
-    const { user: currentUser } = await userService.getSession();
+    const { user: currentUser } = await getSession();
 
     const role = currentUser?.role as "USER" | "ADMIN";
 

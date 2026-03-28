@@ -1,7 +1,7 @@
 "use server";
 import axiosInstance from "@/lib/axios";
 
-export const getTrendingMoviesForCarousel = async () => {
+export async function getTrendingMoviesForCarousel() {
     try {
         const response = await axiosInstance.get('/media/all-media?category=TRENDING&limit=5');
         return response.data.data;
@@ -11,7 +11,7 @@ export const getTrendingMoviesForCarousel = async () => {
     }
 }
 
-export const getTrendingMovies = async () => {
+export async function getTrendingMovies() {
     try {
         const response = await axiosInstance.get('/media/movies');
         return response.data.data;
@@ -20,7 +20,7 @@ export const getTrendingMovies = async () => {
         return [];
     }
 }
-export const getTrendingSeries = async () => {
+export async function getTrendingSeries() {
     try {
         const response = await axiosInstance.get('/media/series');
         return response.data.data;
@@ -29,7 +29,7 @@ export const getTrendingSeries = async () => {
         return [];
     }
 }
-export const getTrendingAnimations = async () => {
+export async function getTrendingAnimations() {
     try {
         const response = await axiosInstance.get('/media/animations');
         return response.data.data;
@@ -38,7 +38,7 @@ export const getTrendingAnimations = async () => {
         return [];
     }
 }
-export const getMovieDetails = async (customid: string) => {
+export async function getMovieDetails(customid: string) {
     try {
         const response = await axiosInstance.get(`/media/${customid}`);
         return response.data.data;
@@ -48,7 +48,7 @@ export const getMovieDetails = async (customid: string) => {
     }
 }
 
-export const getMoviesByCategory = async (category: string) => {
+export async function getMoviesByCategory(category: string) {
     try {
         const response = await axiosInstance.get(`/media/all-media?category=${category}`);
         return response.data.data;
@@ -58,7 +58,7 @@ export const getMoviesByCategory = async (category: string) => {
     }
 }
 
-export const getAllMovies = async () => {
+export async function getAllMovies() {
     try {
         const response = await axiosInstance.get('/media/all-media');
         return response.data.data;

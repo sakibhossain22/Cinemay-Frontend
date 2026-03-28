@@ -97,7 +97,7 @@ export async function getMyReviews() {
     }
 }
 
-export const deleteReview = async (id: string) => {
+export async function deleteReview(id: string) {
     try {
         const cookieStore = await cookies();
         const response = await fetch(`${API_URL}/review/${id}`, {
@@ -119,7 +119,7 @@ export const deleteReview = async (id: string) => {
     }
 }
 
-export const updateReview = async (id: string, data: { content: string }) => {
+export async function updateReview(id: string, data: { content: string }) {
     try {
         const cookieStore = await cookies();
         const response = await fetch(`${API_URL}/review/${id}`, {
@@ -143,7 +143,7 @@ export const updateReview = async (id: string, data: { content: string }) => {
     }
 }
 
-export const myWatchList = async () => {
+export async function myWatchList() {
     try {
         const cookieStore = await cookies();
         const response = await fetch(`${API_URL}/watchlist`, {
@@ -166,7 +166,7 @@ export const myWatchList = async () => {
     }
 }
 
-export const removeFromWatchlist = async (id: string) => {
+export async function removeFromWatchlist(id: string) {
     try {
         const cookieStore = await cookies();
         const response = await fetch(`${API_URL}/watchlist/${id}`, {
@@ -210,5 +210,56 @@ export async function getPurchaseHistory() {
     catch (error) {
         console.error("Error fetching purchase history:", error);
         return { success: false, data: null, error: "An error occurred while fetching purchase history" };
+    }
+}
+
+export async function buyMovie(movieId: string, type: 'BUY' | 'RENT') {
+    try {
+        const cookieStore = await cookies();
+        const response = await fetch(`${API_URL}/purchase/create-payment-intent`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Cookie": cookieStore.toString(),
+            },
+            credentials: "include",
+            body: JSON.stringify({ movieId, type }),
+        });
+        const res = await response.json();
+        console.log(res)
+        if (res.ok) {
+            return { success: res.success, message: res.message, ok: res.ok, userId: res.userId, amount: res.amount, clientSecret : res.clientSecret, transactionId : res.transactionId };
+        }
+        return { success: false, error: res.error || "Failed to buy movie" };
+    }
+    catch (error) {
+        console.error("Error buying movie:", error);
+        return { success: false, error: "An error occurred while buying the movie" };
+    }
+}
+
+export async function confirmMoviePurchase(movieId: string, type: string, paymentIntentId: string, customid: string) {
+    try {
+        const cookieStore = await cookies();
+        const response = await fetch(`${API_URL}/purchase/confirm`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Cookie": cookieStore.toString(),
+            },
+            credentials: "include",
+            body: JSON.stringify({ movieId, type, paymentIntentId }),
+        });
+        const res = await response.json();
+        console.log(res)
+        if (res.ok) {
+            // revalidatePath(`/movies/details/${customid}`);
+            return { success: res.success, message: res.message, ok: res.ok };
+        }
+        return { success: false, error: res.error || "Failed to confirm movie purchase" };
+    }
+    catch (error) {
+        console.error("Error confirming movie purchase:", error);
+        return { success: false, error: "An error occurred while confirming the movie purchase" };
     }
 }

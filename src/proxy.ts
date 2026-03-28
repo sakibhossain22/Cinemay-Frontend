@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { userService } from "./services/userService";
+import { getSession } from "./services/userService";
 
 // middleware.ts
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    const { user } = await userService.getSession();
+    const { user } = await getSession();
     const role = user?.role;
 
     if (!user) {

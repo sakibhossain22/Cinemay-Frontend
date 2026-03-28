@@ -2,7 +2,6 @@ const API_KEY = "ce2a7837d2f4c072f0976a85f1d3a08a"; // আপনার TMDB API 
 
 
 export async function getMovieCast(movieId: string, type: string) {
-    console.log(type)
     const res = await fetch(
         `https://api.themoviedb.org/3/${type}/${movieId}/credits?api_key=${API_KEY}`
     );

@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 
 const API_URL = process.env.API_URL
 
-export const getAllUsers = async () => {
+export async function getAllUsers() {
     try {
         const cookieStore = await cookies();
 
@@ -26,7 +26,7 @@ export const getAllUsers = async () => {
     }
 };
 
-export const getAllReviews = async () => {
+export async function getAllReviews() {
     try {
         const cookieStore = await cookies();
 
@@ -46,7 +46,7 @@ export const getAllReviews = async () => {
     }
 };
 
-export const getAllPayments = async () => {
+export async function getAllPayments() {
     try {
         const cookieStore = await cookies();
 
@@ -66,7 +66,7 @@ export const getAllPayments = async () => {
     }
 };
 
-export const getAllMedia = async () => {
+export async function getAllMedia() {
     try {
         const cookieStore = await cookies();
 
@@ -85,7 +85,7 @@ export const getAllMedia = async () => {
         throw error;
     }
 };
-export const getAllComments = async () => {
+export async function getAllComments() {
     try {
         const cookieStore = await cookies();
 
@@ -105,7 +105,7 @@ export const getAllComments = async () => {
     }
 };
 
-export const getAllUWatchlist = async () => {
+export async function getAllUWatchlist() {
     try {
         const cookieStore = await cookies();
 
@@ -125,7 +125,7 @@ export const getAllUWatchlist = async () => {
     }
 };
 
-export const updateUserStatus = async (userId: string, newStatus: string) => {
+export async function updateUserStatus(userId: string, newStatus: string) {
     try {
         const cookieStore = await cookies();
         const res = await fetch(`${API_URL}/admin/update-user-status/${userId}`, {
@@ -146,7 +146,7 @@ export const updateUserStatus = async (userId: string, newStatus: string) => {
     }
 }
 
-export const deleteMovie = async (movieId: string) => {
+export async function deleteMovie(movieId: string) {
     try {
         const cookieStore = await cookies();
         const res = await fetch(`${API_URL}/admin/delete-media/${movieId}`, {
@@ -166,7 +166,7 @@ export const deleteMovie = async (movieId: string) => {
     }
 }
 
-export const updateMovie = async (movieId: string, body: FormData) => {
+export async function updateMovie(movieId: string, body: FormData) {
     try {
         const cookieStore = await cookies();
 
@@ -203,7 +203,7 @@ export const updateMovie = async (movieId: string, body: FormData) => {
 }
 
 
-export const adminStatistics = async () => {
+export async function adminStatistics() {
     try {
         const cookieStore = await cookies();
         const res = await fetch(`${API_URL}/admin/admin-dashboard-stats`, {
@@ -222,7 +222,7 @@ export const adminStatistics = async () => {
         throw error;
     }
 }
-export const getAllPaymentHistory = async () => {
+export async function getAllPaymentHistory() {
     try {
         const cookieStore = await cookies();
         const res = await fetch(`${API_URL}/admin/all-payments`, {

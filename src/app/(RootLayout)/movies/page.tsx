@@ -22,6 +22,5 @@ export default async function MediaPage({
         cache: 'no-store'
     });
     const initialData = await res.json();
-    console.log()
     return <AdminMediaLibrary initialData={initialData} />;
 }
