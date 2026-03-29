@@ -61,7 +61,7 @@ export default function WatchListClient({ initialData }: { initialData: any[] })
                 const movie = item.movie;
                 return (
                     <div key={item.id} className="group relative bg-zinc-900/30 border border-white/5 rounded-3xl overflow-hidden hover:bg-zinc-900/60 transition-all duration-500">
-                        {/* Movie Poster */}
+                        
                         <div className="relative aspect-[2/3] overflow-hidden">
                             <Image
                                 src={movie.posterUrl || "/placeholder-movie.jpg"}
@@ -72,7 +72,7 @@ export default function WatchListClient({ initialData }: { initialData: any[] })
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
 
-                            {/* Delete Button - এখানে item.id ব্যবহার করা হয়েছে (Watchlist Item ID) */}
+                            
                             <button
                                 onClick={() => handleDelete(movie.id)}
                                 disabled={deletingId === item.id}
@@ -83,7 +83,7 @@ export default function WatchListClient({ initialData }: { initialData: any[] })
                             </button>
                         </div>
 
-                        {/* Content */}
+                        
                         <div className="p-5 space-y-3">
                             <div className="flex justify-between items-start gap-2">
                                 <h3 className="font-bold text-zinc-100 line-clamp-1 group-hover:text-blue-400 transition-colors">{movie.title}</h3>

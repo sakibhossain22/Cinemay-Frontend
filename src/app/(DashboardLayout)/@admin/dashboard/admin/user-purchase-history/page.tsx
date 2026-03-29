@@ -26,7 +26,7 @@ async function UserPurchaseHistory() {
 
     const { payments, stats } = data;
 
-    // আলাদা করা: Subscriptions এবং Movie Purchases (Rent/Buy)
+    
     const subscriptionPayments = payments.filter((p: any) => p.method === "STRIPE_USER_SUBSCRIPTION");
     const moviePayments = payments.filter((p: any) => p.method === "STRIPE");
 
@@ -34,7 +34,7 @@ async function UserPurchaseHistory() {
         <div className="p-6 md:p-10 bg-black min-h-screen text-zinc-400 font-sans">
             <div className="max-w-7xl mx-auto space-y-10">
                 
-                {/* --- TOP STATS SECTION --- */}
+                
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <StatCard 
                         title="Total Revenue" 
@@ -58,7 +58,7 @@ async function UserPurchaseHistory() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     
-                    {/* --- SUBSCRIPTIONS SECTION --- */}
+                    
                     <section className="space-y-6">
                         <div className="flex items-center justify-between border-b border-white/5 pb-4">
                             <div className="flex items-center gap-3">
@@ -97,7 +97,7 @@ async function UserPurchaseHistory() {
                         </div>
                     </section>
 
-                    {/* --- MOVIE PURCHASES SECTION --- */}
+                    
                     <section className="space-y-6">
                         <div className="flex items-center justify-between border-b border-white/5 pb-4">
                             <div className="flex items-center gap-3">
@@ -144,7 +144,7 @@ async function UserPurchaseHistory() {
     );
 }
 
-// Helper components
+
 function StatCard({ title, value, icon, color }: { title: string, value: string, icon: React.ReactNode, color: string }) {
     const colors: any = {
         emerald: "from-emerald-500/20 to-transparent border-emerald-500/20",

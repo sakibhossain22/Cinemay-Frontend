@@ -40,8 +40,10 @@ export async function getTrendingAnimations() {
 }
 export async function getMovieDetails(customid: string) {
     try {
-        const response = await axiosInstance.get(`/media/${customid}`);
-        return response.data.data;
+
+        const result = await fetch(`${process.env.API_URL}/media/${customid}`);
+        const response = await result.json();
+        return response.data;
     } catch (error) {
         console.error('Error fetching movie details:', error);
         return [];

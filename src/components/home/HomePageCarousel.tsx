@@ -4,22 +4,34 @@ import MovieSlider from "./EmblaCarousel";
 import { getMovieBackDrop } from "@/services/getMovieCast";
 
 export default async function HomePageCarousel() {
+    const moviesResponse = await getTrendingMoviesForCarousel();
+    
+    const movieData = moviesResponse?.data || [];
 
-    const movies = await getTrendingMoviesForCarousel();
-    // console.log(movies);
+    if (!Array.isArray(movieData) || movieData.length === 0) {
+        return null;
+    }
+
     const moviesWithBackdrops = await Promise.all(
-        movies?.data?.map(async (movie : any) => {
-            const backdropUrl = await getMovieBackDrop(
-                movie.tmdb_id,
-                movie.type === "MOVIE" ? "movie" : "tv");
-            return {
-                ...movie,
-                backdropUrl: backdropUrl || movie.posterUrl, 
-            };
+        movieData.map(async (movie: any) => {
+            try {
+                const backdropUrl = await getMovieBackDrop(
+                    movie.tmdb_id,
+                    movie.type === "MOVIE" ? "movie" : "tv"
+                );
+                return {
+                    ...movie,
+                    backdropUrl: backdropUrl || movie.posterUrl,
+                };
+            } catch (error) {
+                console.error(`Error fetching backdrop for ${movie.tmdb_id}:`, error);
+                return { ...movie, backdropUrl: movie.posterUrl };
+            }
         })
     );
+
     return (
-        <div className="w-full h-[400px] md:h-[600px] relative group">
+        <div className="w-full h-[400px] md:h-[600px] relative group overflow-hidden">
             <MovieSlider movies={moviesWithBackdrops} />
 
             <style dangerouslySetInnerHTML={{

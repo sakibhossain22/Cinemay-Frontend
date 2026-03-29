@@ -11,7 +11,7 @@ async function ManageCategories() {
     <div className="min-h-screen bg-black text-white p-4 md:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
         
-        {/* Header Section - More Compact */}
+        
         <div className="flex justify-between items-center border-b border-white/5 pb-6">
           <div>
             <h1 className="text-3xl flex items-center gap-3 font-black uppercase tracking-tighter ">
@@ -26,7 +26,7 @@ async function ManageCategories() {
           </div>
         </div>
 
-        {/* Client Side List (Delete/Edit logic here) */}
+        
         <CategoryList initialCategories={categories} />
 
       </div>

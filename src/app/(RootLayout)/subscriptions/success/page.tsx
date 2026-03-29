@@ -57,13 +57,13 @@ export default function PaymentSuccess() {
         <div className="min-h-screen bg-black flex items-center justify-center p-6 text-white font-sans">
             <div className="max-w-2xl w-full text-center space-y-8">
 
-                {/* আইকন সেকশন */}
+                
                 <div className="relative inline-block">
                     <div className="absolute inset-0 bg-blue-600 blur-3xl opacity-20 animate-pulse"></div>
                     <CheckCircle2 size={100} className="text-blue-500 relative z-10 mx-auto" strokeWidth={1.5} />
                 </div>
 
-                {/* টেক্সট সেকশন */}
+                
                 <div className="space-y-4">
                     <h1 className="text-5xl font-black uppercase tracking-tighter italic">
                         Welcome to the <span className="text-blue-500">Pro Club!</span>
@@ -73,7 +73,7 @@ export default function PaymentSuccess() {
                     </p>
                 </div>
 
-                {/* ফিচার হাইলাইট (বক্স) */}
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8">
                     <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl text-left space-y-2">
                         <Sparkles className="text-amber-400" size={24} />
@@ -87,7 +87,7 @@ export default function PaymentSuccess() {
                     </div>
                 </div>
 
-                {/* অ্যাকশন বাটন */}
+                
                 <div className="pt-10 flex flex-col md:flex-row items-center justify-center gap-4">
                     <Link
                         href="/dashboard"

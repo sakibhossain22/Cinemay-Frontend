@@ -97,7 +97,7 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
                 <span className="ml-2 text-xs font-bold text-amber-400">{review.rating}/10</span>
               </div>
 
-              {/* Conditional Rendering for Edit Mode */}
+              
               {editingId === review.id ? (
                 <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
                   <textarea 
@@ -141,7 +141,7 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
               </div>
             </div>
 
-            {/* Actions */}
+            
             <div className="flex md:flex-col justify-end gap-2 border-t md:border-t-0 md:border-l border-white/5 pt-4 md:pt-0 md:pl-6">
               <button 
                 disabled={editingId === review.id}

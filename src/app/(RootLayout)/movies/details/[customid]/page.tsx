@@ -63,9 +63,9 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-zinc-300 font-sans">
 
-      {/* --- Header Section (Backdrop) --- */}
+
       <div className="relative w-full h-[450px] overflow-hidden">
-        {/* Background Overlay */}
+
         <div className="absolute inset-0 z-0">
           <Image
             src={movie.backdropUrl}
@@ -73,72 +73,76 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
             width={1280}
             height={720}
             className="absolute right-0 top-0 h-full w-auto object-cover object-right opacity-70 blur-[2px]"
-            priority 
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
         </div>
 
-        {/* Hero Content */}
+
         <div className="relative z-10 max-w-8xl mx-auto px-6 h-full flex flex-col justify-center gap-6">
-          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-            {/* Small Poster */}
-            <div className="w-32 md:w-44 aspect-[2/3] relative rounded-lg overflow-hidden border border-zinc-800 shadow-2xl">
-              <Image src={movie.posterUrl} alt={movie.title} width={768}
-                height={432} className="object-cover" />
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+
+            <div className="w-36 md:w-44 lg:w-48 aspect-[2/3] relative rounded-lg overflow-hidden border border-zinc-800 shadow-2xl shrink-0 self-center md:self-start">
+              <Image
+                src={movie.posterUrl}
+                alt={movie.title}
+                fill
+                priority
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 128px, (max-width: 1200px) 176px, 192px"
+              />
             </div>
 
-            {/* Info */}
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+            <div className="flex-1 text-center md:text-left w-full">
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3">
                 {movie.title}
               </h1>
-
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs md:text-sm text-zinc-400 mb-4">
-                <Badge variant="outline" className="text-zinc-400 border-zinc-700"><Tv /></Badge>
-                <span>|</span>
+              <div className="flex items-center justify-center md:justify-start gap-2 md:gap-3 text-[10px] md:text-sm text-zinc-400 mb-5">
+                <Badge variant="outline" className="text-zinc-400 border-zinc-700 px-1 py-0"><Tv size={14} /></Badge>
+                <span className="text-zinc-700">|</span>
                 <span>{movie.releaseYear}</span>
-                <span>|</span>
-                <span className="text-green-600 bg-zinc-800 px-1 rounded uppercase">{movie.contentType}</span>
-                <span>|</span>
-                <span>{movie.genre.join(", ")}</span>
+                <span className="text-zinc-700">|</span>
+                <span className="text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded text-[10px] font-bold uppercase">{movie.contentType}</span>
+                <span className="text-zinc-700">|</span>
+                <span className="truncate">{movie.genre.join(", ")}</span>
               </div>
 
-              <p className="max-w-3xl text-sm md:text-base leading-relaxed line-clamp-3 mb-6">
-                {movie.synopsis} <span className="text-white cursor-pointer hover:underline">.....</span>
+              <p className="max-w-3xl text-sm md:text-base leading-relaxed text-zinc-300 mb-6 line-clamp-1 md:line-clamp-none">
+                {movie.synopsis}
               </p>
 
-              {/* Action Buttons */}
-              <MovieDetailsAction userId={userId} hasPurchased={hasPurchased} movie={movie} />
-
+              <div className="w-full">
+                <MovieDetailsAction userId={userId} hasPurchased={hasPurchased} movie={movie} />
+              </div>
             </div>
 
-            {/* Rating Section */}
-            <div className="hidden lg:flex flex-col items-end pt-4">
+            <div className="hidden lg:flex flex-col items-end pt-2 shrink-0">
               <div className="flex items-center gap-2 text-yellow-500 text-4xl font-bold">
-                <span className="text-2xl">★</span> {movie.ratingAverage.toFixed(1)} <span className="text-zinc-600 text-xl font-normal">/10</span>
+                <span className="text-2xl">★</span> {movie.ratingAverage?.toFixed(1) || "0.0"}
+                <span className="text-zinc-600 text-xl font-normal">/10</span>
               </div>
-              <p className="text-zinc-500 text-sm">0 people rated</p>
+              <p className="text-zinc-500 text-xs mt-1">Global Rating</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* --- Tabs Section (Episodes, Cast etc) --- */}
+
       <div className="max-w-8xl mx-auto px-6 py-2">
 
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           <div className="lg:col-span-3 space-y-12">
-            {/* Cast Section */}
+
             <div>
-              {/* Top Cast Section */}
+
               <section id="cast-section" className="scroll-mt-20">
                 <div className="">
                   <CastSlider casts={casts} />
                 </div>
               </section>
             </div>
-            {/* Movie Interactions and Reviews */}
+
             <div>
               <MovieInteractions
                 movieId={movie.id}
@@ -147,7 +151,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
                 isLiked={movie.likes?.some((l: any) => l.userId === userId)}
               />
 
-              {/* কাস্ট সেকশনের নিচে রিভিউ সেকশন বসান */}
+
               <div id="review-section" className="scroll-mt-20">
                 <ReviewSection
                   movieId={movie.id}
@@ -159,7 +163,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
             </div>
 
           </div>
-          {/* Right Side: More like this */}
+
           <aside className="space-y-6">
             <h2 className="text-xl font-bold text-white">More like this</h2>
             <div className="grid grid-cols-2 gap-4">

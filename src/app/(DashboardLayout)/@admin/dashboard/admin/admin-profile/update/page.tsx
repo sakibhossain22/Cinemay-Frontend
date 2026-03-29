@@ -72,7 +72,7 @@ export default function ProfileUpdatePage() {
     return (
         <div className="min-h-screen bg-black text-zinc-100 p-6 flex flex-col items-center font-sans">
             <div className="w-full max-w-2xl">
-                {/* Navigation */}
+                
                 <button
                     onClick={() => router.back()}
                     className="flex items-center gap-2 text-zinc-500 hover:text-white mb-10 transition-colors group"

@@ -3,7 +3,7 @@
 
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-// ১. মুভিতে লাইক দেওয়া বা রিমুভ করা
+
 export async function toggleLike(reviewId: string, userId: string, customid: string) {
   const cookieStore = await cookies();
 
@@ -30,7 +30,7 @@ export async function toggleLike(reviewId: string, userId: string, customid: str
 
 }
 
-// ২. রিভিউ সাবমিট করা
+
 export async function submitReview(formData: FormData) {
   const cookieStore = await cookies();
 
@@ -75,35 +75,35 @@ export async function submitReview(formData: FormData) {
 export async function addComment(formData: FormData) {
   const cookieStore = await cookies();
 
-  // ফর্ম ডাটা থেকে ভ্যালুগুলো নেওয়া
+  
   const reviewId = formData.get("reviewId") as string;
   const content = formData.get("content") as string;
   const customId = formData.get("customId") as string;
-  const parentId = formData.get("parentId") as string | null; // নেস্টেড কমেন্টের জন্য
-  // ভ্যালিডেশন
+  const parentId = formData.get("parentId") as string | null; 
+  
   if (!reviewId || !content) {
     return { success: false, error: "Content is required" };
   }
 
   try {
-    // আপনার ব্যাকএন্ড এপিআই-তে ডাটা পাঠানো
+    
     const response = await fetch(`${process.env.API_URL}/comments/add-comment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Cookie": cookieStore.toString(), // অথেনটিকেশন সেশন পাঠানোর জন্য
+        "Cookie": cookieStore.toString(), 
       },
       body: JSON.stringify({
         content,
         reviewId,
-        parentId: parentId || null // যদি parentId থাকে তবেই পাঠাবে
+        parentId: parentId || null 
       }),
     });
 
     const res = await response.json();
 
     if (response.ok) {
-      // পেজ রিvalidation যাতে নতুন কমেন্ট সাথে সাথে দেখা যায়
+      
       revalidatePath(`/movies/details/${customId}`);
       return { success: true, ok: res.ok };
     }
@@ -117,7 +117,7 @@ export async function addComment(formData: FormData) {
 
 export async function toggleWatchlist(movieId: string) {
   try {
-    // আপনার backend API কল করুন
+    
     const cookieStore = await cookies();
     const response = await fetch(`${process.env.API_URL}/watchlist`, {
       method: "POST",
@@ -129,7 +129,7 @@ export async function toggleWatchlist(movieId: string) {
     });
     const res = await response.json();
     if (response.ok) {
-      // revalidatePath(`/movies/${movieId}`);
+      
       return { success: true };
     }
     return { success: false };
@@ -189,7 +189,7 @@ export async function addMovie(movie: any) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Cookie": cookieStore.toString(), // অথেনটিকেশন সেশন পাঠানোর জন্য
+        "Cookie": cookieStore.toString(), 
       },
       body: JSON.stringify(movie),
     });

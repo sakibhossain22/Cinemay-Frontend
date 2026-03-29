@@ -11,20 +11,18 @@ function NavMovieSearch() {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
-    console.log(movies)
     useEffect(() => {
         const fetchMovies = async () => {
             if (searchTerm.length < 2) {
                 setMovies([]);
                 return;
             }
-
+            
             setLoading(true);
             try {
-                // আপনার এক্সপ্রেস ব্যাকএন্ডের ফুল URL দিন যদি ফ্রন্টএন্ড থেকে আলাদা পোর্টে হয়
                 const response = await fetch(`http://localhost:5000/api/media/all-media?searchTerm=${encodeURIComponent(searchTerm)}`);
                 const data = await response.json();
-                setMovies(data.data.data || []); // আপনার API রেসপন্স অনুযায়ী 'data.movies' ও হতে পারে
+                setMovies(data.data.data || []);
             }
             catch (error) {
                 console.error("Error fetching movies:", error);
@@ -34,7 +32,6 @@ function NavMovieSearch() {
             }
         };
 
-        // Debouncing: ইউজার টাইপ থামানোর ৫০০ মিলি-সেকেন্ড পর API কল হবে
         const delayDebounceFn = setTimeout(() => {
             fetchMovies();
         }, 500);
@@ -62,10 +59,8 @@ function NavMovieSearch() {
                 <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-emerald-500 animate-spin" />
             )}
 
-            {/* সার্চ রেজাল্ট ড্রপডাউন */}
             {showResults && searchTerm.length >= 2 && (
                 <>
-                    {/* স্ক্রিনের বাইরে ক্লিক করলে ড্রপডাউন বন্ধ করার জন্য ওভারলে */}
                     <div className="fixed inset-0 z-10" onClick={() => setShowResults(false)}></div>
                     
                     <div className="absolute top-full mt-2 w-full bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-20 backdrop-blur-xl">
@@ -73,7 +68,7 @@ function NavMovieSearch() {
                             <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
                                 {movies.map((movie: any) => (
                                     <Link 
-                                        key={movie._id} 
+                                        key={movie.tmdb_id} 
                                         href={`/movies/details/${movie.customid}`}
                                         onClick={() => setShowResults(false)}
                                         className="flex items-center gap-3 p-3 hover:bg-emerald-500/10 transition-colors border-b border-zinc-800/50 last:border-0"

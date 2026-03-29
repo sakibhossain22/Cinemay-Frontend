@@ -57,7 +57,7 @@ export default function ReviewList({ initialReviews }: { initialReviews: any[] }
                     >
                         <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center">
 
-                            {/* Reviewer & Content */}
+                            
                             <div className="flex gap-4 items-start flex-1">
                                 <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center overflow-hidden border border-white/10 shrink-0">
                                     {review.user?.image ? (
@@ -103,7 +103,7 @@ export default function ReviewList({ initialReviews }: { initialReviews: any[] }
                                 </div>
                             </div>
 
-                            {/* Action Buttons */}
+                            
                             <div className="flex items-center gap-2 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
                                 {!review.isApproved ? (
                                     <button

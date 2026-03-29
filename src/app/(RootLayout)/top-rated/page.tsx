@@ -23,7 +23,7 @@ async function TopRated() {
                 </Link>
             </div>
 
-            {/* Responsive Grid Layout */}
+            
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-6">
                 {items && items.length > 0 ? (
                     items.map((item: any) => (
@@ -32,7 +32,7 @@ async function TopRated() {
                                 
                                 className="group relative bg-[#121212] rounded-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/10"
                             >
-                                {/* Poster Image Container */}
+                                
                                 <div className="aspect-[2/3] relative w-full overflow-hidden">
                                     <Image
                                         width={400}
@@ -43,14 +43,14 @@ async function TopRated() {
                                         loading="lazy"
                                     />
 
-                                    {/* Emerald Play Icon Overlay */}
+                                    
                                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                         <div className="bg-emerald-500 p-4 rounded-full shadow-lg shadow-emerald-500/40 transform scale-50 group-hover:scale-100 transition-transform duration-300">
                                             <Play className="w-8 h-8 text-black fill-current" />
                                         </div>
                                     </div>
 
-                                    {/* Rating Badge */}
+                                    
                                     {item.ratingAverage && (
                                         <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-xs font-bold text-emerald-400 border border-emerald-500/30">
                                             ⭐ {item.ratingAverage.toFixed(1)}
@@ -58,7 +58,7 @@ async function TopRated() {
                                     )}
                                 </div>
 
-                                {/* Content Info */}
+                                
                                 <div className="p-3">
                                     <h3 className="text-sm md:text-base font-semibold truncate group-hover:text-emerald-400 transition-colors">
                                         {item.title}

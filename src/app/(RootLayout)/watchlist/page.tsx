@@ -5,7 +5,6 @@ import { FilmIcon } from "lucide-react";
 
 async function WatchList() {
     const session  = await getSession();
-    console.log(session)
     const response = await myWatchList();
     const list = response?.data || [];
 

@@ -82,7 +82,7 @@ export default function CategoryList({ initialCategories }: { initialCategories:
 
     return (
         <div className="space-y-4">
-            {/* Add Button Section */}
+            
             {isAdding ? (
                 <div className="flex gap-2 animate-in fade-in slide-in-from-top-1">
                     <input
@@ -112,7 +112,7 @@ export default function CategoryList({ initialCategories }: { initialCategories:
                 </button>
             )}
 
-            {/* List Section */}
+            
             <div className="bg-zinc-900/20 border border-white/5 rounded-2xl overflow-hidden">
                 <div className="grid grid-cols-12 bg-zinc-900/50 px-6 py-3 text-md font-black uppercase tracking-widest text-zinc-600">
                     <div className="col-span-1">#</div>

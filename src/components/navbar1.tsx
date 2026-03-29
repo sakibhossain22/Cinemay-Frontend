@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, Search, LayoutDashboard, Loader2, LogOut } from "lucide-react";
+import { Menu, LayoutDashboard, Loader2, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -18,16 +18,13 @@ import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/authClient"; 
 import NavMovieSearch from "./NavMovieSearch";
 
-// userInfo প্রপস হিসেবে গ্রহণ করা হচ্ছে
 const Navbar = ({ userInfo }: { userInfo: any }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // প্রপস থেকে ইউজার ডাটা বের করা
   const user = userInfo?.user;
-  // যেহেতু আপনি সার্ভার বা প্যারেন্ট থেকে ডাটা পাঠাচ্ছেন, 
-  // userInfo নাল থাকলে আমরা ধরে নিতে পারি ডাটা লোড হচ্ছে (যদি আপনি সেভাবে হ্যান্ডেল করেন)
+
   const isLoading = userInfo === undefined; 
 
   useEffect(() => {
@@ -68,7 +65,7 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between gap-4">
 
-          {/* 1. Logo Section */}
+          
           <div className="flex items-center gap-8 shrink-0">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.4)] group-hover:rotate-12 transition-transform">
@@ -95,19 +92,18 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
             </div>
           </div>
 
-          {/* 2. Central Search Box */}
+          
           <div className="hidden md:flex flex-1 max-w-md mx-4">
             <div className="relative w-full group">
               <NavMovieSearch />
             </div>
           </div>
 
-          {/* 3. Desktop Actions (Fixed Logic) */}
+          
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             {isLoading ? (
               <Loader2 className="size-5 animate-spin text-emerald-500" />
             ) : user ? (
-              // ইউজার লগইন থাকলে Dashboard এবং Logout দেখাবে
               <div className="flex items-center gap-3">
                 <Button asChild variant="ghost" size="sm" className="text-zinc-400 hover:text-emerald-400">
                   <Link href="/dashboard">
@@ -126,7 +122,6 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
                 </Button>
               </div>
             ) : (
-              // ইউজার লগইন না থাকলে Login এবং Sign Up দেখাবে
               <div className="flex items-center gap-2">
                 <Button asChild variant="ghost" size="sm" className="text-zinc-300">
                   <Link href="/login">Login</Link>
@@ -138,7 +133,7 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
             )}
           </div>
 
-          {/* 4. Mobile Controls */}
+          
           <div className="flex items-center gap-2 lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -166,7 +161,7 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
                   <div className="mt-8 flex flex-col gap-4">
                     {user ? (
                       <>
-                        <Button asChild className="bg-zinc-800 w-full justify-start py-6">
+                        <Button asChild className="w-full bg-black text-white/80 font-bold text-lg justify-start py-6">
                           <Link href="/dashboard">Dashboard</Link>
                         </Button>
                         <Button onClick={logOut} variant="destructive" className="w-full py-6">

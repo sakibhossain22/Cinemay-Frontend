@@ -57,7 +57,7 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
 
     return (
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8">
-            {/* Header Actions */}
+            
             <div className="flex justify-between items-center mb-10">
                 <button
                     type="button"
@@ -77,7 +77,7 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Basic Info */}
+                
                 <div className="space-y-6 bg-zinc-900/30 p-6 rounded-3xl border border-white/5">
                     <h3 className="text-emerald-500 font-black text-xs uppercase tracking-[0.2em] mb-4">Identity & Visuals</h3>
 
@@ -114,7 +114,7 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
                     </div>
                 </div>
 
-                {/* Pricing & Links */}
+                
                 <div className="space-y-6 bg-zinc-900/30 p-6 rounded-3xl border border-white/5">
                     <h3 className="text-blue-500 font-black text-xs uppercase tracking-[0.2em] mb-4">Monetization & Access</h3>
 
@@ -149,7 +149,7 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
                     </div>
                 </div>
 
-                {/* Synopsis Full Width */}
+                
                 <div className="md:col-span-2 bg-zinc-900/30 p-6 rounded-3xl border border-white/5">
                     <label className={labelStyle}>Synopsis / Storyline</label>
                     <textarea

@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image"; // Next.js Image component
+import Image from "next/image"; 
 import {
   Shield, User, Mail, Star, Loader2,
   MoreVertical, CheckCircle2, Ban, ChevronDown,
@@ -36,13 +36,13 @@ export default function ManageUser() {
     fetchUsers();
   }, []);
 
-  // স্ট্যাটাস আপডেট করার ফাংশন (Server Action এর সাথে কানেক্ট করবেন)
+  
   const handleStatusChange = async (userId: string, newStatus: string) => {
     setUpdatingId(userId);
     try {
       const response = await updateUserStatus(userId, newStatus);
       if (response.success) {
-        // লোকাল স্টেট আপডেট 
+        
         setUsers(users.map(u => u.id === userId ? { ...u, status: newStatus } : u));
         toast.success(`User status updated to ${newStatus.toLowerCase()}`);
       } else {
@@ -66,7 +66,7 @@ export default function ManageUser() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      
       <div className="flex justify-between items-center bg-zinc-900/30 p-6 rounded-2xl border border-white/5 backdrop-blur-md">
         <div>
           <h2 className="text-3xl font-black uppercase text-white tracking-tight flex items-center gap-3">
@@ -80,7 +80,7 @@ export default function ManageUser() {
         </div>
       </div>
 
-      {/* Table */}
+      
       <div className="bg-zinc-900/50 border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
@@ -95,7 +95,7 @@ export default function ManageUser() {
             <tbody className="divide-y divide-white/5">
               {users.map((user) => (
                 <tr key={user.id} className="hover:bg-white/[0.02] transition-all group">
-                  {/* User Info with Next Image */}
+                  
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
                       <div className="relative w-12 h-12 rounded-full border-2 border-zinc-800 p-0.5 overflow-hidden flex-shrink-0">
@@ -128,7 +128,7 @@ export default function ManageUser() {
                     </div>
                   </td>
 
-                  {/* Role & Premium Badge */}
+                  
                   <td className="px-6 py-4">
                     <div className="flex flex-col gap-1.5">
                       <span className={`inline-flex items-center gap-1 w-fit px-2 py-0.5 rounded text-[10px] font-bold border ${user.role === "ADMIN"
@@ -146,7 +146,7 @@ export default function ManageUser() {
                     </div>
                   </td>
 
-                  {/* Status Dropdown Indicator */}
+                  
                   <td className="px-6 py-4 text-center">
                     <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold border ${user.status === "ACTIVE"
                         ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
@@ -157,7 +157,7 @@ export default function ManageUser() {
                     </div>
                   </td>
 
-                  {/* Status Toggle Dropdown */}
+                  
                   <td className="px-6 py-4 text-right">
                     <div className="inline-block relative">
                       <select

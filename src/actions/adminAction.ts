@@ -170,7 +170,7 @@ export async function updateMovie(movieId: string, body: FormData) {
     try {
         const cookieStore = await cookies();
 
-        // FormData theke data-gulu extract kora
+        
         const updatedData = {
             title: body.get('title'),
             type: body.get('type'),
@@ -180,7 +180,7 @@ export async function updateMovie(movieId: string, body: FormData) {
             downloadLink: body.get('downloadLink'),
             posterUrl: body.get('posterUrl'),
             contentType: body.get('contentType'),
-            // Price gulu string e ashe, tai Number e convert kora safe
+            
             buyPrice: Number(body.get('buyPrice')),
             rentPrice: Number(body.get('rentPrice'))
         }
@@ -190,7 +190,7 @@ export async function updateMovie(movieId: string, body: FormData) {
                 "Content-Type": "application/json",
                 "Cookie": cookieStore.toString(),
             },
-            body: JSON.stringify(updatedData), // Extract kora object-ti pathate hobe
+            body: JSON.stringify(updatedData), 
         });
 
         const data = await res.json();

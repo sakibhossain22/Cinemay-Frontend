@@ -3,7 +3,9 @@ import { cookies } from "next/headers";
 
 export async function getSession() {
     try {
+
         const cookieStore = await cookies();
+         
         const res = fetch(`${process.env.API_URL}/user/profile`, {
             method: "GET",
             headers: {

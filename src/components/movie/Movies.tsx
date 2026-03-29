@@ -57,16 +57,16 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
   };
 
   return (
-    <div className="p-4 md:p-8 bg-[#020617] min-h-screen text-zinc-300 font-sans selection:bg-emerald-500/30">
+    <div className="lg:p-4 p-0 md:p-8 bg-[#020617] min-h-screen text-zinc-300 font-sans selection:bg-emerald-500/30">
       <div className="max-w-7xl mx-auto space-y-10">
 
-        {/* --- HEADER & SEARCH --- */}
+        
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           <div className="space-y-2">
-            <h1 className="text-3xl font-black text-white tracking-tighter flex items-center gap-3">
-              <Film className="text-emerald-500 w-10 h-10" /> EXPLORE MEDIA
+            <h1 className="lg:text-3xl md:text-2xl text-xl font-black text-white tracking-tighter flex items-center gap-3">
+              <Film className="text-emerald-500 lg:w-10 h-10" /> EXPLORE MEDIA
             </h1>
-            <p className="text-zinc-500 text-sm font-medium uppercase tracking-[0.1em]">Discover Premium Entertainment</p>
+            <p className="text-zinc-500 text-xs md:text-sm font-medium uppercase tracking-[0.1em]">Discover Premium Entertainment</p>
           </div>
 
           <div className="flex items-center gap-3 w-full lg:w-auto">
@@ -78,20 +78,20 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleFilterChange('searchTerm', searchInput)}
-                className="bg-zinc-900/40 border border-white/30 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/40 w-full transition-all backdrop-blur-md"
+                className="bg-zinc-900/40 border border-white/30 rounded-2xl lg:py-4 py-3  pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/40 w-full transition-all backdrop-blur-md"
               />
             </div>
             <button
               onClick={() => handleFilterChange('searchTerm', searchInput)}
-              className="bg-emerald-600 hover:bg-emerald-500 text-black/80 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20 active:scale-95"
+              className="bg-emerald-600 hover:bg-emerald-500 text-black/80 lg:px-8 px-4 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20 active:scale-95"
             >
               Search
             </button>
           </div>
         </div>
 
-        {/* --- FILTERS & SORT --- */}
-        <div className="flex flex-col sm:flex-row justify-between items-center bg-white/[0.02] p-3 rounded-[2.5rem] border border-white/5 backdrop-blur-xl gap-4">
+        
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-white/[0.02] lg:p-3 rounded-[2.5rem] border border-white/5 backdrop-blur-xl gap-4">
           <div className="flex scroll-none items-center gap-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto scrollbar-hide">
             <FilterButton
               label="All Content"
@@ -111,8 +111,8 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
             />
           </div>
 
-          <div className="flex flex-wrap items-center gap-4">
-            {/* --- NEW: CATEGORY FILTER --- */}
+          <div className="flex lg:flex-wrap items-center gap-4">
+            
             <div className="flex items-center gap-3 bg-black/20 px-4 py-3 rounded-2xl border border-white/5 group">
               <Clapperboard size={14} className="text-emerald-500 group-hover:text-emerald-400 transition-colors" />
               <select
@@ -127,9 +127,9 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
               </select>
             </div>
 
-            {/* --- SORT BY --- */}
+            
             <div className="flex items-center gap-4 bg-black/20 px-6 py-3 rounded-2xl border border-white/5">
-              <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Sort By</span>
+              <span className="text-[10px] font-black text-zinc-500 uppercase hidden lg:block tracking-widest">Sort By</span>
               <select
                 value={searchParams.get('sortBy') || 'newest'}
                 onChange={(e) => handleFilterChange('sortBy', e.target.value)}
@@ -144,7 +144,7 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
           </div>
         </div>
 
-        {/* --- MOVIE GRID --- */}
+        
         {movies.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-6">
             {movies.map((movie: any) => (
@@ -213,7 +213,7 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
           </div>
         )}
 
-        {/* --- PAGINATION --- */}
+        
         <div className="pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-white/5">
           <div className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">
             Showing <span className="text-white">{movies.length}</span> — Page {meta.page} of {meta.totalPage}
@@ -255,7 +255,7 @@ function FilterButton({ label, active, onClick, icon }: any) {
   return (
     <button
       onClick={onClick}
-      className={`flex-shrink-0 mx-2 flex items-center gap-2 px-6 my-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${active
+      className={`flex-shrink-0 mx-2 flex items-center gap-2 lg:px-6 px-2 my-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${active
         ? 'bg-emerald-500 text-black/80 shadow-[0_0_20px_rgba(255,255,255,0.1)] scale-105'
         : 'text-zinc-500 hover:text-white hover:bg-white/5'
         }`}

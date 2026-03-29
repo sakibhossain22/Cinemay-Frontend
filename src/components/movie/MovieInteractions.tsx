@@ -41,7 +41,6 @@ export default function MovieInteractions({ movieId, userId }: any) {
       return toast.error("Please login to add to watchlist");
     }
 
-    // মুভিটি অলরেডি অ্যাড করা থাকলে আর সার্ভার কল হবে না
     if (inWatchlist) {
       return toast.info("Movie already added to watchlist");
     }
@@ -50,7 +49,6 @@ export default function MovieInteractions({ movieId, userId }: any) {
       const result = await toggleWatchlist(movieId);
 
       if (result.success) {
-        // শুধুমাত্র অ্যাড হওয়ার পর লোকাল স্টেট আপডেট
         setWatchLists((prev) => [...prev, { movieId }]);
 
         toast.success("Added to Watchlist", {

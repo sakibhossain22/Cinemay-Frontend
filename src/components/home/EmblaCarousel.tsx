@@ -35,21 +35,21 @@ export default function MovieSlider({ movies }: { movies: IMovieDetail[] }) {
                         />
                         <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16 bg-gradient-to-t from-black via-transparent to-transparent">
                             <div className="max-w-2xl space-y-4 text-white">
-                                <h2 className="text-4xl md:text-6xl font-bold">{movie.title}</h2>
+                                <h2 className="text-2xl lg:text-4xl md:text-6xl font-bold">{movie.title}</h2>
                                 <div className="flex items-center gap-4 text-emerald-400">
                                     <span>{movie.releaseYear}</span>
                                     <span className="px-2 py-0.5 border border-emerald-500 rounded text-xs">{movie.type}</span>
                                     <span className="text-yellow-400">★ {movie.ratingAverage}</span>
                                 </div>
-                                <p className="text-zinc-300 line-clamp-3">{movie.synopsis}</p>
+                                <p className="text-zinc-300 text-sm lg:text-xl md:text-lg line-clamp-3">{movie.synopsis}</p>
                                 <div className="flex gap-4 pt-4">
-                                    <Link href={`/movies/details/${movie.customid}`} className="px-8 cursor-pointer py-3 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-full transition-all">
-                                        <button className='cursor-pointer'>
+                                    <Link href={`/movies/details/${movie.customid}`} className="lg:px-8 px-2 md:px-8 cursor-pointer py-3 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-full transition-all">
+                                        <button className='cursor-pointer text-sm lg:text-xl md:text-2xl'>
                                             Watch Now
                                         </button>
                                     </Link>
-                                    <Link href={`/movies/details/${movie.customid}/trailer`} className="px-8 cursor-pointer py-3 bg-white/10 backdrop-blur-md rounded-full transition-all hover:bg-white/20">
-                                        <button className='cursor-pointer'>Watch Trailer</button>
+                                    <Link href={`/movies/details/${movie.customid}/trailer`} className="lg:px-8 px-2 md:px-8 cursor-pointer py-3 bg-white/10 backdrop-blur-md rounded-full transition-all hover:bg-white/20">
+                                        <button className='cursor-pointer text-sm lg:text-xl md:text-2xl'>Watch Trailer</button>
                                     </Link>
                                 </div>
                             </div>

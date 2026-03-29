@@ -52,7 +52,7 @@ export async function clearAllHistory() {
             cache: 'no-store'
         });
         const result = await res.json();
-        revalidatePath('/history'); // Revalidate the history page to reflect changes
+        revalidatePath('/history'); 
         return result;
     } catch (error) {
         console.error("Failed to clear user history:", error);

@@ -61,7 +61,7 @@ const RegisterPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black px-4 py-12">
-      {/* Background Glows (Green Theme) */}
+      
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full"></div>
@@ -74,7 +74,7 @@ const RegisterPage = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Full Name */}
+          
           <div className="group">
             <label className="block text-sm font-medium text-zinc-400 mb-2 group-focus-within:text-emerald-500 transition-colors">Full Name</label>
             <div className="relative">
@@ -89,7 +89,7 @@ const RegisterPage = () => {
             {errors.name && <p className="text-red-500 text-xs mt-1.5 ml-1">{errors.name.message}</p>}
           </div>
 
-          {/* Email Address */}
+          
           <div className="group">
             <label className="block text-sm font-medium text-zinc-400 mb-2 group-focus-within:text-emerald-500 transition-colors">Email Address</label>
             <div className="relative">
@@ -104,7 +104,7 @@ const RegisterPage = () => {
             {errors.email && <p className="text-red-500 text-xs mt-1.5 ml-1">{errors.email.message}</p>}
           </div>
 
-          {/* Phone Number */}
+          
           <div className="group">
             <label className="block text-sm font-medium text-zinc-400 mb-2 group-focus-within:text-emerald-500 transition-colors">Phone Number</label>
             <div className="relative">
@@ -119,7 +119,7 @@ const RegisterPage = () => {
             {errors.phone && <p className="text-red-500 text-xs mt-1.5 ml-1">{errors.phone.message}</p>}
           </div>
 
-          {/* Password */}
+          
           <div className="group">
             <label className="block text-sm font-medium text-zinc-400 mb-2 group-focus-within:text-emerald-500 transition-colors">Create Password</label>
             <div className="relative">
@@ -134,14 +134,14 @@ const RegisterPage = () => {
             {errors.password && <p className="text-red-500 text-xs mt-1.5 ml-1">{errors.password.message}</p>}
           </div>
 
-          {/* Error Message */}
+          
           {error && (
             <div className="bg-red-500/10 border border-red-500/50 p-4 rounded-xl">
               <p className="text-red-500 text-sm text-center font-medium">{error}</p>
             </div>
           )}
 
-          {/* Submit Button (Green Theme) */}
+          
           <button
             disabled={loading}
             type="submit"

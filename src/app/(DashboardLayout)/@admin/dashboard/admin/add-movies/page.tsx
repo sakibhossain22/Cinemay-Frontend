@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 import {
     PlusCircle, Search, Loader2, RefreshCcw,
-    Globe, DollarSign, Film, User, Tag, List
+    Globe, DollarSign, Film, User, Tag
 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -20,25 +20,24 @@ export default function AddMovies() {
         tmdb_id: "",
         title: "",
         customid: "",
-        type: "MOVIE", // MOVIE | SERIES
+        type: "MOVIE", 
         synopsis: "",
         posterUrl: "",
         genre: "",
         releaseYear: new Date().getFullYear(),
         director: "",
         cast: "",
-        streamingLink: "youtube.com/embed/", // ডিফল্ট ভ্যালু সেট করা হয়েছে
+        streamingLink: "youtube.com/embed/", 
         downloadLink: "",
-        episodeLinks: "", // UI-তে কমা দিয়ে ইনপুট নিবে
-        contentType: "FREE", // FREE | PREMIUM
+        episodeLinks: "", 
+        contentType: "FREE", 
         buyPrice: 0,
         rentPrice: 0,
         rentDuration: 48,
         ratingAverage: 0,
-        category: [] as string[], // এখানে ক্যাটাগরি নামগুলো থাকবে
+        category: [] as string[], 
     });
 
-    // ১. মাউন্ট হওয়ার সময় সকল ক্যাটাগরি লোড করা
     useEffect(() => {
         const loadCategories = async () => {
             try {
@@ -53,14 +52,12 @@ export default function AddMovies() {
         loadCategories();
     }, []);
 
-    // ২. Access Type 'FREE' হলে প্রাইস রিসেট করা
     useEffect(() => {
         if (formData.contentType === "FREE") {
             setFormData(prev => ({ ...prev, buyPrice: 0, rentPrice: 0 }));
         }
     }, [formData.contentType]);
 
-    // ৩. ক্যাটাগরি টগল করার লজিক
     const toggleCategory = (catName: string) => {
         setFormData(prev => {
             const isSelected = prev.category.includes(catName);
@@ -103,21 +100,16 @@ export default function AddMovies() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         if (formData.category.length === 0) {
             return toast.error("Please select at least one category!");
         }
-
         setLoading(true);
-
-        // ৪. ডাটা ফরম্যাট করা (String to Array)
         const finalData = {
             ...formData,
             genre: formData.genre.split(",").map(g => g.trim()).filter(Boolean),
             cast: formData.cast.split(",").map(c => c.trim()).filter(Boolean),
             episodeLinks: formData.episodeLinks.split(",").map(l => l.trim()).filter(Boolean),
         };
-
         try {
             const response = await addMovie(finalData);
             if (!response.success) {
@@ -135,38 +127,36 @@ export default function AddMovies() {
     };
 
     const labelStyle = "block text-[10px] uppercase tracking-widest font-black text-zinc-500 mb-2 ml-1";
-    const inputStyle = "w-full bg-zinc-900/50 border border-white/5 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 transition-all placeholder:text-zinc-700 text-sm disabled:opacity-20 disabled:cursor-not-allowed";
+    const inputStyle = "w-full bg-zinc-900/50 border border-white/5 rounded-xl md:rounded-2xl px-4 py-2.5 md:py-3 text-white focus:outline-none focus:border-emerald-500/50 transition-all placeholder:text-zinc-700 text-sm disabled:opacity-20 disabled:cursor-not-allowed";
 
     return (
-        <div className="min-h-screen bg-black text-white p-6 md:p-12">
-            <div className="max-w-6xl mx-auto space-y-10">
+        <div className="min-h-screen bg-black text-white p-4 md:p-12 overflow-x-hidden">
+            <div className="max-w-6xl mx-auto space-y-6 md:space-y-10">
 
-                {/* Header */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h2 className="text-3xl font-black uppercase text-white tracking-tight flex items-center gap-3">
-                            <Film className="text-emerald-500" />Add <span className="text-emerald-500">Movie</span>
+                        <h2 className="text-2xl md:text-3xl font-black uppercase text-white tracking-tight flex items-center gap-3">
+                            <Film className="text-emerald-500 w-6 h-6 md:w-8 md:h-8" />Add <span className="text-emerald-500">Movie</span>
                         </h2>
-                        <p className="text-zinc-500 mt-1 font-medium">Add new movies to your collection.</p>
+                        <p className="text-zinc-500 mt-1 font-medium text-xs md:text-sm">Add new movies to your collection.</p>
                     </div>
                     <button
                         form="movie-form"
                         disabled={loading}
-                        className="group relative bg-emerald-600 hover:bg-emerald-500 px-10 py-4 rounded-2xl font-black transition-all flex items-center gap-3 shadow-2xl shadow-emerald-900/20 disabled:opacity-50"
+                        className="group relative bg-emerald-600 hover:bg-emerald-500 px-6 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl font-black transition-all flex items-center justify-center gap-2 md:gap-3 shadow-2xl shadow-emerald-900/20 disabled:opacity-50 text-xs md:text-base w-full sm:w-auto"
                     >
-                        {loading ? <Loader2 className="animate-spin" /> : <PlusCircle className="group-hover:rotate-90 transition-transform" />}
+                        {loading ? <Loader2 className="animate-spin w-4 h-4" /> : <PlusCircle className="group-hover:rotate-90 transition-transform w-4 h-4 md:w-5 md:h-5" />}
                         PUBLISH NOW
                     </button>
                 </div>
 
-                {/* TMDB Search */}
-                <div className="bg-zinc-900/40 border-2 border-dashed border-white/10 p-8 rounded-[2.5rem] flex flex-col md:flex-row items-end gap-6 hover:border-emerald-500/30 transition-colors">
+                <div className="bg-zinc-900/40 border-2 border-dashed border-white/10 p-4 md:p-8 rounded-3xl md:rounded-[2.5rem] flex flex-col md:flex-row items-end gap-4 md:gap-6">
                     <div className="flex-1 w-full space-y-2">
                         <label className={labelStyle}>Import from TMDB (ID)</label>
                         <div className="relative">
-                            <Search className="absolute left-4 top-3.5 text-zinc-600" size={18} />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" size={16} />
                             <input
-                                className={`${inputStyle} pl-12 bg-black/40 h-14 text-lg`}
+                                className={`${inputStyle} pl-12 bg-black/40 h-12 md:h-14 text-base md:text-lg`}
                                 placeholder="e.g. 76600"
                                 value={formData.tmdb_id}
                                 onChange={(e) => setFormData({ ...formData, tmdb_id: e.target.value })}
@@ -177,38 +167,36 @@ export default function AddMovies() {
                         type="button"
                         onClick={fetchTmdbData}
                         disabled={fetching}
-                        className="bg-white text-black px-10 h-14 rounded-2xl font-black flex items-center gap-2 hover:bg-emerald-400 transition-all disabled:opacity-50"
+                        className="bg-white text-black px-6 md:px-10 h-12 md:h-14 rounded-xl md:rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-emerald-400 transition-all disabled:opacity-50 text-xs md:text-sm w-full md:w-auto"
                     >
-                        {fetching ? <RefreshCcw className="animate-spin" /> : <RefreshCcw />}
+                        {fetching ? <RefreshCcw className="animate-spin w-4 h-4" /> : <RefreshCcw size={16} />}
                         AUTO FILL
                     </button>
                 </div>
 
-                <form id="movie-form" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-12 gap-8">
+                <form id="movie-form" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
 
-                    {/* Left Column */}
-                    <div className="md:col-span-8 space-y-8">
-
-                        {/* Essential Details */}
-                        <div className="bg-zinc-900/20 border border-white/5 p-8 rounded-[2.5rem] space-y-6">
-                            <h3 className="flex items-center gap-2 font-bold text-zinc-400 uppercase text-xs tracking-widest"><Film size={16} /> Essential Details</h3>
-                            <div className="grid grid-cols-2 gap-6">
-                                <div className="col-span-2 md:col-span-1">
+                    <div className="md:col-span-8 space-y-6 md:space-y-8">
+                        <div className="bg-zinc-900/20 border border-white/5 p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] space-y-4 md:space-y-6">
+                            <h3 className="flex items-center gap-2 font-bold text-zinc-400 uppercase text-[10px] md:text-xs tracking-widest"><Film size={14} /> Essential Details</h3>
+                            <div className="grid grid-cols-2 gap-4 md:gap-6">
+                                <div className="col-span-2 sm:col-span-1">
                                     <label className={labelStyle}>Content Type</label>
                                     <select className={inputStyle} value={formData.type} onChange={(e) => setFormData({ ...formData, type: e.target.value })}>
                                         <option value="MOVIE">MOVIE</option>
                                         <option value="SERIES">SERIES</option>
+                                        <option value="ANIMATION">ANIMATION</option>
                                     </select>
                                 </div>
-                                <div className="col-span-2 md:col-span-1">
+                                <div className="col-span-2 sm:col-span-1">
                                     <label className={labelStyle}>Title</label>
                                     <input className={inputStyle} value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required />
                                 </div>
-                                <div className="col-span-2 md:col-span-1">
+                                <div className="col-span-2 sm:col-span-1">
                                     <label className={labelStyle}>Custom Slug / ID</label>
                                     <input className={inputStyle} value={formData.customid} onChange={(e) => setFormData({ ...formData, customid: e.target.value })} />
                                 </div>
-                                <div className="col-span-2 md:col-span-1">
+                                <div className="col-span-2 sm:col-span-1">
                                     <label className={labelStyle}>Release Year</label>
                                     <input type="number" className={inputStyle} value={formData.releaseYear} onChange={(e) => setFormData({ ...formData, releaseYear: Number(e.target.value) })} />
                                 </div>
@@ -219,18 +207,17 @@ export default function AddMovies() {
                             </div>
                         </div>
 
-                        {/* Category Selection (Multi-select) */}
-                        <div className="bg-zinc-900/20 border border-white/5 p-8 rounded-[2.5rem] space-y-6">
-                            <h3 className="flex items-center gap-2 font-bold text-zinc-400 uppercase text-xs tracking-widest"><Tag size={16} /> Select Categories</h3>
-                            <div className="flex flex-wrap gap-3">
+                        <div className="bg-zinc-900/20 border border-white/5 p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] space-y-4 md:space-y-6">
+                            <h3 className="flex items-center gap-2 font-bold text-zinc-400 uppercase text-[10px] md:text-xs tracking-widest"><Tag size={14} /> Select Categories</h3>
+                            <div className="flex flex-wrap gap-2 md:gap-3">
                                 {allCategories.map((cat) => (
                                     <button
                                         key={cat.id}
                                         type="button"
                                         onClick={() => toggleCategory(cat.name)}
-                                        className={`px-5 py-3 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all border ${formData.category.includes(cat.name)
-                                            ? "bg-emerald-500 border-emerald-500 text-black shadow-lg shadow-emerald-500/20"
-                                            : "bg-zinc-900 border-white/5 text-zinc-500 hover:border-white/20"
+                                        className={`px-3 md:px-5 py-2 md:py-3 rounded-lg md:rounded-xl text-[9px] md:text-[11px] font-black uppercase tracking-wider transition-all border ${formData.category.includes(cat.name)
+                                            ? "bg-emerald-500 border-emerald-500 text-black shadow-lg"
+                                            : "bg-zinc-900 border-white/5 text-zinc-500"
                                             }`}
                                     >
                                         {cat.name}
@@ -239,14 +226,12 @@ export default function AddMovies() {
                             </div>
                         </div>
 
-                        {/* Media Links */}
-                        <div className="bg-zinc-900/20 border border-white/5 p-8 rounded-[2.5rem] space-y-6">
-                            <h3 className="flex items-center gap-2 font-bold text-zinc-400 uppercase text-xs tracking-widest"><Globe size={16} /> Media & Links</h3>
+                        <div className="bg-zinc-900/20 border border-white/5 p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] space-y-4 md:space-y-6">
+                            <h3 className="flex items-center gap-2 font-bold text-zinc-400 uppercase text-[10px] md:text-xs tracking-widest"><Globe size={14} /> Media & Links</h3>
                             <div className="space-y-4">
                                 <label className={labelStyle}>Poster URL</label>
                                 <input className={inputStyle} value={formData.posterUrl} onChange={(e) => setFormData({ ...formData, posterUrl: e.target.value })} />
-
-                                <div className="grid grid-cols-2 gap-6 pt-2">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 pt-2">
                                     <div>
                                         <label className={labelStyle}>Streaming Link</label>
                                         <input className={inputStyle} value={formData.streamingLink} onChange={(e) => setFormData({ ...formData, streamingLink: e.target.value })} />
@@ -256,12 +241,11 @@ export default function AddMovies() {
                                         <input className={inputStyle} value={formData.downloadLink} onChange={(e) => setFormData({ ...formData, downloadLink: e.target.value })} />
                                     </div>
                                 </div>
-
                                 <div className="pt-2">
-                                    <label className={labelStyle}>Episode Links (Comma separated for Series)</label>
+                                    <label className={labelStyle}>Episode Links</label>
                                     <textarea
                                         rows={3}
-                                        className={`${inputStyle} resize-none font-mono text-[11px]`}
+                                        className={`${inputStyle} resize-none font-mono text-[10px] md:text-[11px]`}
                                         placeholder="url1, url2, url3..."
                                         value={formData.episodeLinks}
                                         onChange={(e) => setFormData({ ...formData, episodeLinks: e.target.value })}
@@ -271,13 +255,12 @@ export default function AddMovies() {
                         </div>
                     </div>
 
-                    {/* Right Column (Sidebar) */}
-                    <div className="md:col-span-4 space-y-8">
-                        <div className="bg-zinc-900/20 border border-white/5 p-8 rounded-[2.5rem] space-y-6">
-                            <h3 className="flex items-center gap-2 font-bold text-zinc-400 uppercase text-xs tracking-widest"><User size={16} /> Cast & Crew</h3>
+                    <div className="md:col-span-4 space-y-6 md:space-y-8">
+                        <div className="bg-zinc-900/20 border border-white/5 p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] space-y-4 md:space-y-6">
+                            <h3 className="flex items-center gap-2 font-bold text-zinc-400 uppercase text-[10px] md:text-xs tracking-widest"><User size={14} /> Cast & Crew</h3>
                             <div className="space-y-4">
                                 <div>
-                                    <label className={labelStyle}>Genres (Display only)</label>
+                                    <label className={labelStyle}>Genres</label>
                                     <input className={inputStyle} placeholder="Action, Thriller" value={formData.genre} onChange={(e) => setFormData({ ...formData, genre: e.target.value })} />
                                 </div>
                                 <div>
@@ -291,10 +274,9 @@ export default function AddMovies() {
                             </div>
                         </div>
 
-                        {/* Pricing Section */}
-                        <div className={`bg-zinc-900/20 border p-8 rounded-[2.5rem] space-y-6 transition-all ${formData.contentType === "FREE" ? "border-white/5" : "border-emerald-500/20 shadow-2xl shadow-emerald-500/5"}`}>
-                            <h3 className="flex items-center gap-2 font-bold text-emerald-500 uppercase text-xs tracking-widest"><DollarSign size={16} /> Pricing</h3>
-                            <div className="grid grid-cols-2 gap-4">
+                        <div className={`bg-zinc-900/20 border p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] space-y-4 md:space-y-6 transition-all ${formData.contentType === "FREE" ? "border-white/5" : "border-emerald-500/20 shadow-2xl shadow-emerald-500/5"}`}>
+                            <h3 className="flex items-center gap-2 font-bold text-emerald-500 uppercase text-[10px] md:text-xs tracking-widest"><DollarSign size={14} /> Pricing</h3>
+                            <div className="grid grid-cols-2 gap-3 md:gap-4">
                                 <div className="col-span-2">
                                     <label className={labelStyle}>Access Type</label>
                                     <select className={inputStyle} value={formData.contentType} onChange={(e) => setFormData({ ...formData, contentType: e.target.value })}>
@@ -303,7 +285,7 @@ export default function AddMovies() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className={labelStyle}>Buy Price ($)</label>
+                                    <label className={labelStyle}>Buy ($)</label>
                                     <input
                                         type="number"
                                         className={inputStyle}
@@ -313,7 +295,7 @@ export default function AddMovies() {
                                     />
                                 </div>
                                 <div>
-                                    <label className={labelStyle}>Rent Price ($)</label>
+                                    <label className={labelStyle}>Rent ($)</label>
                                     <input
                                         type="number"
                                         className={inputStyle}

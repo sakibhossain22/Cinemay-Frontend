@@ -21,7 +21,7 @@ async function UserProfile() {
         <div className="p-4 md:p-10 bg-[#0A0A0A] min-h-screen text-zinc-100 font-sans">
             <div className="max-w-5xl mx-auto">
                 
-                {/* Header Section */}
+                
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                     <div className="flex items-center gap-6">
                         <div className="relative">
@@ -67,10 +67,10 @@ async function UserProfile() {
                 </div>
                 
 
-                {/* Main Content Grid */}
+                
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     
-                    {/* Left Column: Essential Info */}
+                    
                     <div className="lg:col-span-2 space-y-6">
                         <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-3xl p-8">
                             <h3 className="text-zinc-500 text-xs font-black uppercase tracking-[0.2em] mb-8">Account Credentials</h3>
@@ -83,7 +83,7 @@ async function UserProfile() {
                             </div>
                         </div>
 
-                        {/* Banner for Non-Premium Users */}
+                        
                         {!isPremium && (
                             <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 border border-zinc-700 rounded-3xl p-6 flex justify-between items-center group cursor-pointer">
                                 <div className="flex items-center gap-4">
@@ -103,7 +103,7 @@ async function UserProfile() {
                         )}
                     </div>
 
-                    {/* Right Column: Mini Stats/Security */}
+                    
                     <div className="space-y-6">
                         <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-3xl p-8">
                             <h3 className="text-zinc-500 text-xs font-black uppercase tracking-[0.2em] mb-6">Security</h3>

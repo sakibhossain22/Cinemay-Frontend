@@ -13,13 +13,13 @@ export default function Error({
     reset: () => void;
 }) {
     useEffect(() => {
-        // আপনি চাইলে এখানে Sentry বা অন্য কোনো সার্ভিসে এরর লগ করতে পারেন
+        
         console.error(error);
     }, [error]);
 
     return (
         <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center px-6">
-            {/* Animated Icon */}
+            
             <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
@@ -29,7 +29,7 @@ export default function Error({
                 <AlertTriangle className="w-12 h-12 text-red-500" />
             </motion.div>
 
-            {/* Text Content */}
+            
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ export default function Error({
                 </p>
             </motion.div>
 
-            {/* Action Buttons */}
+            
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -68,7 +68,7 @@ export default function Error({
                 </Link>
             </motion.div>
 
-            {/* Subtle background glow */}
+            
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] -z-10" />
         </div>
     );

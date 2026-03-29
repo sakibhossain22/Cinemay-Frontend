@@ -63,7 +63,7 @@ export default function PlayMovie({ params }: { params: any }) {
             <div className="max-w-[1600px] mx-auto">
                 <div className="flex flex-col lg:flex-row gap-6">
                     
-                    {/* Left Column: Video Player & Title */}
+                    
                     <div className="flex-1 lg:pl-4">
                         <div className="w-full bg-black shadow-2xl relative">
                             <div className="relative w-full aspect-video max-h-[80vh] mx-auto bg-zinc-900 overflow-hidden">
@@ -108,7 +108,7 @@ export default function PlayMovie({ params }: { params: any }) {
                         </div>
                     </div>
 
-                    {/* Right Column: Dynamic Sidebar (Episodes or Related Movies) */}
+                    
                     <div className="w-full lg:w-[400px] p-4 lg:pr-6 space-y-6">
                         
                         <div className="bg-zinc-900/50 rounded-2xl border border-zinc-800 overflow-hidden">
@@ -123,7 +123,6 @@ export default function PlayMovie({ params }: { params: any }) {
 
                             <div className="max-h-[600px] lg:max-h-[800px] overflow-y-auto custom-scrollbar">
                                 {isSeries ? (
-                                    /* Series Mode: Episode List */
                                     movieData?.episodeLinks.map((link: string, index: number) => {
                                         const epId = getDriveId(link);
                                         const isActive = activeVideoId === epId;
@@ -145,7 +144,6 @@ export default function PlayMovie({ params }: { params: any }) {
                                         );
                                     })
                                 ) : (
-                                    /* Movie Mode: Related Movies List */
                                     relatedMovies?.map((movie: any) => (
                                         <Link
                                             key={movie.id}

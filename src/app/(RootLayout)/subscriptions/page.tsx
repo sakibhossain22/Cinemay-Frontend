@@ -96,7 +96,7 @@ function Subscriptions() {
                 </div>
             </div>
 
-            {/* --- STRIPE PAYMENT MODAL --- */}
+            
             {paymentSecret && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
                     <div className="max-w-md w-full bg-zinc-950 border border-white/10 rounded-[2.5rem] p-8 shadow-2xl relative">

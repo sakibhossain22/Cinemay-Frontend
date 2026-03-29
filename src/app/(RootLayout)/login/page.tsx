@@ -68,19 +68,7 @@ const LoginPage = () => {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:3000/dashboard", // সরাসরি রিলেটিভ পাথ দিন যদি ফ্রন্টএন্ড ৩০০০ এ হয়
-        errorCallbackURL: "/login",
-        fetchOptions: {
-          onSuccess: () => {
-            // অনেক সময় অটো রিডাইরেক্ট না হলে এটি ম্যানুয়ালি পুশ করবে
-            router.push("http://localhost:3000/dashboard");
-            router.refresh();
-          },
-          onError: (ctx) => {
-            setError(ctx.error.message || "Google login failed");
-            setGoogleLoading(false);
-          }
-        }
+        callbackURL: "http://localhost:3000/dashboard",
       });
     } catch (err) {
       console.error(err);
@@ -101,7 +89,7 @@ const LoginPage = () => {
           <p className="text-zinc-400 mt-2">Sign in to continue to CinemaY</p>
         </div>
 
-        {/* Google Login Button */}
+        
         <button
           onClick={handleGoogleLogin}
           disabled={googleLoading || loading}
@@ -133,7 +121,7 @@ const LoginPage = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Email Field */}
+          
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-1.5">Email Address</label>
             <div className="relative group">
@@ -149,7 +137,7 @@ const LoginPage = () => {
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
           </div>
 
-          {/* Password Field */}
+          
           <div>
             <div className="flex justify-between mb-1.5">
               <label className="block text-sm font-medium text-zinc-300">Password</label>

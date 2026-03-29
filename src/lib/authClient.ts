@@ -2,9 +2,15 @@ import { createAuthClient } from "better-auth/react";
 
 
 export const authClient = createAuthClient({
-    baseURL: "http://localhost:5000", // আপনার API সার্ভারের URL
+    baseURL: "http://localhost:5000",
+    sessionOptions : {
+        refetchInterval : 5 * 60, // 5 minutes in seconds
+        refetchWhenOffline : false,
+        refetchOnReconnect : true,
+        refetchOnWindowFocus : false,
+    },
     fetchOptions: {
-        credentials: "include", // এটি খুবই গুরুত্বপূর্ণ! নাহলে কুকি আদান-প্রদান হবে না
+        credentials: "include",
     },
     withCredentials: true,
 });

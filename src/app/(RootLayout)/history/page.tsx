@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Play, Clock } from 'lucide-react'
-import { getUserHistory } from '@/actions/history.action' // ধরে নিচ্ছি clearAction-টিও আছে
+import { getUserHistory } from '@/actions/history.action' 
 import ClearHistory from '@/components/home/clear-history'
 
 async function History() {
@@ -11,7 +11,7 @@ async function History() {
     const historyData = response?.data || []
     return (
         <div className="min-h-screen bg-black text-white py-2 px-4 sm:px-10">
-            {/* Header Section */}
+            
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4 border-b border-zinc-800 pb-6">
                 <div>
                     <h1 className="text-3xl font-bold flex items-center gap-3">
@@ -26,12 +26,12 @@ async function History() {
                 )}
             </div>
 
-            {/* History Grid */}
+            
             {historyData.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
                     {historyData.map((item: any) => (
                         <div key={item.id} className="flex flex-col gap-2">
-                            {/* Card with Play Icon Hover */}
+                            
                             <Link
                                 href={`/movies/details/${item.media.customid}`}
                                 className="group relative aspect-[2/3] rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 transition-all duration-300 hover:border-emerald-500/50"
@@ -43,20 +43,20 @@ async function History() {
                                     className="object-cover transition-transform duration-500 group-hover:scale-110 group-hover:opacity-40"
                                 />
 
-                                {/* Emerald Play Overlay */}
+                                
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                                     <div className="bg-emerald-500 p-3 rounded-full shadow-lg shadow-emerald-500/40 transform scale-50 group-hover:scale-100 transition-transform">
                                         <Play className="w-6 h-6 text-black fill-current" />
                                     </div>
                                 </div>
 
-                                {/* Viewed At Badge (Small) */}
+                                
                                 <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded text-[10px] text-zinc-300 border border-zinc-700">
                                     {new Date(item.viewedAt).toLocaleDateString()}
                                 </div>
                             </Link>
 
-                            {/* Info */}
+                            
                             <div className="px-1">
                                 <h3 className="text-sm font-medium truncate text-zinc-200 hover:text-emerald-400 transition-colors">
                                     {item.media.title}

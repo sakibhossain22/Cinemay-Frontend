@@ -13,9 +13,9 @@ import { toast } from "sonner";
 
 // রিটার্ন স্টেটমেন্টে বাটনগুলো এভাবে দিন:
 <div className="flex items-center gap-6 py-4">
-  {/* Watchlist Button ... */}
+  
 
-  {/* Cast Button */}
+  
   <button 
     onClick={() => scrollToSection("cast-section")}
     className="flex items-center gap-2 text-zinc-400 hover:text-emerald-400 transition-colors"
@@ -24,7 +24,7 @@ import { toast } from "sonner";
     <span className="text-sm font-medium">Cast</span>
   </button>
 
-  {/* Review Button */}
+  
   <button 
     onClick={() => scrollToSection("review-section")}
     className="flex items-center gap-2 text-zinc-400 hover:text-emerald-400 transition-colors"
@@ -33,5 +33,5 @@ import { toast } from "sonner";
     <span className="text-sm font-medium">Reviews</span>
   </button>
 
-  {/* Share Button ... */}
+  
 </div>

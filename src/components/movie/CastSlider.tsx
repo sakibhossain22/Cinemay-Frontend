@@ -21,20 +21,20 @@ export default function CastSlider({ casts }: { casts: any[] }) {
             <Swiper
                 modules={[Navigation, Autoplay]}
                 spaceBetween={16}
-                slidesPerView={2} // মোবাইলে ২টি
+                slidesPerView={2}
                 navigation
                 autoplay={{ delay: 3000, disableOnInteraction: false }}
                 breakpoints={{
                     640: { slidesPerView: 3 },
                     768: { slidesPerView: 4 },
-                    1024: { slidesPerView: 6 }, // ডেস্কটপে ৬টি
+                    1024: { slidesPerView: 6 },
                 }}
                 className="cast-swiper"
             >
                 {casts.slice(0, 15).map((member: any) => (
                     <SwiperSlide key={member.id}>
                         <div className="group bg-zinc-900 rounded-xl overflow-hidden border border-white/5 hover:border-emerald-500/50 transition-all duration-300 shadow-lg">
-                            {/* অভিনেতা/অভিনেত্রীর ছবি */}
+                            
                             <div className="relative aspect-[2/3] w-full bg-zinc-800">
                                 {member.profile_path ? (
                                     <Image
@@ -51,7 +51,7 @@ export default function CastSlider({ casts }: { casts: any[] }) {
                                 )}
                             </div>
 
-                            {/* টেক্সট ডিটেইলস */}
+                            
                             <div className="p-3">
                                 <h3 className="font-bold text-sm text-white truncate group-hover:text-emerald-400 transition-colors">
                                     {member.name}
@@ -65,7 +65,7 @@ export default function CastSlider({ casts }: { casts: any[] }) {
                 ))}
             </Swiper>
 
-            {/* স্লাইডার অ্যারো স্টাইল কাস্টমাইজ করার জন্য (Optional) */}
+            
             <style jsx global>{`
         .cast-swiper .swiper-button-next,
         .cast-swiper .swiper-button-prev {

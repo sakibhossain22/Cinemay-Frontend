@@ -45,7 +45,7 @@ export default function WatchTrailer({ params }: { params: any }) {
         <div className="min-h-screen bg-[#050505] text-white">
             <div className="max-w-[1600px] mx-auto">
 
-                {/* Back Button - Floating */}
+                
                 <div className="p-4 lg:px-6">
                     <Link
                         href={`/movies/details/${movieData.customid}`}
@@ -58,7 +58,7 @@ export default function WatchTrailer({ params }: { params: any }) {
 
                 <div className="flex flex-col lg:flex-row gap-8 px-4 lg:px-6">
 
-                    {/* Left Side: Trailer Player & Title */}
+                    
                     <div className="flex-1">
                         <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-zinc-800 bg-black group">
                             {trailerId ? (
@@ -78,7 +78,7 @@ export default function WatchTrailer({ params }: { params: any }) {
                             )}
                         </div>
 
-                        {/* Trailer Info Header */}
+                        
                         <div className="mt-6 border-b border-zinc-800/50 pb-6">
                             <div className="flex items-center gap-2 text-emerald-500 mb-3">
                                 <span className="bg-emerald-500 text-black text-[10px] font-black px-2 py-0.5 rounded uppercase">Official</span>
@@ -89,7 +89,7 @@ export default function WatchTrailer({ params }: { params: any }) {
                             </h1>
                         </div>
 
-                        {/* Synopsis Card */}
+                        
                         <div className="mt-8 bg-zinc-900/30 p-6 rounded-2xl border border-zinc-800/50 backdrop-blur-sm">
                             <div className="flex items-center gap-2 mb-4 text-zinc-400">
                                 <span className="text-emerald-500"><Info size={18} /></span>
@@ -99,7 +99,7 @@ export default function WatchTrailer({ params }: { params: any }) {
                                 {movieData.synopsis}
                             </p>
 
-                            {/* Genres */}
+                            
                             <div className="flex flex-wrap gap-2 mt-6">
                                 {movieData.genre.map((g: string) => (
                                     <span key={g} className="bg-zinc-800/50 text-zinc-300 px-3 py-1 rounded-md text-[10px] font-bold border border-zinc-700/50 uppercase">
@@ -110,7 +110,7 @@ export default function WatchTrailer({ params }: { params: any }) {
                         </div>
                     </div>
 
-                    {/* Right Side: Sidebar Info */}
+                    
 
                     <div className='flex flex-col lg:flex-col md:flex-row gap-2 '>
                         {relatedMovies.length > 0 && (
@@ -150,7 +150,7 @@ export default function WatchTrailer({ params }: { params: any }) {
                             </div>
                         )}
                         <div className="w-full lg:w-[350px] space-y-6 pb-10">
-                            {/* Quick Metadata Card */}
+                            
                             <div className="bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800">
                                 <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-6 border-b border-zinc-800 pb-3">Movie Info</h3>
                                 <div className="space-y-5">
@@ -160,7 +160,7 @@ export default function WatchTrailer({ params }: { params: any }) {
                                 </div>
                             </div>
 
-                            {/* Cast Card */}
+                            
                             <div className="bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800">
                                 <div className="flex items-center gap-2 mb-6 border-b border-zinc-800 pb-3">
                                     <Users size={14} className="text-emerald-500" />

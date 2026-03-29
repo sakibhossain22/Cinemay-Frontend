@@ -12,7 +12,7 @@ async function ManageReviews() {
     <div className="min-h-screen bg-black text-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto space-y-6">
         
-        {/* Header Section */}
+        {}
         <div className="flex justify-between items-center border-b border-white/5 pb-6">
           <div>
             <h1 className="text-3xl flex gap-2 items-center font-black tracking-tighter uppercase">
@@ -31,7 +31,7 @@ async function ManageReviews() {
              </div>
           </div>
         </div>
-        {/* Client Side List */}
+        {}
         <ReviewList initialReviews={reviews} />
 
       </div>

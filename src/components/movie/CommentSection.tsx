@@ -73,7 +73,7 @@ function CommentItem({ comment, userId, customid, reviewId, depth }: any) {
     return (
         <div className="animate-in fade-in slide-in-from-left-2 duration-300">
             <div className="flex gap-3 items-start relative">
-                {/* কানেক্টিং লাইন */}
+                
                 {depth > 0 && (
                     <div className="absolute -left-[18px] top-4 w-4 h-[1px] bg-zinc-800" />
                 )}
@@ -119,7 +119,7 @@ function CommentItem({ comment, userId, customid, reviewId, depth }: any) {
                         </form>
                     )}
 
-                    {/* নেস্টেড রিপ্লাই রেন্ডার করার জন্য রিকার্সিভ কল */}
+                    
                     {comment.replies && comment.replies.length > 0 && (
                         <CommentSection
                             comments={comment.replies}

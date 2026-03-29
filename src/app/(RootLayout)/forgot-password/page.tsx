@@ -10,7 +10,7 @@ import { Loader2, Mail, ArrowLeft, CheckCircle2, Lock, ShieldCheck } from "lucid
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-// স্কিমাগুলো অপরিবর্তিত আছে...
+
 const emailSchema = z.object({
     email: z.string().email("Invalid email address").min(1, "Email is required"),
 });

@@ -15,7 +15,7 @@ import {
 async function AdminStats() {
   const response = await adminStatistics();
 
-  // API response structure অনুযায়ী ডাটা এক্সট্রাক্ট করা
+  
   const stats = response?.data?.data;
 
   if (!stats) return <div className="p-10 text-white">Loading stats...</div>;
@@ -33,7 +33,7 @@ async function AdminStats() {
         </div>
       </header>
 
-      {/* 1. Summary Cards */}
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Users"
@@ -63,7 +63,7 @@ async function AdminStats() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* 2. Engagement Stats */}
+        
         <div className="bg-zinc-900/40 border border-white/5 p-6 rounded-3xl space-y-6">
           <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-400">User Engagement</h2>
           <div className="space-y-4">
@@ -85,7 +85,7 @@ async function AdminStats() {
           </div>
         </div>
 
-        {/* 3. Technical/Device Usage */}
+        
         <div className="bg-zinc-900/40 border border-white/5 p-6 rounded-3xl space-y-6">
           <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-400">Device Traffic</h2>
           <div className="flex items-center justify-between">
@@ -104,7 +104,7 @@ async function AdminStats() {
           </div>
         </div>
 
-        {/* 4. Quick Actions/Status */}
+        
         <div className="bg-gradient-to-br from-emerald-600/20 to-transparent border border-emerald-500/10 p-6 rounded-3xl flex flex-col justify-center items-center text-center">
           <TrendingUp className="text-emerald-500 mb-4" size={40} />
           <h3 className="font-bold text-lg">System Health</h3>
@@ -118,7 +118,7 @@ async function AdminStats() {
   );
 }
 
-// --- Helper Components ---
+
 
 function StatCard({ title, value, icon, subValue, isTrend = false }: any) {
   return (

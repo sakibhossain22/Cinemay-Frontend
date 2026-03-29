@@ -226,7 +226,6 @@ export async function buyMovie(movieId: string, type: 'BUY' | 'RENT') {
             body: JSON.stringify({ movieId, type }),
         });
         const res = await response.json();
-        console.log(res)
         if (res.ok) {
             return { success: res.success, message: res.message, ok: res.ok, userId: res.userId, amount: res.amount, clientSecret : res.clientSecret, transactionId : res.transactionId };
         }
@@ -251,9 +250,8 @@ export async function confirmMoviePurchase(movieId: string, type: string, paymen
             body: JSON.stringify({ movieId, type, paymentIntentId }),
         });
         const res = await response.json();
-        console.log(res)
         if (res.ok) {
-            // revalidatePath(`/movies/details/${customid}`);
+            
             return { success: res.success, message: res.message, ok: res.ok };
         }
         return { success: false, error: res.error || "Failed to confirm movie purchase" };

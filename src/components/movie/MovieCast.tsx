@@ -13,14 +13,14 @@
 //                 Movie Cast Details
 //             </h1>
 
-//             {/* কাস্ট গ্রিড লেআউট */}
+//             
 //             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
 //                 {cast && cast.slice(0, 12).map((member: any) => (
 //                     <div
 //                         key={member.id}
 //                         className="group bg-zinc-900 rounded-xl overflow-hidden border border-white/5 hover:border-emerald-500/50 transition-all duration-300 shadow-lg"
 //                     >
-//                         {/* অভিনেতা/অভিনেত্রীর ছবি */}
+//                         
 //                         <div className="relative aspect-[2/3] h-auto w-auto bg-zinc-800">
 //                             {member.profile_path ? (
 //                                 <Image
@@ -37,7 +37,7 @@
 //                             )}
 //                         </div>
 
-//                         {/* টেক্সট ডিটেইলস */}
+//                         
 //                         <div className="p-3">
 //                             <h2 className="font-bold text-sm text-white truncate">
 //                                 {member.name}
