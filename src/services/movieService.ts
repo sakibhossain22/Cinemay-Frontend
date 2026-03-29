@@ -3,7 +3,7 @@ import axiosInstance from "@/lib/axios";
 
 export async function getTrendingMoviesForCarousel() {
     try {
-        const response = await axiosInstance.get('/media/all-media?category=TRENDING&limit=5');
+        const response = await axiosInstance.get('/media/all-media?category=TRENDING&limit=8');
         return response.data.data;
     } catch (error) {
         console.error('Error fetching trending movies:', error);

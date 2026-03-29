@@ -1,7 +1,10 @@
-import { env } from "@/env";
 import { createAuthClient } from "better-auth/react";
-const API_URL = process.env.NEXT_PUBLIC_AUTH_URL
+
+
 export const authClient = createAuthClient({
-    baseURL: API_URL,
+    baseURL: "http://localhost:5000", // আপনার API সার্ভারের URL
+    fetchOptions: {
+        credentials: "include", // এটি খুবই গুরুত্বপূর্ণ! নাহলে কুকি আদান-প্রদান হবে না
+    },
     withCredentials: true,
 });

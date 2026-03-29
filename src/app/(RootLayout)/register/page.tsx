@@ -8,6 +8,7 @@ import * as z from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2, Mail, Lock, User, Phone } from "lucide-react";
+import { toast } from "sonner";
 
 // ১. Zod Schema: নাম, ইমেইল, ফোন এবং পাসওয়ার্ডের জন্য ভ্যালিডেশন
 const registerSchema = z.object({
@@ -37,18 +38,19 @@ const RegisterPage = () => {
     setError("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
+      const response = await fetch(`http://localhost:5000/api/authentication/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(data),
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message || "Registration failed");
-      } else {
+      const res = await response.json()
+      if (res.success) {
+        toast.success(res.message || "Registration successful!");
         router.push("/login");
+      } else {
+        toast.error(res.error || "Registration failed");
+        setError(res.error || "Registration failed");
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");

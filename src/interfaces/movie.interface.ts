@@ -33,6 +33,7 @@ export interface IMovie {
 }
 
 export interface IMovieDetail {
+    backdropUrl?: string | null;
     id: string;
     tmdb_id: string;
     title: string;

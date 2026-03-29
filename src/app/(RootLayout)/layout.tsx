@@ -4,15 +4,17 @@ import "../globals.css";
 import Navbar from "@/components/navbar1";
 import { AppSidebar } from "@/components/home/app-sidebar";
 import BottomNav from "@/components/home/BottomNav";
+import { getSession } from "@/services/userService";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getSession();
   return (
     <div className="bg-black dark text-zinc-100 antialiased min-h-screen flex flex-col overflow-x-hidden">
-      <Navbar />
+      <Navbar userInfo={session} />
 
       <SidebarProvider>
         {/* flex-1 এবং w-full এর সাথে overflow-hidden যোগ করা হয়েছে */}

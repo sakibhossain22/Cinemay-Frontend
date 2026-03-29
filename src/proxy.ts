@@ -4,8 +4,10 @@ import { getSession } from "./services/userService";
 // middleware.ts
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
+
     const { user } = await getSession();
     const role = user?.role;
+    console.log(user)
 
     if (!user) {
         return NextResponse.redirect(new URL("/login", request.url));

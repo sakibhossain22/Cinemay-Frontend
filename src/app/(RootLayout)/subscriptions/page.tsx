@@ -7,6 +7,7 @@ import { subscribeToPlan } from '@/actions/subcscription.action';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '@/components/payment/CheckoutForm';
+import { getSession } from '@/services/userService';
 
 // ১. এটি কম্পোনেন্টের বাইরে রাখুন
 const stripePromise = loadStripe('pk_test_51OIDPJHroIJBMQjzF1Jel9pubaQSdu9G8kcSvS6R5MLEfNIret24NUn0b2Xg7bOENutA7VGDIeshxQhIv4rCpRsx00ChMVNbAi');
@@ -17,6 +18,13 @@ function Subscriptions() {
     const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
     const handleSubscription = async (planType: string) => {
+
+        const user = await getSession();
+        if (!user?.user?.id) {
+            toast.error("You must be logged in to subscribe to a plan.");
+            return;
+        }
+
         if (planType === "Free") return;
 
         try {
@@ -150,7 +158,7 @@ function PricingCard({ title, price, description, icon, features, buttonText, hi
                 className={`w-full py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all active:scale-95 ${isCurrent
                     ? 'bg-zinc-800 text-zinc-500 cursor-default'
                     : highlighted
-                        ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20'
+                        ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20'
                         : 'bg-white text-black hover:bg-zinc-200'
                     }`}
             >

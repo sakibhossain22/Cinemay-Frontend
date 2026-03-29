@@ -8,9 +8,10 @@ import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { IMovie } from '@/interfaces/movie.interface';
+import { IMovieDetail } from '@/interfaces/movie.interface';
+import Link from 'next/link';
 
-export default function MovieSlider({ movies }: { movies: IMovie }) {
+export default function MovieSlider({ movies }: { movies: IMovieDetail[] }) {
     return (
         <Swiper
             spaceBetween={0}
@@ -21,15 +22,15 @@ export default function MovieSlider({ movies }: { movies: IMovie }) {
             modules={[Autoplay, Pagination, Navigation]}
             className="mySwiper w-full h-full rounded-2xl overflow-hidden"
         >
-            {movies.data.map((movie: any) => (
+            {movies.map((movie: any) => (
                 <SwiperSlide key={movie.id}>
                     <div className="relative w-full h-full">
                         <Image
-                            src={movie.posterUrl}
+                            src={movie.backdropUrl || movie.posterUrl}
                             alt={movie.title}
-                            width={768}
-                            height={432}
-                            className="object-cover brightness-[0.4]"
+                            width={1920}
+                            height={500}
+                            className="object-cover mx-auto brightness-[0.7]"
                             priority
                         />
                         <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16 bg-gradient-to-t from-black via-transparent to-transparent">
@@ -42,8 +43,14 @@ export default function MovieSlider({ movies }: { movies: IMovie }) {
                                 </div>
                                 <p className="text-zinc-300 line-clamp-3">{movie.synopsis}</p>
                                 <div className="flex gap-4 pt-4">
-                                    <button className="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-full transition-all">Watch Now</button>
-                                    <button className="px-8 py-3 bg-white/10 backdrop-blur-md font-bold rounded-full">Details</button>
+                                    <Link href={`/movies/details/${movie.customid}`} className="px-8 cursor-pointer py-3 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-full transition-all">
+                                        <button className='cursor-pointer'>
+                                            Watch Now
+                                        </button>
+                                    </Link>
+                                    <Link href={`/movies/details/${movie.customid}/trailer`} className="px-8 cursor-pointer py-3 bg-white/10 backdrop-blur-md rounded-full transition-all hover:bg-white/20">
+                                        <button className='cursor-pointer'>Watch Trailer</button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

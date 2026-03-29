@@ -2,6 +2,12 @@ import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 
 export const auth = betterAuth({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
-    plugins: [nextCookies()] // make sure this is the last plugin in the array
+    baseURL: process.env.BETTER_AUTH_URL, 
+    plugins: [nextCookies()],
+    socialProviders: {
+        google: { 
+            clientId: process.env.GOOGLE_CLIENT_ID as string, 
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string, 
+        }, 
+    },
 })

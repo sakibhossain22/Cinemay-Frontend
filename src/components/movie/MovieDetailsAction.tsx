@@ -11,10 +11,8 @@ import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 import MovieCheckout from "../payment/MovieCheckOut"
 
-// মুভি পারচেজ/রেন্ট করার জন্য আপনার তৈরি করা অ্যাকশন ইমপোর্ট করুন
-// import { purchaseMovieAction } from "@/actions/purchase.action" 
 
-const MovieDetailsAction = ({ movie, hasPurchased }: { movie: any, hasPurchased: boolean }) => {
+const MovieDetailsAction = ({ movie, hasPurchased, userId }: { movie: any, hasPurchased: boolean, userId: string | null }) => {
     const stripePromise = loadStripe('pk_test_51OIDPJHroIJBMQjzF1Jel9pubaQSdu9G8kcSvS6R5MLEfNIret24NUn0b2Xg7bOENutA7VGDIeshxQhIv4rCpRsx00ChMVNbAi');
 
     const [paymentSecret, setPaymentSecret] = useState<string | null>(null);
@@ -23,8 +21,12 @@ const MovieDetailsAction = ({ movie, hasPurchased }: { movie: any, hasPurchased:
 
     const handleAction = async (type: 'BUY' | 'RENT') => {
         try {
+            if (!userId) {
+                toast.error(`You must be logged in to ${type.toLowerCase()} this movie.`);
+                return;
+            }
             setType(type);
-            const { success, message, ok, amount, clientSecret, error, transactionId, userId } = await buyMovie(movie.id, type);
+            const { success, message, ok, amount, clientSecret, error, transactionId } = await buyMovie(movie.id, type);
             if (success && ok) {
                 setPaymentSecret(clientSecret);
                 setTransactionId(transactionId);

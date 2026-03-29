@@ -3,7 +3,7 @@ import { getMovieDetails, getMoviesByCategory } from "@/services/movieService";
 import Image from "next/image";
 import { Tv } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { getMovieCast } from "@/services/getMovieCast";
+import { getMovieBackDrop, getMovieCast } from "@/services/getMovieCast";
 import CastSlider from "@/components/movie/CastSlider";
 import MovieCard from "@/components/home/MovieCard";
 import MovieInteractions from "@/components/movie/MovieInteractions";
@@ -12,7 +12,6 @@ import { trackMovieView } from "@/actions/history.action";
 import MovieDetailsAction from "@/components/movie/MovieDetailsAction";
 import { confirmMoviePurchase, getPurchaseHistory } from "@/actions/user.action";
 import { getSession } from "@/services/userService";
-import { toast } from "sonner";
 
 async function MovieDetails({ params, searchParams }: { params: Promise<{ customid: string, paymentStatus: string }>, searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const { customid } = await params;
@@ -24,10 +23,17 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
 
 
 
-
   const response = await getMovieDetails(customid);
   const casts = await getMovieCast(response.tmdb_id, response.type === "MOVIE" ? "movie" : "tv");
-  const movie = response;
+
+  const movies = response;
+  const backdropUrl = await getMovieBackDrop(movies.tmdb_id, movies.type === "MOVIE" ? "movie" : "tv");
+  const movie = {
+    ...movies,
+    backdropUrl: backdropUrl || movies.posterUrl,
+  };
+
+
 
   if (paymentStatus === "success") {
     await confirmMoviePurchase(movie.id, type, transactionId, customid);
@@ -36,6 +42,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
 
   const data = await getPurchaseHistory();
   const purchasedMovies = data?.data?.movies.map((item: any) => item.movie);
+
   let hasPurchased = purchasedMovies?.some((m: any) => m.id === movie.id);
 
   if (movie.contentType === "FREE") {
@@ -61,11 +68,12 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
         {/* Background Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src={movie.posterUrl}
+            src={movie.backdropUrl}
             alt="backdrop"
-            width={768}
-            height={432}
-            className="object-cover opacity-30 blur-[2px]"
+            width={1280}
+            height={720}
+            className="absolute right-0 top-0 h-full w-auto object-cover object-right opacity-70 blur-[2px]"
+            priority 
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
         </div>
@@ -100,7 +108,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
               </p>
 
               {/* Action Buttons */}
-              <MovieDetailsAction hasPurchased={hasPurchased} movie={movie} />
+              <MovieDetailsAction userId={userId} hasPurchased={hasPurchased} movie={movie} />
 
             </div>
 
