@@ -14,16 +14,13 @@ export default function CategoryList({ initialCategories }: { initialCategories:
     const [editName, setEditName] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // --- Add Category ---
     const handleAdd = async () => {
         if (!newCatName.trim()) return toast.error("Name is required");
         
         setLoading(true);
         try {
             const res = await addCategory(newCatName.toUpperCase());
-            
             if (res.success && res.data) {
-                // সার্ভার থেকে আসা আসল ডাটা (ID সহ) স্টেটে সেট করুন
                 setCategories([...categories, res.data]);
                 toast.success("Category added successfully");
                 setIsAdding(false);
@@ -38,17 +35,13 @@ export default function CategoryList({ initialCategories }: { initialCategories:
         }
     };
 
-    // --- Update Category ---
     const handleUpdate = async (id: string) => {
         if (!editName.trim()) return setEditingId(null);
-        
-        // যদি নাম পরিবর্তন না হয় তবে শুধু ক্লোজ করে দিন
         const original = categories.find(c => c.id === id);
         if (original?.name === editName) return setEditingId(null);
 
         try {
             const res = await updateCategory(id, editName.toUpperCase());
-            
             if (res.success) {
                 setCategories(categories.map(c => 
                     c.id === id ? { ...c, name: editName.toUpperCase() } : c
@@ -63,10 +56,8 @@ export default function CategoryList({ initialCategories }: { initialCategories:
         }
     };
 
-    // --- Delete Category ---
     const handleDelete = async (id: string) => {
         if (!confirm("Are you sure you want to delete this category?")) return;
-
         try {
             const res = await deleteCategory(id);
             if (res.success) {
@@ -81,10 +72,10 @@ export default function CategoryList({ initialCategories }: { initialCategories:
     };
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 max-w-full overflow-hidden">
             
             {isAdding ? (
-                <div className="flex gap-2 animate-in fade-in slide-in-from-top-1">
+                <div className="flex flex-col sm:flex-row gap-2 animate-in fade-in slide-in-from-top-1">
                     <input
                         className="flex-1 bg-zinc-900 border border-emerald-500/30 rounded-lg px-4 py-2 text-sm outline-none focus:border-emerald-500"
                         placeholder="New category name..."
@@ -92,71 +83,75 @@ export default function CategoryList({ initialCategories }: { initialCategories:
                         onChange={(e) => setNewCatName(e.target.value)}
                         autoFocus
                     />
-                    <button 
-                        disabled={loading}
-                        onClick={handleAdd} 
-                        className="bg-emerald-600 p-2 rounded-lg hover:bg-emerald-500 disabled:opacity-50"
-                    >
-                        {loading ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />}
-                    </button>
-                    <button onClick={() => setIsAdding(false)} className="bg-zinc-800 p-2 rounded-lg text-zinc-400">
-                        <X size={18} />
-                    </button>
+                    <div className="flex gap-2 justify-end">
+                        <button 
+                            disabled={loading}
+                            onClick={handleAdd} 
+                            className="bg-emerald-600 p-2 rounded-lg hover:bg-emerald-500 disabled:opacity-50 flex-1 sm:flex-none flex justify-center"
+                        >
+                            {loading ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />}
+                        </button>
+                        <button onClick={() => setIsAdding(false)} className="bg-zinc-800 p-2 rounded-lg text-zinc-400 flex-1 sm:flex-none flex justify-center">
+                            <X size={18} />
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <button
                     onClick={() => setIsAdding(true)}
-                    className="w-full py-3 border border-dashed border-white/10 rounded-xl text-md font-black uppercase tracking-widest text-white/70 hover:border-emerald-500/50 hover:text-emerald-500 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3 border border-dashed border-white/10 rounded-xl text-sm md:text-md font-black uppercase tracking-widest text-white/70 hover:border-emerald-500/50 hover:text-emerald-500 transition-all flex items-center justify-center gap-2"
                 >
                     <Plus size={14} /> Add New Category
                 </button>
             )}
 
-            
             <div className="bg-zinc-900/20 border border-white/5 rounded-2xl overflow-hidden">
-                <div className="grid grid-cols-12 bg-zinc-900/50 px-6 py-3 text-md font-black uppercase tracking-widest text-zinc-600">
-                    <div className="col-span-1">#</div>
-                    <div className="col-span-8">Category Name</div>
-                    <div className="col-span-3 text-right">Actions</div>
+                {/* Table Header - Hidden on very small screens or adjusted */}
+                <div className="flex bg-zinc-900/50 px-4 md:px-6 py-3 text-[10px] md:text-xs font-black uppercase tracking-widest text-zinc-600 border-b border-white/5">
+                    <div className="w-8 md:w-12">#</div>
+                    <div className="flex-1">Category Name</div>
+                    <div className="w-20 text-right">Actions</div>
                 </div>
 
                 <div className="divide-y divide-white/5">
                     {categories.map((cat, index) => (
-                        <div key={cat.id} className="grid grid-cols-12 px-6 py-4 items-center group hover:bg-white/[0.01] transition-all">
-                            <div className="col-span-1 text-md font-mono text-white ">
+                        <div key={cat.id} className="flex px-4 md:px-6 py-4 items-center group hover:bg-white/[0.01] transition-all">
+                            <div className="w-8 md:w-12 text-xs md:text-sm font-mono text-zinc-500">
                                 {String(index + 1).padStart(2, '0')}
                             </div>
 
-                            <div className="col-span-8">
+                            <div className="flex-1 min-w-0 pr-2">
                                 {editingId === cat.id ? (
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-2 w-full">
                                         <input
-                                            className="bg-black border border-emerald-500/50 rounded px-3 py-1 text-sm outline-none w-full max-w-[250px] text-emerald-400"
+                                            className="bg-black border border-emerald-500/50 rounded px-2 md:px-3 py-1 text-xs md:text-sm outline-none w-full max-w-[200px] text-emerald-400"
                                             value={editName}
                                             onChange={(e) => setEditName(e.target.value)}
                                             onKeyDown={(e) => e.key === 'Enter' && handleUpdate(cat.id)}
                                             autoFocus
                                         />
-                                        <button onClick={() => handleUpdate(cat.id)} className="text-emerald-500"><Check size={16}/></button>
-                                        <button onClick={() => setEditingId(null)} className="text-zinc-500"><X size={16}/></button>
+                                        <div className="flex gap-1">
+                                            <button onClick={() => handleUpdate(cat.id)} className="text-emerald-500 p-1"><Check size={16}/></button>
+                                            <button onClick={() => setEditingId(null)} className="text-zinc-500 p-1"><X size={16}/></button>
+                                        </div>
                                     </div>
                                 ) : (
-                                    <span className="text-sm font-bold uppercase tracking-tight text-zinc-300 group-hover:text-white transition-colors">
+                                    <span className="text-xs md:text-sm font-bold uppercase tracking-tight text-zinc-300 group-hover:text-white transition-colors truncate block">
                                         {cat.name}
                                     </span>
                                 )}
                             </div>
 
-                            <div className="col-span-3 flex justify-end gap-1">
+                            <div className="w-20 flex justify-end gap-1">
                                 <button
                                     onClick={() => { setEditingId(cat.id); setEditName(cat.name); }}
-                                    className="p-2 rounded-lg text-white/80 hover:text-emerald-500 hover:bg-emerald-500/5 transition-all"
+                                    className="p-1.5 md:p-2 rounded-lg text-white/60 hover:text-emerald-500 hover:bg-emerald-500/5 transition-all"
                                 >
                                     <Pencil size={14} />
                                 </button>
                                 <button
                                     onClick={() => handleDelete(cat.id)}
-                                    className="p-2 rounded-lg text-white/80 hover:text-rose-500 hover:bg-rose-500/5 transition-all"
+                                    className="p-1.5 md:p-2 rounded-lg text-white/60 hover:text-rose-500 hover:bg-rose-500/5 transition-all"
                                 >
                                     <Trash2 size={14} />
                                 </button>
