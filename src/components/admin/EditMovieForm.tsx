@@ -69,7 +69,7 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-2xl font-black transition-all shadow-lg shadow-emerald-900/20 disabled:opacity-50"
+                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 lg:px-8  lg:py-3 rounded-2xl font-black transition-all shadow-lg shadow-emerald-900/20 disabled:opacity-50"
                 >
                     {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
                     UPDATE MOVIE

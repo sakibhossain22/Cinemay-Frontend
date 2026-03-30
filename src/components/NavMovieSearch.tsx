@@ -20,7 +20,7 @@ function NavMovieSearch() {
             
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:5000/api/media/all-media?searchTerm=${encodeURIComponent(searchTerm)}`);
+                const response = await fetch(`https://cinemay-server.vercel.app/api/media/all-media?searchTerm=${encodeURIComponent(searchTerm)}`);
                 const data = await response.json();
                 setMovies(data.data.data || []);
             }

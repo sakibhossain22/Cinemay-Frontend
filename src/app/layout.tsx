@@ -4,7 +4,6 @@ import { Toaster } from "sonner";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CinemaY - Watch Your Favorite Movies",

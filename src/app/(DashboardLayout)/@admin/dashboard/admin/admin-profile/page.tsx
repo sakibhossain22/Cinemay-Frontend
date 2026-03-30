@@ -29,7 +29,7 @@ async function AdminProfile() {
                                     {profile.image ? (
                                         <Image src={profile.image} alt={profile.name} className="w-full h-full object-cover" width={96} height={96} />
                                     ) : (
-                                        <span className="text-3xl font-bold text-zinc-700">{profile.name[0]}</span>
+                                        <span className="text-3xl font-bold bg-emerald-600 px-4 py-3 rounded-full">{profile.name[0]}</span>
                                     )}
                                 </div>
                             </div>
@@ -46,7 +46,7 @@ async function AdminProfile() {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-black tracking-tighter uppercase mb-1 italic">
+                            <h1 className="text-2xl md:text-3xl font-black tracking-tighter uppercase mb-1 ">
                                 {profile.name}
                             </h1>
                             <div className="flex items-center gap-2 text-zinc-500 text-[10px] md:text-xs font-bold uppercase tracking-widest">
@@ -60,7 +60,7 @@ async function AdminProfile() {
 
                     <Link 
                         href="/dashboard/admin/admin-profile/update" 
-                        className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-zinc-100 text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all active:scale-95"
+                        className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 transition-all active:scale-95"
                     >
                         <Settings size={14} />
                         Edit Profile

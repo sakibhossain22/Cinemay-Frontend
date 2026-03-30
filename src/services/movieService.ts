@@ -1,10 +1,10 @@
 "use server";
-import axiosInstance from "@/lib/axios";
 
 export async function getTrendingMoviesForCarousel() {
     try {
-        const response = await axiosInstance.get('/media/all-media?category=TRENDING&limit=8');
-        return response.data.data;
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=TRENDING&limit=8`);
+        const data = await response.json();
+        return data.data;
     } catch (error) {
         console.error('Error fetching trending movies:', error);
         return [];
@@ -13,17 +13,41 @@ export async function getTrendingMoviesForCarousel() {
 
 export async function getTrendingMovies() {
     try {
-        const response = await axiosInstance.get('/media/movies');
-        return response.data.data;
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=TRENDING&limit=6`);
+        const data = await response.json();
+        return data?.data?.data;
     } catch (error) {
         console.error('Error fetching trending movies:', error);
         return [];
     }
 }
+export async function getBanglaMovies() {
+    try {
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=BANGLA&limit=6`);
+        const data = await response.json();
+        return data?.data?.data;
+    } catch (error) {
+        console.error('Error fetching bangla movies:', error);
+        return [];
+    }
+}
+export async function getHindiMovies() {
+    try {
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=HINDI&limit=6`);
+        const data = await response.json();
+        return data?.data?.data;
+    } catch (error) {
+        console.error('Error fetching hindi movies:', error);
+        return [];
+    }
+}
+
+
 export async function getTrendingSeries() {
     try {
-        const response = await axiosInstance.get('/media/series');
-        return response.data.data;
+        const response = await fetch(`${process.env.API_URL}/media/series`);
+        const data = await response.json();
+        return data?.data;
     } catch (error) {
         console.error('Error fetching trending series:', error);
         return [];
@@ -31,13 +55,15 @@ export async function getTrendingSeries() {
 }
 export async function getTrendingAnimations() {
     try {
-        const response = await axiosInstance.get('/media/animations');
-        return response.data.data;
+        const response = await fetch(`${process.env.API_URL}/media/animations`);
+        const data = await response.json();
+        return data?.data;
     } catch (error) {
         console.error('Error fetching trending animations:', error);
         return [];
     }
 }
+
 export async function getMovieDetails(customid: string) {
     try {
 
@@ -52,18 +78,20 @@ export async function getMovieDetails(customid: string) {
 
 export async function getMoviesByCategory(category: string) {
     try {
-        const response = await axiosInstance.get(`/media/all-media?category=${category}`);
-        return response.data.data;
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=${category}`);
+        const data = await response.json();
+        return data.data;
     } catch (error) {
-        console.error('Error fetching trending movies:', error);
+        console.error('Error fetching  movies:', error);
         return [];
     }
 }
 
 export async function getAllMovies() {
     try {
-        const response = await axiosInstance.get('/media/all-media');
-        return response.data.data;
+        const response = await fetch(`${process.env.API_URL}/media/all-media`);
+        const data = await response.json();
+        return data?.data;
     } catch (error) {
         console.error('Error fetching all movies:', error);
         return [];

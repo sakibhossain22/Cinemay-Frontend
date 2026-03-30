@@ -2,15 +2,34 @@ import { createAuthClient } from "better-auth/react";
 
 
 export const authClient = createAuthClient({
-    baseURL: "http://localhost:5000",
-    sessionOptions : {
-        refetchInterval : 5 * 60, // 5 minutes in seconds
-        refetchWhenOffline : false,
-        refetchOnReconnect : true,
-        refetchOnWindowFocus : false,
+    baseURL: "https://cinemay-server.vercel.app",
+    sessionOptions: {
+        refetchInterval: 5 * 60, // 5 minutes in seconds
+        refetchWhenOffline: false,
+        refetchOnReconnect: true,
+        refetchOnWindowFocus: false,
     },
     fetchOptions: {
         credentials: "include",
     },
-    withCredentials: true,
+    plugins: [
+        {
+            id: "next-cookies-request",
+            fetchPlugins: [
+                {
+                    id: "next-cookies-request-plugin",
+                    name: "next-cookies-request-plugin",
+                    hooks: {
+                        async onRequest(ctx) {
+                            if (typeof window === "undefined") {
+                                const { cookies } = await import("next/headers");
+                                const headers = await cookies();
+                                ctx.headers.set("cookie", headers.toString());
+                            }
+                        },
+                    },
+                },
+            ],
+        },
+    ],
 });

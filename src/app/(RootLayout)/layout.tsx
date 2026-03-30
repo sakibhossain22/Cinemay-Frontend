@@ -31,7 +31,7 @@ export default async function RootLayout({
               <SidebarTrigger className="hidden md:flex text-emerald-500 hover:bg-emerald-500/10 transition-all" />
             </div>
 
-            <div className="px-6 pb-24 md:pb-12">
+            <div className="lg:px-6 px-2 pb-2 lg:pb-12 md:pb-6">
               {children}
             </div>
             <Footer />

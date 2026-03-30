@@ -38,12 +38,17 @@ export default function ForgotPassword() {
     const onSendOTP = async (data: EmailValues) => {
         setLoading(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/authentication/forgot-password`, {
+            const res = await fetch(`https://cinemay-server.vercel.app/api/authentication/forgot-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: data.email }),
             });
             const response = await res.json();
+            console.log(response)
+            if (!response.success) {
+                toast.error(response.message || "Failed to send OTP.");
+                return;
+            }
             setUserEmail(data.email);
             setStep(2);
             toast.success(response.message || "OTP sent successfully!");
@@ -57,7 +62,7 @@ export default function ForgotPassword() {
     const onResetPassword = async (data: ResetValues) => {
         setLoading(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/authentication/reset-password`, {
+            const res = await fetch(`https://cinemay-server.vercel.app/api/authentication/reset-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: userEmail, code: Number(data.otp), newPassword: data.password }),

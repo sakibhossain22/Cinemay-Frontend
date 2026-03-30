@@ -79,8 +79,8 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
         </div>
 
 
-        <div className="relative z-10 max-w-8xl mx-auto px-6 h-full flex flex-col justify-center gap-6">
-          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+        <div className="relative z-10 max-w-8xl mx-auto px-2 h-full flex flex-col justify-center gap-2">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-8 items-start">
 
             <div className="w-36 md:w-44 lg:w-48 aspect-[2/3] relative rounded-lg overflow-hidden border border-zinc-800 shadow-2xl shrink-0 self-center md:self-start">
               <Image
@@ -88,7 +88,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
                 alt={movie.title}
                 fill
                 priority
-                className="object-cover object-top"
+                className="object-cover mt-6 lg:mt-0 object-top"
                 sizes="(max-width: 768px) 128px, (max-width: 1200px) 176px, 192px"
               />
             </div>
@@ -107,7 +107,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
                 <span className="truncate">{movie.genre.join(", ")}</span>
               </div>
 
-              <p className="max-w-3xl text-sm md:text-base leading-relaxed text-zinc-300 mb-6 line-clamp-1 md:line-clamp-none">
+              <p className="max-w-3xl text-sm md:text-base leading-relaxed text-zinc-300 mb-2 line-clamp-1 md:line-clamp-none">
                 {movie.synopsis}
               </p>
 

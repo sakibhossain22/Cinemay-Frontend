@@ -10,7 +10,7 @@ async function WatchList() {
         <div className="p-6 bg-black min-h-screen">
             <div className="max-w-6xl mx-auto">
                 <header className="mb-10 space-y-2">
-                    <h1 className="text-4xl flex items-center gap-2 font-black uppercase tracking-tighter text-white"><FilmIcon size={32} /> My <span className="text-emerald-500">Watchlist</span></h1>
+                    <h1 className="lg:text-4xl text-2xl md:text-3xl flex items-center gap-2 font-black uppercase tracking-tighter text-white"><FilmIcon size={32} /> My <span className="text-emerald-500">Watchlist</span></h1>
                     <p className="text-zinc-500 text-sm">Movies youve saved to watch later.</p>
                 </header>
 

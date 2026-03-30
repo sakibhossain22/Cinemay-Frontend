@@ -18,7 +18,7 @@ const navItems = [
   { name: "Movie", href: "/movies", icon: Film },
   { name: "TV Show", href: "/movies?type=SERIES", icon: Tv, type: "SERIES" },
   { name: "Animation", href: "/movies?type=ANIMATION", icon: Sparkles, type: "ANIMATION" },
-  { name: "Hindi Movies", href: "/movies?genre=HINDI", icon: Music, genre: "HINDI" },
+  { name: "Hindi Movies", href: "/movies?category=HINDI", icon: Music, category: "HINDI" },
 ];
 
 const NavContent = () => {
@@ -27,17 +27,14 @@ const NavContent = () => {
   
   // URL থেকে বর্তমান type এবং genre বের করা
   const currentType = searchParams.get("type");
-  const currentGenre = searchParams.get("genre");
+  const currentGenre = searchParams.get("category");
 
   return (
     <ul className="flex items-center justify-around">
       {navItems.map((item) => {
-        // Active State Logic:
-        // ১. যদি আইটেমে genre থাকে (যেমন Hindi), তবে URL এর genre এর সাথে মিলাবে
-        // ২. যদি আইটেমে type থাকে (যেমন TV Show), তবে URL এর type এর সাথে মিলাবে
-        // ৩. যদি কোনোটাই না থাকে (Home/Movie), তবে শুধু pathname চেক করবে (নিশ্চিত করবে যেন কোনো ফিল্টার না থাকে)
-        const isActive = item.genre 
-          ? currentGenre === item.genre 
+
+        const isActive = item.category 
+          ? currentGenre === item.category 
           : item.type 
             ? currentType === item.type 
             : pathname === item.href && !currentType && !currentGenre;

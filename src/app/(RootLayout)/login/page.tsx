@@ -39,7 +39,7 @@ const LoginPage = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(`http://localhost:5000/api/authentication/login`, {
+      const response = await fetch(`https://cinemay-server.vercel.app/api/authentication/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

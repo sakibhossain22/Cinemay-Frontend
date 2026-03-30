@@ -2,15 +2,17 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import {
     LayoutDashboard, Home, User, Star, ShoppingBag,
-    PlusSquare, Users, Settings, LogOut, Clapperboard, 
+    PlusSquare, Users, Settings, LogOut, Clapperboard,
     BarChart3, Menu, X
 } from "lucide-react";
 import { adminRoutes } from "@/routes/adminRoutes";
 import { userRoutes } from "@/routes/userRoutes";
+import { authClient } from "@/lib/authClient";
+
 
 const getIcon = (title: string) => {
     switch (title) {
@@ -26,14 +28,15 @@ const getIcon = (title: string) => {
     }
 };
 
-const SidebarContent = ({ 
-    pathname, 
-    activeRoutes, 
-    onClose 
-}: { 
-    pathname: string, 
-    activeRoutes: any[], 
-    onClose: () => void 
+
+const SidebarContent = ({
+    pathname,
+    activeRoutes,
+    onClose
+}: {
+    pathname: string,
+    activeRoutes: any[],
+    onClose: () => void
 }) => (
     <div className="flex flex-col h-full bg-zinc-950">
         <div className="p-6">
@@ -59,8 +62,8 @@ const SidebarContent = ({
                         href={route.url}
                         onClick={onClose}
                         className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${isActive
-                                ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
-                                : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
+                            ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
+                            : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
                             }`}
                     >
                         <span className={`${isActive ? "text-emerald-500" : "text-zinc-500 group-hover:text-zinc-300"}`}>
@@ -72,12 +75,7 @@ const SidebarContent = ({
             })}
         </nav>
 
-        <div className="p-4 border-t border-white/5">
-            <button className="flex items-center gap-3 px-4 py-3 w-full text-zinc-500 hover:text-red-400 hover:bg-red-400/5 rounded-lg transition-all">
-                <LogOut size={18} />
-                <span className="text-sm font-medium">Logout</span>
-            </button>
-        </div>
+  
     </div>
 );
 
@@ -90,7 +88,7 @@ export default function Sidebar({ role }: { role: "ADMIN" | "USER" }) {
     return (
         <>
             <div className="lg:hidden fixed top-4 left-4 z-[60]">
-                <button 
+                <button
                     onClick={() => setIsOpen(true)}
                     className="p-2 bg-zinc-900 border border-white/5 rounded-lg text-white shadow-lg active:scale-95 transition-transform"
                 >
@@ -99,24 +97,24 @@ export default function Sidebar({ role }: { role: "ADMIN" | "USER" }) {
             </div>
 
             <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 bg-zinc-950 border-r border-white/5 flex-col z-[50]">
-                <SidebarContent 
-                    pathname={pathname} 
-                    activeRoutes={activeRoutes} 
-                    onClose={() => setIsOpen(false)} 
+                <SidebarContent
+                    pathname={pathname}
+                    activeRoutes={activeRoutes}
+                    onClose={() => setIsOpen(false)}
                 />
             </aside>
 
             {isOpen && (
                 <div className="lg:hidden fixed inset-0 z-[100]">
-                    <div 
+                    <div
                         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
                         onClick={() => setIsOpen(false)}
                     />
                     <aside className="absolute left-0 top-0 h-full w-72 bg-zinc-950 border-r border-white/10 flex flex-col shadow-2xl animate-in slide-in-from-left duration-300">
-                        <SidebarContent 
-                            pathname={pathname} 
-                            activeRoutes={activeRoutes} 
-                            onClose={() => setIsOpen(false)} 
+                        <SidebarContent
+                            pathname={pathname}
+                            activeRoutes={activeRoutes}
+                            onClose={() => setIsOpen(false)}
                         />
                     </aside>
                 </div>

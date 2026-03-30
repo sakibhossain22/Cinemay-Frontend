@@ -2,130 +2,153 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Save, ChevronLeft, Loader2, User, Phone, Image as ImageIcon } from 'lucide-react';
+import { Save, ChevronLeft, Loader2, User, Phone, Image as ImageIcon, Pen, Camera } from 'lucide-react';
 import { toast } from 'sonner';
 import { getUserProfile, updateUserProfile } from '@/actions/user.action';
+import Image from 'next/image';
 
 export default function ProfileUpdatePage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
 
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
         image: ''
     });
+
     useEffect(() => {
         const fetchProfile = async () => {
-            const res = await getUserProfile();
-            if (res?.data) {
-                const profile = res.data;
-                setFormData({
-                    name: profile.name || '',
-                    phone: profile.phone || '',
-                    image: profile.image || ''
-                });
-            } else {
+            try {
+                const res = await getUserProfile();
+                if (res?.data) {
+                    const profile = res.data;
+                    setFormData({
+                        name: profile.name || '',
+                        phone: profile.phone || '',
+                        image: profile.image || ''
+                    });
+                }
+            } catch (error) {
                 toast.error("Failed to load profile data");
+            } finally {
+                setIsInitialLoading(false);
             }
         }
         fetchProfile();
-
     }, []);
-
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!formData.name) return toast.error("Name is required!");
 
-        if (!formData.name) {
-            return toast.error("Name is required!");
-        }
         try {
             setLoading(true);
             const response = await updateUserProfile(formData);
 
             if (response?.success) {
-                toast.success("Profile updated successfully!");
+                toast.success("Identity updated successfully");
                 router.refresh();
                 setTimeout(() => {
                     router.push('/dashboard/admin/admin-profile');
-                }, 1000);
+                }, 800);
             } else {
                 toast.error(response?.message || "Something went wrong");
             }
         } catch (error: any) {
-            console.error("Update Error:", error);
-            toast.error("Failed to update profile");
+            toast.error("Critical error during update");
         } finally {
             setLoading(false);
         }
     };
 
-    if (!formData || formData.name === '') {
+    if (isInitialLoading) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center">
-                <Loader2 className="animate-spin text-blue-600" size={40} />
+            <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center gap-4">
+                <Loader2 className="animate-spin text-emerald-500" size={32} />
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600">Syncing Node...</span>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-black text-zinc-100 p-6 flex flex-col items-center font-sans">
-            <div className="w-full max-w-2xl">
+        <div className="min-h-screen bg-[#0A0A0A] text-zinc-100 p-6 md:p-12 flex flex-col items-center font-sans">
+            <div className="w-full max-w-xl">
                 
                 <button
                     onClick={() => router.back()}
-                    className="flex items-center gap-2 text-zinc-500 hover:text-white mb-10 transition-colors group"
+                    className="flex items-center gap-2 text-zinc-600 hover:text-emerald-500 mb-12 transition-all group text-[10px] font-black uppercase tracking-widest"
                 >
-                    <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-                    Back to Profile
+                    <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                    Return to Dashboard
                 </button>
 
-                <div className="space-y-2 mb-10">
-                    <h1 className="text-4xl font-black tracking-tight uppercase">Edit Profile</h1>
-                    <p className="text-zinc-500">Update your public presence and contact details.</p>
+                <div className="relative mb-12 flex flex-col items-center md:items-start gap-6">
+                    <div className="relative group">
+                        <div className="w-24 h-24 rounded-3xl bg-zinc-900 border border-white/5 overflow-hidden flex items-center justify-center relative">
+                            {formData.image ? (
+                                <Image src={formData.image} alt="Preview" fill className="object-cover  opacity-60 group-hover:opacity-100 transition-opacity" />
+                            ) : (
+                                <User size={32} className="text-zinc-800" />
+                            )}
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Camera size={20} className="text-emerald-500" />
+                            </div>
+                        </div>
+                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                            <Pen size={10} className="text-black" />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                        <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase flex items-center gap-3">
+                           Edit Profile
+                        </h1>
+                        <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mt-2">Update your public presence and contact details.</p>
+                    </div>
                 </div>
 
-                <form onSubmit={handleUpdate} className="space-y-8">
-                    <div className="grid grid-cols-1 gap-6">
+                <form onSubmit={handleUpdate} className="space-y-6">
+                    <div className="grid grid-cols-1 gap-5">
                         <CustomInput
                             icon={<User size={18} />}
-                            label="Full Name"
+                            label="Legal Name"
                             placeholder="Shakib Hossain"
                             value={formData.name}
                             onChange={(val: string) => setFormData({ ...formData, name: val })}
                         />
                         <CustomInput
                             icon={<Phone size={18} />}
-                            label="Phone Number"
+                            label="Contact Line"
                             placeholder="019968xxxxx"
                             value={formData.phone}
                             onChange={(val: string) => setFormData({ ...formData, phone: val })}
                         />
                         <CustomInput
                             icon={<ImageIcon size={18} />}
-                            label="Profile Image URL"
+                            label="Avatar Source URL"
                             placeholder="https://your-image-url.com"
                             value={formData.image}
                             onChange={(val: string) => setFormData({ ...formData, image: val })}
                         />
                     </div>
 
-                    <div className="pt-6 border-t border-zinc-900 flex justify-end gap-4">
+                    <div className="pt-8 flex flex-col md:flex-row justify-end gap-4 border-t border-white/5">
                         <button
                             type="button"
                             onClick={() => router.back()}
-                            className="px-6 py-2.5 text-sm font-bold text-zinc-500 hover:text-zinc-300 transition-colors"
+                            className="px-8 py-4 text-[10px] font-black text-zinc-600 uppercase tracking-widest hover:text-zinc-300 transition-colors order-2 md:order-1"
                         >
-                            Cancel
+                            Abort Changes
                         </button>
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-8 py-2.5 bg-blue-600 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-blue-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 shadow-lg shadow-blue-600/20"
+                            className="px-10 py-4 bg-emerald-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-emerald-500 transition-all disabled:opacity-50 active:scale-95 shadow-xl shadow-emerald-600/10 order-1 md:order-2"
                         >
                             {loading ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
-                            {loading ? "Saving..." : "Save Changes"}
+                            {loading ? "Commiting..." : "Commit Update"}
                         </button>
                     </div>
                 </form>
@@ -136,10 +159,12 @@ export default function ProfileUpdatePage() {
 
 function CustomInput({ icon, label, placeholder, value, onChange }: any) {
     return (
-        <div className="space-y-3">
-            <label className="text-xs font-bold text-zinc-600 uppercase tracking-widest ml-1">{label}</label>
-            <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-500 transition-colors">
+        <div className="space-y-2 group">
+            <label className="text-[9px] font-black text-zinc-600 uppercase tracking-[0.3em] ml-2 group-focus-within:text-emerald-500 transition-colors">
+                {label}
+            </label>
+            <div className="relative">
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-700 group-focus-within:text-emerald-500 transition-colors">
                     {icon}
                 </div>
                 <input
@@ -147,7 +172,7 @@ function CustomInput({ icon, label, placeholder, value, onChange }: any) {
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder={placeholder}
-                    className="w-full bg-zinc-900/50 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-sm focus:border-blue-500 outline-none transition-all placeholder:text-zinc-700 text-zinc-200"
+                    className="w-full bg-[#111111] border border-white/5 rounded-2xl py-5 pl-14 pr-6 text-xs font-bold focus:border-emerald-500/50 outline-none transition-all placeholder:text-zinc-800 text-zinc-200 tracking-tight"
                 />
             </div>
         </div>
