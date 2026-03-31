@@ -267,7 +267,7 @@ export async function LogOutFunc() {
         const cookieStore = await cookies();
         
         // ব্যাকেন্ডে রিকোয়েস্ট পাঠানোর সময় কুকিগুলো সঠিকভাবে পাঠানো
-        const response = await fetch(`${process.env.API_URL}/auth/logout`, {
+        const response = await fetch(`https://cinemay-server.vercel.app/api/authentication/logout`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

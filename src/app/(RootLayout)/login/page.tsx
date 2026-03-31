@@ -62,24 +62,26 @@ const LoginPage = () => {
 
   // Google Login ফাংশন
   // Google Login ফাংশন
-  const handleGoogleLogin = async () => {
-    setGoogleLoading(true);
-    setError("");
-    try {
-      await authClient.signIn.social({
-        provider: "google",
-        fetchOptions: { credentials: "include" },
-        callbackURL: "/dashboard",
-      });
-    } catch (err) {
-      console.error(err);
-      setError("Google login failed. Please try again.");
-      setGoogleLoading(false);
-    }
-  };
+  // const handleGoogleLogin = async () => {
+  //   setGoogleLoading(true);
+  //   setError("");
+  //   const callbackUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`;
+  //   try {
+  //     await authClient.signIn.social({
+        
+  //       provider: "google",
+  //       fetchOptions: { credentials: "include" },
+  //       callbackURL: "http://localhost:3000/dashboard",
+  //     });
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError("Google login failed. Please try again.");
+  //     setGoogleLoading(false);
+  //   }
+  // };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black px-4">
+    <div className="min-h-52 flex items-center justify-center bg-black px-4">
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full"></div>
       </div>
@@ -91,7 +93,7 @@ const LoginPage = () => {
         </div>
 
 
-        <button
+        {/* <button
           onClick={handleGoogleLogin}
           disabled={googleLoading || loading}
           className="w-full mb-6 flex items-center justify-center gap-3 bg-white hover:bg-zinc-200 text-black font-bold py-2.5 rounded-lg transition-all active:scale-[0.98] disabled:opacity-50"
@@ -119,7 +121,7 @@ const LoginPage = () => {
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-[#0c0c0e] px-2 text-zinc-500 font-bold tracking-widest">Or continue with</span>
           </div>
-        </div>
+        </div> */}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 

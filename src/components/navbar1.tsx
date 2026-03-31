@@ -17,6 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import NavMovieSearch from "./NavMovieSearch";
 import { LogOutFunc } from "@/actions/user.action";
+import { authClient } from "@/lib/authClient";
 
 const Navbar = ({ userInfo }: { userInfo: any }) => {
   const pathname = usePathname();
@@ -48,7 +49,8 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
     try {
       setIsLoggingOut(true);
       const res = await LogOutFunc();
-      
+      console.log(res)
+      await authClient.signOut();
       if (res.success) {
         // সাকসেস হলে ইউজারকে লগইন পেজে পাঠিয়ে পেজ রিফ্রেশ করা
         router.push("/login");
