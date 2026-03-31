@@ -19,7 +19,7 @@ export default async function MediaPage({
     queryString.set("limit", "10");
 
     const res = await fetch(`${process.env.API_URL}/media/all-media?${queryString.toString()}`, {
-        cache: 'no-store'
+        next: { revalidate: 3600 }
     });
     const initialData = await res.json();
     return <AdminMediaLibrary initialData={initialData} />;
