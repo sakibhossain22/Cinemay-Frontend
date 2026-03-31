@@ -2,7 +2,9 @@
 
 export async function getTrendingMoviesForCarousel() {
     try {
-        const response = await fetch(`${process.env.API_URL}/media/all-media?category=TRENDING&limit=8`);
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=TRENDING&limit=8`,{
+        next: { revalidate: 600 }
+    });
         const data = await response.json();
         return data.data;
     } catch (error) {
@@ -13,7 +15,9 @@ export async function getTrendingMoviesForCarousel() {
 
 export async function getTrendingMovies() {
     try {
-        const response = await fetch(`${process.env.API_URL}/media/all-media?category=TRENDING&limit=6`);
+        const response = await fetch(`${process.env.API_URL}/media/all-media?type=MOVIE&limit=6`, {
+            next: { revalidate: 600 }
+        });
         const data = await response.json();
         return data?.data?.data;
     } catch (error) {
@@ -23,7 +27,9 @@ export async function getTrendingMovies() {
 }
 export async function getBanglaMovies() {
     try {
-        const response = await fetch(`${process.env.API_URL}/media/all-media?category=BANGLA&limit=6`);
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=BANGLA&limit=6`, {
+            next: { revalidate: 600 }
+        });
         const data = await response.json();
         return data?.data?.data;
     } catch (error) {
@@ -33,7 +39,9 @@ export async function getBanglaMovies() {
 }
 export async function getHindiMovies() {
     try {
-        const response = await fetch(`${process.env.API_URL}/media/all-media?category=HINDI&limit=6`);
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=HINDI&limit=6`, {
+            next: { revalidate: 600 }
+        });
         const data = await response.json();
         return data?.data?.data;
     } catch (error) {
@@ -45,7 +53,9 @@ export async function getHindiMovies() {
 
 export async function getTrendingSeries() {
     try {
-        const response = await fetch(`${process.env.API_URL}/media/series`);
+        const response = await fetch(`${process.env.API_URL}/media/series`, {
+            next: { revalidate: 600 }
+        });
         const data = await response.json();
         return data?.data;
     } catch (error) {
@@ -55,7 +65,9 @@ export async function getTrendingSeries() {
 }
 export async function getTrendingAnimations() {
     try {
-        const response = await fetch(`${process.env.API_URL}/media/animations`);
+        const response = await fetch(`${process.env.API_URL}/media/animations`, {
+            next: { revalidate: 600 }
+        });
         const data = await response.json();
         return data?.data;
     } catch (error) {

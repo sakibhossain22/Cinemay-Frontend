@@ -13,12 +13,13 @@ const nextConfig: NextConfig = {
       },
       {
         // Explicitly map v1 API requests
-        source: "/api/v1/:path*",
-        destination: process.env.BACKEND_URL + "/api/v1/:path*",
+        source: "/api/:path*",
+        destination: process.env.BACKEND_URL + "/api/:path*",
       },
     ];
   },
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { protocol: 'https', hostname: '**' },
       { protocol: 'http', hostname: '**' },

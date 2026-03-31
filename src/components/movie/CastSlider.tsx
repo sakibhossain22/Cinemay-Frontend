@@ -42,6 +42,7 @@ export default function CastSlider({ casts }: { casts: any[] }) {
                                         alt={member.name}
                                         width={768}
                                         height={432}
+                                        quality={30}
                                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                                     />
                                 ) : (

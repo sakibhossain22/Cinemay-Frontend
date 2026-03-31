@@ -1,57 +1,43 @@
-import { Separator } from "@/components/ui/separator";
+"use client";
 
-export default function Loading() {
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-black p-6 md:p-12 space-y-10 animate-pulse">
+import { Play } from "lucide-react";
 
-            
-            <div className="relative w-full h-[400px] bg-zinc-900/50 rounded-3xl border border-white/5 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-                <div className="absolute bottom-10 left-10 space-y-4 w-full max-w-lg">
-                    <div className="h-10 bg-zinc-800 rounded-lg w-3/4" />
-                    <div className="h-4 bg-zinc-800 rounded-md w-1/2" />
-                    <div className="flex gap-3">
-                        <div className="h-12 w-32 bg-emerald-500/20 rounded-full" />
-                        <div className="h-12 w-32 bg-zinc-800 rounded-full" />
-                    </div>
-                </div>
-            </div>
+const Loading = () => {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[400px] w-full space-y-6">
+      <div className="relative flex items-center justify-center">
+        
+        <div className="w-24 h-24 rounded-full border-t-4 border-b-4 border-emerald-500/20 border-l-4 border-r-4 animate-spin border-t-emerald-500 border-b-emerald-500"></div>
+        
+        <div className="absolute w-16 h-16 bg-emerald-500/10 rounded-full blur-xl animate-pulse"></div>
 
-            
-            <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                    <div className="h-8 bg-zinc-900 rounded-md w-48" />
-                    <div className="h-8 bg-zinc-900 rounded-md w-20" />
-                </div>
-                <Separator className="bg-zinc-800" />
-
-                
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                    {[...Array(10)].map((_, i) => (
-                        <div key={i} className="space-y-3">
-                            <div className="aspect-[2/3] w-full bg-zinc-900 rounded-xl border border-white/5" />
-                            <div className="space-y-2">
-                                <div className="h-4 bg-zinc-900 rounded w-full" />
-                                <div className="h-3 bg-zinc-900 rounded w-2/3" />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            
-            <div className="space-y-6">
-                <div className="h-8 bg-zinc-900 rounded-md w-40" />
-                <div className="flex gap-4 overflow-hidden">
-                    {[...Array(6)].map((_, i) => (
-                        <div key={i} className="shrink-0 w-32 space-y-2">
-                            <div className="aspect-square bg-zinc-900 rounded-full border border-white/5" />
-                            <div className="h-3 bg-zinc-900 rounded w-full mx-auto" />
-                        </div>
-                    ))}
-                </div>
-            </div>
-
+        <div className="absolute flex items-center justify-center bg-zinc-900 border border-white/10 w-14 h-14 rounded-full shadow-2xl animate-bounce-slow">
+          <Play className="w-6 h-6 text-emerald-500 fill-emerald-500" />
         </div>
-    );
-}
+      </div>
+
+      <div className="flex flex-col items-center">
+        <h3 className="text-xl font-bold text-white tracking-widest uppercase">
+          Loading<span className="animate-pulse text-emerald-500">...</span>
+        </h3>
+        <p className="text-gray-500 text-sm font-medium">Preparing your cinema experience</p>
+      </div>
+
+      <style jsx global>{`
+        @keyframes bounce-slow {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 2s ease-in-out infinite;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default Loading;

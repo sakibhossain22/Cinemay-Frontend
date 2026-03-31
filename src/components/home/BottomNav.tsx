@@ -25,7 +25,6 @@ const NavContent = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
-  // URL থেকে বর্তমান type এবং genre বের করা
   const currentType = searchParams.get("type");
   const currentGenre = searchParams.get("category");
 

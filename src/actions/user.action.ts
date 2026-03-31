@@ -227,7 +227,7 @@ export async function buyMovie(movieId: string, type: 'BUY' | 'RENT') {
         });
         const res = await response.json();
         if (res.ok) {
-            return { success: res.success, message: res.message, ok: res.ok, userId: res.userId, amount: res.amount, clientSecret : res.clientSecret, transactionId : res.transactionId };
+            return { success: res.success, message: res.message, ok: res.ok, userId: res.userId, amount: res.amount, clientSecret: res.clientSecret, transactionId: res.transactionId };
         }
         return { success: false, error: res.error || "Failed to buy movie" };
     }
@@ -251,7 +251,7 @@ export async function confirmMoviePurchase(movieId: string, type: string, paymen
         });
         const res = await response.json();
         if (res.ok) {
-            
+
             return { success: res.success, message: res.message, ok: res.ok };
         }
         return { success: false, error: res.error || "Failed to confirm movie purchase" };
@@ -261,3 +261,47 @@ export async function confirmMoviePurchase(movieId: string, type: string, paymen
         return { success: false, error: "An error occurred while confirming the movie purchase" };
     }
 }
+
+export async function LogOutFunc() {
+    try {
+        const cookieStore = await cookies();
+        
+        // ব্যাকেন্ডে রিকোয়েস্ট পাঠানোর সময় কুকিগুলো সঠিকভাবে পাঠানো
+        const response = await fetch(`${process.env.API_URL}/auth/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // cookieStore.toString() সরাসরি কুকি হেডার হিসেবে কাজ করে
+                "Cookie": cookieStore.toString(),
+            },
+            // সার্ভার-টু-সার্ভার কলের ক্ষেত্রে credentials: "include" সাধারণত লাগে না 
+            // যদি আপনি 'Cookie' হেডার ম্যানুয়ালি পাস করেন।
+        });
+
+        const res = await response.json();
+
+        if (!response.ok || !res.success) {
+            return { success: false, error: res.error || "Failed to log out" };
+        }
+
+        // --- অত্যন্ত গুরুত্বপূর্ণ: ফ্রন্টেন্ডের কুকিগুলো ক্লিয়ার করা ---
+        // আপনার ব্যাকেন্ড হয়তো কুকি ক্লিয়ার করেছে, কিন্তু Next.js কে সেটা ম্যানুয়ালি করতে হয়
+        const cookiesToClear = ["better-auth.session_token", "accessToken"];
+        
+        cookiesToClear.forEach(cookieName => {
+            cookieStore.set(cookieName, "", {
+                maxAge: 0,
+                path: "/",
+            });
+        });
+
+        // ক্যাশ ক্লিয়ার করে হোমপেজে রিডাইরেক্ট বা রিফ্রেশ করা
+        revalidatePath("/");
+
+        return { success: true, ok: true, message: "Logged out successfully" };
+    }
+    catch (error) {
+        console.error("Error during logout:", error);
+        return { success: false, ok: false, error: "An error occurred while logging out" };
+    }
+}     

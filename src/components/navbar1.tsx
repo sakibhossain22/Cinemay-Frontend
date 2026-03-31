@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, LayoutDashboard, Loader2, LogOut } from "lucide-react";
+import { Menu, LayoutDashboard, Loader2, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -15,18 +15,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { authClient } from "@/lib/authClient"; 
 import NavMovieSearch from "./NavMovieSearch";
+import { LogOutFunc } from "@/actions/user.action";
 
 const Navbar = ({ userInfo }: { userInfo: any }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const user = userInfo?.user;
+  const isLoading = userInfo === undefined;
 
-  const isLoading = userInfo === undefined; 
-
+  // স্ক্রল হ্যান্ডলার
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -42,15 +43,25 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
     { name: "Subscriptions", href: "/subscriptions" },
   ];
 
-  const logOut = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          router.push("/login");
-          router.refresh();
-        },
-      },
-    });
+  // লগআউট ফাংশন
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      const res = await LogOutFunc();
+      
+      if (res.success) {
+        // সাকসেস হলে ইউজারকে লগইন পেজে পাঠিয়ে পেজ রিফ্রেশ করা
+        router.push("/login");
+        router.refresh(); 
+      } else {
+        console.error(res.error);
+        alert("Logout failed: " + res.error);
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   return (
@@ -64,8 +75,8 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between gap-4">
-
           
+          {/* Logo Section */}
           <div className="flex items-center gap-8 shrink-0">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.4)] group-hover:rotate-12 transition-transform">
@@ -76,6 +87,7 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
               </span>
             </Link>
 
+            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-6">
               {navLinks.map((link) => (
                 <Link
@@ -92,14 +104,14 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
             </div>
           </div>
 
-          
+          {/* Search Bar */}
           <div className="hidden md:flex flex-1 max-w-md mx-4">
             <div className="relative w-full group">
               <NavMovieSearch />
             </div>
           </div>
 
-          
+          {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             {isLoading ? (
               <Loader2 className="size-5 animate-spin text-emerald-500" />
@@ -111,14 +123,20 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
                     Dashboard
                   </Link>
                 </Button>
-                <Button 
-                  onClick={logOut} 
-                  variant="destructive" 
-                  size="sm" 
+                
+                <Button
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  variant="destructive"
+                  size="sm"
                   className="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20"
                 >
-                  <LogOut className="mr-2 size-4" />
-                  Logout
+                  {isLoggingOut ? (
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                  ) : (
+                    <LogOut className="mr-2 size-4" />
+                  )}
+                  {isLoggingOut ? "Logging out..." : "Logout"}
                 </Button>
               </div>
             ) : (
@@ -133,7 +151,7 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
             )}
           </div>
 
-          
+          {/* Mobile Menu (Sheet) */}
           <div className="flex items-center gap-2 lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -158,14 +176,33 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
                       {link.name}
                     </Link>
                   ))}
+                  
                   <div className="mt-8 flex flex-col gap-4">
                     {user ? (
                       <>
-                        <Button asChild className="w-full bg-black text-white/80 font-bold text-lg justify-start py-6">
-                          <Link href="/dashboard">Dashboard</Link>
+                        <div className="flex items-center gap-3 px-2 py-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
+                            <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500">
+                                <User className="size-6" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold text-white truncate">{user.name || "User"}</p>
+                                <p className="text-xs text-zinc-500 truncate">{user.email}</p>
+                            </div>
+                        </div>
+                        <Button asChild className="w-full bg-zinc-900 hover:bg-zinc-800 text-white justify-start py-6">
+                          <Link href="/dashboard">
+                            <LayoutDashboard className="mr-2 size-5" />
+                            Dashboard
+                          </Link>
                         </Button>
-                        <Button onClick={logOut} variant="destructive" className="w-full py-6">
-                          Logout
+                        <Button 
+                          onClick={handleLogout} 
+                          disabled={isLoggingOut}
+                          variant="destructive" 
+                          className="w-full py-6 flex items-center justify-center gap-2"
+                        >
+                          {isLoggingOut ? <Loader2 className="animate-spin size-5" /> : <LogOut className="size-5" />}
+                          {isLoggingOut ? "Logging out..." : "Logout"}
                         </Button>
                       </>
                     ) : (
@@ -173,7 +210,7 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
                         <Button asChild className="bg-emerald-600 w-full py-6">
                           <Link href="/register">Join Now</Link>
                         </Button>
-                        <Button asChild variant="outline" className="py-6 text-white">
+                        <Button asChild variant="outline" className="py-6 text-white border-zinc-700">
                           <Link href="/login">Login</Link>
                         </Button>
                       </>

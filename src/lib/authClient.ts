@@ -4,7 +4,7 @@ import { createAuthClient } from "better-auth/react";
 export const authClient = createAuthClient({
     baseURL: "https://cinemay-server.vercel.app",
     sessionOptions: {
-        refetchInterval: 5 * 60, // 5 minutes in seconds
+        refetchInterval: 5 * 60,
         refetchWhenOffline: false,
         refetchOnReconnect: true,
         refetchOnWindowFocus: false,

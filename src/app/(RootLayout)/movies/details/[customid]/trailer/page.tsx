@@ -131,6 +131,7 @@ export default function WatchTrailer({ params }: { params: any }) {
                                                     width={400}
                                                     height={700}
                                                     src={movie.posterUrl}
+                                                    quality={30}
                                                     alt={movie.title}
                                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                                                 />

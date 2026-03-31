@@ -77,7 +77,8 @@ function NavMovieSearch() {
                                             <Image 
                                                 src={movie.posterUrl || "/placeholder.jpg"} 
                                                 alt={movie.title} 
-                                                fill 
+                                                fill
+                                                quality={20}
                                                 className="object-cover"
                                             />
                                         </div>

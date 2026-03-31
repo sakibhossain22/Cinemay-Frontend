@@ -155,6 +155,7 @@ export default function PlayMovie({ params }: { params: any }) {
                                                     src={movie.backdropUrl || movie.posterUrl} 
                                                     alt={movie.title} 
                                                     fill 
+                                                    quality={30}
                                                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                                                 />
                                                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />

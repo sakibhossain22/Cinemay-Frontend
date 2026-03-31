@@ -30,6 +30,7 @@ export default function MovieSlider({ movies }: { movies: IMovieDetail[] }) {
                             alt={movie.title}
                             width={1920}
                             height={500}
+                            quality={50}
                             className="object-cover mx-auto brightness-[0.7]"
                             priority
                         />

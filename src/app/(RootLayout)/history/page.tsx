@@ -39,6 +39,7 @@ async function History() {
                                 <Image
                                     src={item.media.posterUrl}
                                     alt={item.media.title}
+                                    quality={30}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110 group-hover:opacity-40"
                                 />

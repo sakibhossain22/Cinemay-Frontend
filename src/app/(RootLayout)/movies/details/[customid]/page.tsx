@@ -72,6 +72,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
             alt="backdrop"
             width={1280}
             height={720}
+            quality={50}
             className="absolute right-0 top-0 h-full w-auto object-cover object-right opacity-70 blur-[2px]"
             priority
           />
@@ -87,6 +88,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
                 src={movie.posterUrl}
                 alt={movie.title}
                 fill
+                quality={30}
                 priority
                 className="object-cover mt-6 lg:mt-0 object-top"
                 sizes="(max-width: 768px) 128px, (max-width: 1200px) 176px, 192px"

@@ -38,7 +38,7 @@ const RegisterPage = () => {
     setError("");
 
     try {
-      const response = await fetch(`https://cinemay-server.vercel.app/api/authentication/register`, {
+      const response = await fetch(`/api/authentication/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

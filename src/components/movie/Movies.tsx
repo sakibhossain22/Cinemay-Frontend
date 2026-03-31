@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Search, Crown, Film, Star, ChevronLeft, ChevronRight,
@@ -55,6 +55,10 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
     params.set('page', '1');
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
+
+  // useEffect(() => {
+  //   setLoading(true);
+  // }, [searchParams]);
 
   return (
     <div className="lg:p-4 p-0 md:p-8 bg-[#020617] min-h-screen text-zinc-300 font-sans selection:bg-emerald-500/30">
@@ -153,6 +157,7 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
                   <div className="relative aspect-[2/3] overflow-hidden">
                     <Image
                       fill
+                      quality={30}
                       src={movie.posterUrl}
                       alt={movie.title}
                       className="object-cover group-hover:scale-110 transition-transform duration-700"

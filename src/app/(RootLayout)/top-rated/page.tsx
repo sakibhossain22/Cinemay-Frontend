@@ -2,13 +2,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Play } from "lucide-react";
+import { getTrending } from "@/actions/new.action";
 
 async function TopRated() {
-    const res = await fetch(`${process.env.API_URL}/media/all-media?category=TOP RATED`, {
-        cache: 'no-store'
-    });
+    const trendingData = await getTrending("TOP RATED");
 
-    const trendingData = await res.json();
     const items = trendingData?.data?.data || [];
     const meta = trendingData?.data?.meta || {};
 
@@ -39,6 +37,7 @@ async function TopRated() {
                                         height={700}
                                         src={item.posterUrl}
                                         alt={item.title}
+                                        quality={30}
                                         className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110 group-hover:opacity-60"
                                         loading="lazy"
                                     />

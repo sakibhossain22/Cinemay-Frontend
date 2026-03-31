@@ -39,7 +39,7 @@ const LoginPage = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(`https://cinemay-server.vercel.app/api/authentication/login`, {
+      const response = await fetch(`/api/authentication/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -68,7 +68,8 @@ const LoginPage = () => {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:3000/dashboard",
+        fetchOptions: { credentials: "include" },
+        callbackURL: "/dashboard",
       });
     } catch (err) {
       console.error(err);
@@ -89,7 +90,7 @@ const LoginPage = () => {
           <p className="text-zinc-400 mt-2">Sign in to continue to CinemaY</p>
         </div>
 
-        
+
         <button
           onClick={handleGoogleLogin}
           disabled={googleLoading || loading}
@@ -121,7 +122,7 @@ const LoginPage = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          
+
           <div>
             <label className="block text-sm font-medium text-zinc-300 mb-1.5">Email Address</label>
             <div className="relative group">
@@ -137,7 +138,7 @@ const LoginPage = () => {
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
           </div>
 
-          
+
           <div>
             <div className="flex justify-between mb-1.5">
               <label className="block text-sm font-medium text-zinc-300">Password</label>

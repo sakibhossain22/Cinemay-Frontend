@@ -1,7 +1,7 @@
 import { IMovieDetail } from "@/interfaces/movie.interface";
 import Image from "next/image";
 import Link from "next/link";
-import { Play } from "lucide-react"; // Play icon এর জন্য lucide-react ব্যবহার করা হয়েছে
+import { Play } from "lucide-react"; 
 
 export default function MovieCard({ movie }: { movie: IMovieDetail }) {
   return (
@@ -15,6 +15,7 @@ export default function MovieCard({ movie }: { movie: IMovieDetail }) {
           alt={movie.title}
           width={768}
           height={432}
+          quality={30}
           className="object-cover w-full h-full transition-all duration-500 group-hover:scale-110 group-hover:opacity-60"
           loading="lazy"
         />
