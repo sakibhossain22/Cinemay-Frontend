@@ -3,9 +3,9 @@
 import { adminStatistics } from '@/actions/adminAction';
 import React from 'react';
 import {
-  Users, Film, DollarSign, TrendingUp, TrendingDown,
-  MessageSquare, PlayCircle, Star, Smartphone, 
-  ArrowUpRight, Clock, ShieldCheck, Globe
+  Users, Film, DollarSign, TrendingDown,
+  MessageSquare, PlayCircle, Star, 
+  ArrowUpRight,  Globe
 } from 'lucide-react';
 
 async function AdminStats() {
@@ -23,7 +23,6 @@ async function AdminStats() {
   return (
     <div className="p-4 md:p-8 space-y-8 bg-[#050505] min-h-screen text-zinc-300 selection:bg-emerald-500/30">
       
-      {/* --- HEADER --- */}
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-8">
         <div>
           <h1 className="text-4xl font-black text-white tracking-tighter uppercase ">
@@ -34,16 +33,15 @@ async function AdminStats() {
         <div className="flex gap-3">
           <div className="px-4 py-2 bg-zinc-900 border border-white/5 rounded-full text-xs font-bold flex items-center gap-2">
             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
-            Live Revenue: ${summary.totalRevenue}
+            Live Revenue: ${summary?.totalRevenue}
           </div>
         </div>
       </header>
 
-      {/* --- TOP SUMMARY CARDS --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <StatCard
           title="Total Revenue"
-          value={`$${summary.totalRevenue}`}
+          value={`$${summary?.totalRevenue}`}
           subValue={summary.revenueGrowth}
           icon={<DollarSign className="text-emerald-400" />}
           trend={summary.revenueGrowth.includes('-') ? 'down' : 'up'}
@@ -71,7 +69,6 @@ async function AdminStats() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* --- CONTENT DISTRIBUTION (LHS) --- */}
         <div className="lg:col-span-1 bg-zinc-900/30 border border-white/5 rounded-[2rem] p-6 backdrop-blur-xl">
           <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
             <PlayCircle size={20} className="text-emerald-500" /> Content Mix
@@ -104,7 +101,6 @@ async function AdminStats() {
           </div>
         </div>
 
-        {/* --- TOP PERFORMING MOVIES (CENTER) --- */}
         <div className="lg:col-span-2 bg-zinc-900/30 border border-white/5 rounded-[2rem] p-6">
           <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
             <Star size={20} className="text-amber-500" /> Top Performing Media
@@ -122,7 +118,6 @@ async function AdminStats() {
             ))}
           </div>
 
-          {/* --- RECENT TRANSACTIONS TABLE --- */}
           <div className="mt-8">
             <h3 className="text-xs font-black uppercase text-zinc-600 tracking-[0.2em] mb-4">Recent Ledger</h3>
             <div className="overflow-x-auto">
@@ -163,7 +158,6 @@ async function AdminStats() {
   );
 }
 
-{/* --- MINI COMPONENTS --- */}
 
 function StatCard({ title, value, icon, subValue, trend }: any) {
   return (
