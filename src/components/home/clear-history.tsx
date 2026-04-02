@@ -1,6 +1,6 @@
 "use client"
 import { Trash2 } from "lucide-react"
-import { clearAllHistory } from '@/actions/history.action' // ধরে নিচ্ছি clearAction-টিও আছে
+import { clearAllHistory } from '@/actions/history.action' 
 import { toast } from "sonner";
 
 function ClearHistory() {
@@ -9,9 +9,7 @@ function ClearHistory() {
         e.preventDefault();
         const result = await clearAllHistory();
         if (result.success) {
-            // Optionally, you can add a success message or refresh the page to reflect changes
             toast.success("History cleared successfully!");
-            // window.location.reload(); // Refresh the page to update the history list
         } else {
             toast.error("Failed to clear history. Please try again.");
         }

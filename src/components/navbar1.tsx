@@ -28,7 +28,6 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
   const user = userInfo?.user;
   const isLoading = userInfo === undefined;
 
-  // স্ক্রল হ্যান্ডলার
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -44,15 +43,12 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
     { name: "Subscriptions", href: "/subscriptions" },
   ];
 
-  // লগআউট ফাংশন
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
       const res = await LogOutFunc();
-      console.log(res)
       await authClient.signOut();
       if (res.success) {
-        // সাকসেস হলে ইউজারকে লগইন পেজে পাঠিয়ে পেজ রিফ্রেশ করা
         router.push("/login");
         router.refresh(); 
       } else {

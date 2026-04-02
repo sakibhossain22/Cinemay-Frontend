@@ -10,7 +10,6 @@ import Link from "next/link";
 import { Loader2, Mail, Lock, User, Phone } from "lucide-react";
 import { toast } from "sonner";
 
-// ১. Zod Schema: নাম, ইমেইল, ফোন এবং পাসওয়ার্ডের জন্য ভ্যালিডেশন
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),

@@ -38,13 +38,12 @@ export default function ForgotPassword() {
     const onSendOTP = async (data: EmailValues) => {
         setLoading(true);
         try {
-            const res = await fetch(`https://cinemay-server.vercel.app/api/authentication/forgot-password`, {
+            const res = await fetch(`${process.env.BACKEND_URL}/api/authentication/forgot-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: data.email }),
             });
             const response = await res.json();
-            console.log(response)
             if (!response.success) {
                 toast.error(response.message || "Failed to send OTP.");
                 return;
@@ -62,7 +61,7 @@ export default function ForgotPassword() {
     const onResetPassword = async (data: ResetValues) => {
         setLoading(true);
         try {
-            const res = await fetch(`https://cinemay-server.vercel.app/api/authentication/reset-password`, {
+            const res = await fetch(`${process.env.BACKEND_URL}/api/authentication/reset-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: userEmail, code: Number(data.otp), newPassword: data.password }),
@@ -82,10 +81,8 @@ export default function ForgotPassword() {
     };
 
     return (
-        // ১. overflow-hidden এবং h-screen যোগ করা হয়েছে যাতে স্ক্রল না হয়
         <div className="h-screen w-full flex items-center justify-center bg-black px-4 relative overflow-hidden select-none">
             
-            {/* Background Glow */}
             <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full -z-10 animate-pulse"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[30%] h-[30%] bg-emerald-500/5 blur-[120px] rounded-full -z-10"></div>
 
@@ -98,7 +95,6 @@ export default function ForgotPassword() {
                     </Link>
                 )}
 
-                {/* --- STEP 1: Enter Email --- */}
                 {step === 1 && (
                     <div className="animate-in fade-in slide-in-from-right-4 duration-500">
                         <h1 className="text-3xl font-bold text-white mb-2">Forgot <span className="text-emerald-500">Password?</span></h1>

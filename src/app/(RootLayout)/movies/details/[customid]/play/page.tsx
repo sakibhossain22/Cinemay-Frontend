@@ -55,7 +55,6 @@ export default function PlayMovie({ params }: { params: any }) {
         </div>
     );
 
-    // চেক করা হচ্ছে এটি সিরিজ কি না
     const isSeries = movieData.episodeLinks && movieData.episodeLinks.length > 0;
 
     return (

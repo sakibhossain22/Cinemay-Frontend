@@ -1,7 +1,6 @@
 import { MessageSquare, Users } from "lucide-react";
 import { toast } from "sonner";
 
-// কম্পোনেন্টের ভেতরে এই ফাংশনটি যোগ করুন
  const scrollToSection = (id: string) => {
   const element = document.getElementById(id);
   if (element) {
@@ -11,7 +10,6 @@ import { toast } from "sonner";
   }
 };
 
-// রিটার্ন স্টেটমেন্টে বাটনগুলো এভাবে দিন:
 <div className="flex items-center gap-6 py-4">
   
 

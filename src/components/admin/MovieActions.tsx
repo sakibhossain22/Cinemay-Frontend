@@ -21,8 +21,7 @@ export default function MovieActions({ movieId, customid, movieTitle }: MovieAct
 
         setIsDeleting(true);
         try {
-            // আপনার ডিলিট সার্ভার অ্যাকশন বা API এখানে কল করুন
-            // const res = await deleteMovie(movieId);
+
             const res = await deleteMovie(movieId);
             if (!res.success) {
                 toast.error(res.message || "Failed to delete movie");

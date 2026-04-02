@@ -8,10 +8,7 @@ import * as z from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2, Mail, Lock } from "lucide-react";
-import { authClient } from "@/lib/authClient";
-import Image from "next/image";
 import { toast } from "sonner";
-// আপনার auth-client টি ইম্পোর্ট করুন
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address").min(1, "Email is required"),
@@ -34,7 +31,6 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  // ইমেইল/পাসওয়ার্ড লগইন
   const onSubmit = async (data: LoginFormValues) => {
     setLoading(true);
     setError("");

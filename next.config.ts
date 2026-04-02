@@ -24,6 +24,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '**' },
       { protocol: 'http', hostname: '**' },
     ],
+    qualities: [20, 30, 40, 50, 60, 70, 75, 80],
+    minimumCacheTTL : 60
   },
 };
 

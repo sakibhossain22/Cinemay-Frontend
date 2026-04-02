@@ -1,4 +1,4 @@
-const API_KEY = "ce2a7837d2f4c072f0976a85f1d3a08a"; // আপনার TMDB API কী এখানে দিন
+const API_KEY = "ce2a7837d2f4c072f0976a85f1d3a08a";
 
 
 export async function getMovieCast(movieId: string, type: string) {

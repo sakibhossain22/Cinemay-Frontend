@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 const API_URL = process.env.API_URL
@@ -49,7 +50,7 @@ export async function deleteReview(reviewId: string) {
     }
 }
 
-export async function updateReviewStatus(reviewId: string) {
+export async function updateReviewStatus(reviewId: string, customid: string) {
     try {
         const cookieStore = await cookies();
         const response = await fetch(`${API_URL}/admin/update-review-status/${reviewId}`, {
@@ -63,6 +64,7 @@ export async function updateReviewStatus(reviewId: string) {
         });
         const res = await response.json();
         if (res.ok) {
+            revalidatePath(`/movies/details/${customid}`)
             return { success: true, ok: res.ok, data: res.data };
         }
         return { success: false, data: [], error: res.error || "Failed to update review status" };

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"; // স্লাইডার ব্যবহারের জন্য এটি ক্লায়েন্ট কম্পোনেন্ট হতে হবে
+"use client"; 
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import Image from "next/image";
 
-// Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 

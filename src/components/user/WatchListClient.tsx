@@ -10,11 +10,9 @@ import { useRouter } from 'next/navigation';
 
 export default function WatchListClient({ initialData }: { initialData: any[] }) {
     const router = useRouter();
-    // initialData আপডেট হলে যেন স্টেট আপডেট হয় সেজন্য useEffect বা সরাসরি list মেইনটেইন করা
     const [list, setList] = useState(initialData);
     const [deletingId, setDeletingId] = useState<string | null>(null);
 
-    // props থেকে আসা ডাটা পরিবর্তন হলে স্টেট আপডেট করার জন্য (Safety check)
     useEffect(() => {
         setList(initialData);
     }, [initialData]);
@@ -23,16 +21,13 @@ export default function WatchListClient({ initialData }: { initialData: any[] })
         try {
             setDeletingId(watchListId);
             
-            // ১. সার্ভার অ্যাকশন কল
             const res = await removeFromWatchlist(watchListId);
             
             if (res.success) {
-                // ২. ক্লায়েন্ট সাইড স্টেট থেকে ফিল্টার করে রিমুভ করা (এটিই পেজ আপডেট করবে)
                 setList((prev) => prev.filter(item => item.id !== watchListId));
                 
                 toast.success("Removed from watchlist");
                 
-                // ৩. সার্ভার ডাটা রিফ্রেশ করা (যাতে হার্ড রিফ্রেশে ডাটা ঠিক থাকে)
                 router.refresh(); 
             } else {
                 toast.error(res.error || "Failed to remove item");

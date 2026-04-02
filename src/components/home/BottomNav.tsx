@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// নেভিগেশন আইটেম লিস্ট
 const navItems = [
   { name: "Home", href: "/", icon: Home },
   { name: "Movie", href: "/movies", icon: Film },

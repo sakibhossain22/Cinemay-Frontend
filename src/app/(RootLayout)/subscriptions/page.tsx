@@ -9,7 +9,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '@/components/payment/CheckoutForm';
 import { getSession } from '@/services/userService';
 
-// ১. এটি কম্পোনেন্টের বাইরে রাখুন
 const stripePromise = loadStripe('pk_test_51OIDPJHroIJBMQjzF1Jel9pubaQSdu9G8kcSvS6R5MLEfNIret24NUn0b2Xg7bOENutA7VGDIeshxQhIv4rCpRsx00ChMVNbAi');
 
 function Subscriptions() {
@@ -34,7 +33,6 @@ function Subscriptions() {
             const response = await subscribeToPlan(planType.toLocaleUpperCase());
             toast.dismiss(loadingToast);
 
-            // ২. এরর হ্যান্ডেলিং এবং এক্সিস্টিং পেমেন্ট চেক
             if (!response.success) {
                 if (response.clientSecret) {
                     toast.error(response.message || "Complete your existing payment");
@@ -46,7 +44,6 @@ function Subscriptions() {
                 return;
             }
 
-            // ৩. সাকসেসফুলি সিক্রেট পেলে মডাল ওপেন
             if (response.clientSecret) {
                 setPaymentSecret(response.clientSecret);
                 setTransactionId(response.transactionId);
@@ -123,7 +120,6 @@ function Subscriptions() {
     );
 }
 
-// PricingCard কম্পোনেন্ট আগের মতোই থাকবে
 function PricingCard({ title, price, description, icon, features, buttonText, highlighted = false, isCurrent = false, badge, yearly = false, onSelect }: any) {
     return (
         <div className={`relative p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col ${highlighted

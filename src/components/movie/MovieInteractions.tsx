@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { useEffect, useState, useTransition, useMemo } from "react";
 import { getWatchListByUser, toggleWatchlist } from "@/actions/movieAction";
 
-export default function MovieInteractions({ movieId, userId }: any) {
+export default function MovieInteractions({ movieId, userId, role }: any) {
   const [isPending, startTransition] = useTransition();
   const [watchLists, setWatchLists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,6 +37,9 @@ export default function MovieInteractions({ movieId, userId }: any) {
   }, [watchLists, movieId]);
 
   const handleWatchlist = () => {
+    if (role === "ADMIN") {
+      return toast.error("Only User Can Add Movie To Watchlist")
+    }
     if (!userId) {
       return toast.error("Please login to add to watchlist");
     }
@@ -76,14 +79,12 @@ export default function MovieInteractions({ movieId, userId }: any) {
       <button
         onClick={handleWatchlist}
         disabled={isLoadingState}
-        className={`flex items-center gap-2 transition-all duration-300 ${
-          inWatchlist ? "text-emerald-400" : "text-zinc-400 hover:text-emerald-400"
-        } ${isLoadingState ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`flex items-center gap-2 transition-all duration-300 ${inWatchlist ? "text-emerald-400" : "text-zinc-400 hover:text-emerald-400"
+          } ${isLoadingState ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         <Bookmark
-          className={`w-6 h-6 transition-all ${
-            inWatchlist ? "fill-emerald-400 scale-110" : "fill-none"
-          }`}
+          className={`w-6 h-6 transition-all ${inWatchlist ? "fill-emerald-400 scale-110" : "fill-none"
+            }`}
         />
         <span className="text-sm font-medium">
           {loading ? "Checking..." : inWatchlist ? "In Watchlist" : "Watchlist"}

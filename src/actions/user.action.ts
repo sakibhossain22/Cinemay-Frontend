@@ -266,16 +266,13 @@ export async function LogOutFunc() {
     try {
         const cookieStore = await cookies();
         
-        // ব্যাকেন্ডে রিকোয়েস্ট পাঠানোর সময় কুকিগুলো সঠিকভাবে পাঠানো
-        const response = await fetch(`https://cinemay-server.vercel.app/api/authentication/logout`, {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/authentication/logout`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                // cookieStore.toString() সরাসরি কুকি হেডার হিসেবে কাজ করে
                 "Cookie": cookieStore.toString(),
             },
-            // সার্ভার-টু-সার্ভার কলের ক্ষেত্রে credentials: "include" সাধারণত লাগে না 
-            // যদি আপনি 'Cookie' হেডার ম্যানুয়ালি পাস করেন।
+
         });
 
         const res = await response.json();
@@ -284,8 +281,7 @@ export async function LogOutFunc() {
             return { success: false, error: res.error || "Failed to log out" };
         }
 
-        // --- অত্যন্ত গুরুত্বপূর্ণ: ফ্রন্টেন্ডের কুকিগুলো ক্লিয়ার করা ---
-        // আপনার ব্যাকেন্ড হয়তো কুকি ক্লিয়ার করেছে, কিন্তু Next.js কে সেটা ম্যানুয়ালি করতে হয়
+
         const cookiesToClear = ["better-auth.session_token", "accessToken"];
         
         cookiesToClear.forEach(cookieName => {
@@ -295,7 +291,7 @@ export async function LogOutFunc() {
             });
         });
 
-        // ক্যাশ ক্লিয়ার করে হোমপেজে রিডাইরেক্ট বা রিফ্রেশ করা
+
         revalidatePath("/");
 
         return { success: true, ok: true, message: "Logged out successfully" };

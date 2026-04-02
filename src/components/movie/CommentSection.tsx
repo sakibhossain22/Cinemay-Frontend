@@ -8,9 +8,8 @@ import { addComment } from "@/actions/movieAction";
 import { toast } from "sonner";
 
 export default function CommentSection({ comments, userId, customid, reviewId, depth = 0 }: any) {
-    // ডাটা যদি ফ্ল্যাট হয়, তবে সেটাকে নেস্টেড ট্রিতে রূপান্তর করি
     const nestedComments = useMemo(() => {
-        if (depth > 0) return comments; // অলরেডি নেস্টেড থাকলে আর দরকার নেই
+        if (depth > 0) return comments;
 
         const map: any = {};
         const roots: any[] = [];
@@ -21,7 +20,6 @@ export default function CommentSection({ comments, userId, customid, reviewId, d
 
         comments.forEach((c: any) => {
             if (c.parentId && map[c.parentId]) {
-                // যদি রিপ্লাই অলরেডি ডুপ্লিকেট না থাকে তবেই পুশ করবে
                 if (!map[c.parentId].replies.find((r: any) => r.id === c.id)) {
                     map[c.parentId].replies.push(map[c.id]);
                 }

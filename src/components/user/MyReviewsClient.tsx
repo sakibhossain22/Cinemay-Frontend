@@ -8,12 +8,10 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
   const [reviews, setReviews] = useState(initialReviews);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   
-  // এডিট স্টেটের জন্য
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
 
-  // ডিলিট হ্যান্ডলার
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this review?")) return;
     try {
@@ -30,13 +28,11 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
     }
   };
 
-  // এডিট শুরু করার হ্যান্ডলার
   const startEditing = (id: string, content: string) => {
     setEditingId(id);
     setEditContent(content);
   };
 
-  // আপডেট সেভ করার হ্যান্ডলার
   const handleSaveEdit = async (id: string) => {
     if (!editContent.trim()) return toast.error("Content cannot be empty");
 
@@ -49,7 +45,7 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
         toast.success("Review updated and sent for re-approval");
         setEditingId(null);
       } else {
-        toast.error(res?.message || "Update failed");
+        toast.error(res?.error || "Update failed");
       }
     } catch (error) {
       toast.error("An error occurred during update");

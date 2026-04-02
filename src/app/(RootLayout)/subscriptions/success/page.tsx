@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { CheckCircle2, Sparkles, ArrowRight, MoveUpIcon } from 'lucide-react';
-import confetti from 'canvas-confetti'; // এটি ইন্সটল করতে হবে: npm install canvas-confetti
+import confetti from 'canvas-confetti';
 import { useSearchParams } from 'next/navigation';
 import { confirmPayment } from '@/actions/subcscription.action';
 import { toast } from 'sonner';
@@ -15,7 +15,6 @@ export default function PaymentSuccess() {
 
 
     useEffect(() => {
-        // পেমেন্ট সফল হওয়ার আনন্দ উদযাপনের জন্য কনফেটি এনিমেশন
 
         const duration = 5 * 1000;
         const animationEnd = Date.now() + duration;

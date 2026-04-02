@@ -15,16 +15,13 @@ export default function CheckoutForm({ clientSecret }: { clientSecret: string; t
 
     setLoading(true);
 
-    // ১. পেমেন্ট কনফার্ম করা - এটি ইউজারকে রিডাইরেক্ট করবে
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // এখানে পেমেন্ট শেষ হলে ইউজারকে পাঠিয়ে দিবে
         return_url: `${window.location.origin}/subscriptions/success`,
       },
     });
 
-    // ২. যদি এখানে কোড আসে, তার মানে এরর হয়েছে (কারণ সাকসেস হলে রিডাইরেক্ট হয়ে যেত)
     if (error) {
       toast.error(error.message || "Payment failed. Please try again.");
     }

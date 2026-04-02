@@ -54,7 +54,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
 
   const user = await getSession();
   const userId = user?.user?.id;
-
+  const role = user?.user?.role
   await trackMovieView(movie.id);
 
 
@@ -149,6 +149,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
               <MovieInteractions
                 movieId={movie.id}
                 userId={userId}
+                role={role}
                 initialLikes={movie._count?.likes || 0}
                 isLiked={movie.likes?.some((l: any) => l.userId === userId)}
               />
@@ -159,6 +160,8 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
                   movieId={movie.id}
                   customid={movie.customid}
                   userId={userId}
+                  role={role}
+                  userStatus={user?.user?.status}
                   reviews={movie.reviews || []}
                 />
               </div>

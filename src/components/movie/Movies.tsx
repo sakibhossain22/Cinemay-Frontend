@@ -56,9 +56,7 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  // useEffect(() => {
-  //   setLoading(true);
-  // }, [searchParams]);
+
 
   return (
     <div className="lg:p-4 p-0 md:p-8 bg-[#020617] min-h-screen text-zinc-300 font-sans selection:bg-emerald-500/30">

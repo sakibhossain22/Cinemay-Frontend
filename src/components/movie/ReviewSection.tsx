@@ -9,11 +9,17 @@ import Image from "next/image";
 import { toast } from "sonner";
 import CommentSection from "./CommentSection";
 
-export default function ReviewSection({ movieId, customid, userId, reviews }: any) {
+export default function ReviewSection({ movieId, customid, userId, reviews, role, userStatus }: any) {
   const [rating, setRating] = useState(0);
   const [isPending, startTransition] = useTransition();
 
-  const handleReviewSubmit = (formData: FormData): void => {
+  const handleReviewSubmit = (formData: FormData): any => {
+    if (role === "ADMIN") {
+      return toast.error("Only User Can Add Review to Movie")
+    }
+    if (userStatus === "BANNED") {
+      return toast.error("Banned User Can't Add Review to Movie")
+    }
     startTransition(async () => {
       try {
         const result = await submitReview(formData);
@@ -48,17 +54,17 @@ export default function ReviewSection({ movieId, customid, userId, reviews }: an
           <input type="hidden" name="rating" value={rating} />
 
           <div className="space-y-2">
-             <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Your Rating</p>
-             <div className="flex items-center gap-1.5 md:gap-2">
-                {[...Array(10)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 md:w-6 md:h-6 cursor-pointer transition-all duration-300 ${i < rating ? "fill-yellow-500 text-yellow-500 scale-110 drop-shadow-[0_0_8px_rgba(234,179,8,0.4)]" : "text-zinc-700 hover:text-zinc-500"}`}
-                    onClick={() => setRating(i + 1)}
-                  />
-                ))}
-                <span className="ml-3 text-emerald-400 font-bold text-sm md:text-lg">{rating || "0"}<span className="text-zinc-600 text-xs font-normal">/10</span></span>
-             </div>
+            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Your Rating</p>
+            <div className="flex items-center gap-1.5 md:gap-2">
+              {[...Array(10)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`w-5 h-5 md:w-6 md:h-6 cursor-pointer transition-all duration-300 ${i < rating ? "fill-yellow-500 text-yellow-500 scale-110 drop-shadow-[0_0_8px_rgba(234,179,8,0.4)]" : "text-zinc-700 hover:text-zinc-500"}`}
+                  onClick={() => setRating(i + 1)}
+                />
+              ))}
+              <span className="ml-3 text-emerald-400 font-bold text-sm md:text-lg">{rating || "0"}<span className="text-zinc-600 text-xs font-normal">/10</span></span>
+            </div>
           </div>
 
           <textarea
@@ -152,11 +158,11 @@ function ReviewCard({ review, userId, customid }: any) {
         {review.hasSpoiler ? (
           <div className="relative group/spoiler">
             <div className="blur-md select-none pointer-events-none group-hover/spoiler:blur-none group-active/spoiler:blur-none transition-all duration-500 text-zinc-300 text-sm leading-relaxed p-4 bg-zinc-800/20 rounded-xl border border-white/5">
-                {review.content}
+              {review.content}
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center group-hover/spoiler:opacity-0 group-active/spoiler:opacity-0 transition-opacity bg-black/40 rounded-xl backdrop-blur-sm cursor-help">
-                <AlertTriangle className="text-emerald-500 mb-1" size={20} />
-                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Spoiler - Click to view</span>
+              <AlertTriangle className="text-emerald-500 mb-1" size={20} />
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Spoiler - Click to view</span>
             </div>
           </div>
         ) : (
@@ -208,12 +214,12 @@ function ReviewCard({ review, userId, customid }: any) {
       )}
 
       <div className="pl-4 md:pl-8">
-          <CommentSection
-            comments={review.comments} 
-            userId={userId}
-            customid={customid}
-            reviewId={review.id}
-          />
+        <CommentSection
+          comments={review.comments}
+          userId={userId}
+          customid={customid}
+          reviewId={review.id}
+        />
       </div>
     </div>
   );

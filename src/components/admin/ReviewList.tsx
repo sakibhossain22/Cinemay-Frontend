@@ -18,9 +18,8 @@ import { deleteReview, updateReviewStatus } from '@/actions/review.admin.action'
 
 export default function ReviewList({ initialReviews }: { initialReviews: any[] }) {
     const [reviews, setReviews] = useState(initialReviews);
-
-    const handleApprove = async (id: string) => {
-        const res = await updateReviewStatus(id);
+    const handleApprove = async (id: string, customid : string) => {
+        const res = await updateReviewStatus(id,customid);
         if (!res.success) {
             toast.error("Failed to approve review");
             return;
@@ -104,7 +103,7 @@ export default function ReviewList({ initialReviews }: { initialReviews: any[] }
                             <div className="flex items-center gap-2 w-full md:w-auto border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
                                 {!review.isApproved ? (
                                     <button
-                                        onClick={() => handleApprove(review.id)}
+                                        onClick={() => handleApprove(review?.id, review?.movie?.customid)}
                                         className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-emerald-500 text-black border border-emerald-500/20 px-3 md:px-4 py-2 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all"
                                     >
                                         <CheckCircle size={14} /> Approve
