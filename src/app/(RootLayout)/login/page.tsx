@@ -36,10 +36,10 @@ const LoginPage = () => {
 
   const handleGitHubLogin = async () => {
     const res = await authClient.signIn.social({
-      provider: "github",
-      callbackURL: "https://cinemay.vercel.app/dashboard", 
+      provider: "google",
+      callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL + "/dashboard",
     });
-    console.log("GitHub login response:", res);
+    console.log("Google login response:", res);
 
   };
   // Demo Login Handler
