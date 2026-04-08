@@ -72,12 +72,12 @@ export default function CategoryList({ initialCategories }: { initialCategories:
     };
 
     return (
-        <div className="space-y-4 max-w-full overflow-hidden">
+        <div className="space-y-4 max-w-full overflow-hidden transition-colors duration-300">
             
             {isAdding ? (
                 <div className="flex flex-col sm:flex-row gap-2 animate-in fade-in slide-in-from-top-1">
                     <input
-                        className="flex-1 bg-zinc-900 border border-emerald-500/30 rounded-lg px-4 py-2 text-sm outline-none focus:border-emerald-500"
+                        className="flex-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-emerald-500/30 rounded-lg px-4 py-2 text-sm outline-none focus:border-emerald-500 text-zinc-900 dark:text-zinc-100 shadow-sm dark:shadow-none"
                         placeholder="New category name..."
                         value={newCatName}
                         onChange={(e) => setNewCatName(e.target.value)}
@@ -87,11 +87,11 @@ export default function CategoryList({ initialCategories }: { initialCategories:
                         <button 
                             disabled={loading}
                             onClick={handleAdd} 
-                            className="bg-emerald-600 p-2 rounded-lg hover:bg-emerald-500 disabled:opacity-50 flex-1 sm:flex-none flex justify-center"
+                            className="bg-emerald-600 p-2 rounded-lg hover:bg-emerald-500 text-white disabled:opacity-50 flex-1 sm:flex-none flex justify-center"
                         >
                             {loading ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />}
                         </button>
-                        <button onClick={() => setIsAdding(false)} className="bg-zinc-800 p-2 rounded-lg text-zinc-400 flex-1 sm:flex-none flex justify-center">
+                        <button onClick={() => setIsAdding(false)} className="bg-zinc-100 dark:bg-zinc-800 p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 flex-1 sm:flex-none flex justify-center transition-colors">
                             <X size={18} />
                         </button>
                     </div>
@@ -99,24 +99,24 @@ export default function CategoryList({ initialCategories }: { initialCategories:
             ) : (
                 <button
                     onClick={() => setIsAdding(true)}
-                    className="w-full py-3 border border-dashed border-white/10 rounded-xl text-sm md:text-md font-black uppercase tracking-widest text-white/70 hover:border-emerald-500/50 hover:text-emerald-500 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3 border border-dashed border-zinc-300 dark:border-white/10 rounded-xl text-sm md:text-md font-black uppercase tracking-widest text-zinc-500 dark:text-white/70 hover:border-emerald-500/50 hover:text-emerald-500 transition-all flex items-center justify-center gap-2"
                 >
                     <Plus size={14} /> Add New Category
                 </button>
             )}
 
-            <div className="bg-zinc-900/20 border border-white/5 rounded-2xl overflow-hidden">
-                {/* Table Header - Hidden on very small screens or adjusted */}
-                <div className="flex bg-zinc-900/50 px-4 md:px-6 py-3 text-[10px] md:text-xs font-black uppercase tracking-widest text-zinc-600 border-b border-white/5">
+            <div className="bg-white dark:bg-zinc-900/20 border border-zinc-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-sm dark:shadow-none">
+                {/* Table Header */}
+                <div className="flex bg-zinc-50 dark:bg-zinc-900/50 px-4 md:px-6 py-3 text-[10px] md:text-xs font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-600 border-b border-zinc-100 dark:border-white/5">
                     <div className="w-8 md:w-12">#</div>
                     <div className="flex-1">Category Name</div>
                     <div className="w-20 text-right">Actions</div>
                 </div>
 
-                <div className="divide-y divide-white/5">
+                <div className="divide-y divide-zinc-100 dark:divide-white/5">
                     {categories.map((cat, index) => (
-                        <div key={cat.id} className="flex px-4 md:px-6 py-4 items-center group hover:bg-white/[0.01] transition-all">
-                            <div className="w-8 md:w-12 text-xs md:text-sm font-mono text-zinc-500">
+                        <div key={cat.id} className="flex px-4 md:px-6 py-4 items-center group hover:bg-zinc-50 dark:hover:bg-white/[0.01] transition-all">
+                            <div className="w-8 md:w-12 text-xs md:text-sm font-mono text-zinc-300 dark:text-zinc-500">
                                 {String(index + 1).padStart(2, '0')}
                             </div>
 
@@ -124,19 +124,19 @@ export default function CategoryList({ initialCategories }: { initialCategories:
                                 {editingId === cat.id ? (
                                     <div className="flex items-center gap-2 w-full">
                                         <input
-                                            className="bg-black border border-emerald-500/50 rounded px-2 md:px-3 py-1 text-xs md:text-sm outline-none w-full max-w-[200px] text-emerald-400"
+                                            className="bg-zinc-50 dark:bg-black border border-emerald-500/50 rounded px-2 md:px-3 py-1 text-xs md:text-sm outline-none w-full max-w-[200px] text-emerald-600 dark:text-emerald-400"
                                             value={editName}
                                             onChange={(e) => setEditName(e.target.value)}
                                             onKeyDown={(e) => e.key === 'Enter' && handleUpdate(cat.id)}
                                             autoFocus
                                         />
                                         <div className="flex gap-1">
-                                            <button onClick={() => handleUpdate(cat.id)} className="text-emerald-500 p-1"><Check size={16}/></button>
-                                            <button onClick={() => setEditingId(null)} className="text-zinc-500 p-1"><X size={16}/></button>
+                                            <button onClick={() => handleUpdate(cat.id)} className="text-emerald-500 p-1 hover:scale-110 transition-transform"><Check size={16}/></button>
+                                            <button onClick={() => setEditingId(null)} className="text-zinc-400 p-1 hover:scale-110 transition-transform"><X size={16}/></button>
                                         </div>
                                     </div>
                                 ) : (
-                                    <span className="text-xs md:text-sm font-bold uppercase tracking-tight text-zinc-300 group-hover:text-white transition-colors truncate block">
+                                    <span className="text-xs md:text-sm font-bold uppercase tracking-tight text-zinc-700 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors truncate block">
                                         {cat.name}
                                     </span>
                                 )}
@@ -145,13 +145,13 @@ export default function CategoryList({ initialCategories }: { initialCategories:
                             <div className="w-20 flex justify-end gap-1">
                                 <button
                                     onClick={() => { setEditingId(cat.id); setEditName(cat.name); }}
-                                    className="p-1.5 md:p-2 rounded-lg text-white/60 hover:text-emerald-500 hover:bg-emerald-500/5 transition-all"
+                                    className="p-1.5 md:p-2 rounded-lg text-zinc-400 dark:text-white/60 hover:text-emerald-500 hover:bg-emerald-500/5 transition-all"
                                 >
                                     <Pencil size={14} />
                                 </button>
                                 <button
                                     onClick={() => handleDelete(cat.id)}
-                                    className="p-1.5 md:p-2 rounded-lg text-white/60 hover:text-rose-500 hover:bg-rose-500/5 transition-all"
+                                    className="p-1.5 md:p-2 rounded-lg text-zinc-400 dark:text-white/60 hover:text-rose-500 hover:bg-rose-500/5 transition-all"
                                 >
                                     <Trash2 size={14} />
                                 </button>

@@ -2,17 +2,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
     LayoutDashboard, Home, User, Star, ShoppingBag,
-    PlusSquare, Users, Settings, LogOut, Clapperboard,
+    PlusSquare, Users, Settings, Clapperboard,
     BarChart3, Menu, X
 } from "lucide-react";
 import { adminRoutes } from "@/routes/adminRoutes";
 import { userRoutes } from "@/routes/userRoutes";
-import { authClient } from "@/lib/authClient";
-
 
 const getIcon = (title: string) => {
     switch (title) {
@@ -28,7 +26,6 @@ const getIcon = (title: string) => {
     }
 };
 
-
 const SidebarContent = ({
     pathname,
     activeRoutes,
@@ -38,14 +35,14 @@ const SidebarContent = ({
     activeRoutes: any[],
     onClose: () => void
 }) => (
-    <div className="flex flex-col h-full bg-zinc-950">
+    <div className="flex flex-col h-full bg-white dark:bg-zinc-950">
         <div className="p-6">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center font-bold text-black">
                         C
                     </div>
-                    <span className="text-xl font-bold text-white uppercase tracking-wider">CinemaY</span>
+                    <span className="text-xl font-bold text-zinc-900 dark:text-white uppercase tracking-wider">CinemaY</span>
                 </div>
                 <button onClick={onClose} className="lg:hidden text-zinc-400 hover:text-white transition-colors">
                     <X size={24} />
@@ -63,7 +60,7 @@ const SidebarContent = ({
                         onClick={onClose}
                         className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${isActive
                             ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
-                            : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
+                            : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-white"
                             }`}
                     >
                         <span className={`${isActive ? "text-emerald-500" : "text-zinc-500 group-hover:text-zinc-300"}`}>
@@ -74,8 +71,6 @@ const SidebarContent = ({
                 );
             })}
         </nav>
-
-  
     </div>
 );
 
@@ -90,13 +85,13 @@ export default function Sidebar({ role }: { role: "ADMIN" | "USER" }) {
             <div className="lg:hidden fixed top-4 left-4 z-[60]">
                 <button
                     onClick={() => setIsOpen(true)}
-                    className="p-2 bg-zinc-900 border border-white/5 rounded-lg text-white shadow-lg active:scale-95 transition-transform"
+                    className="p-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 rounded-lg text-zinc-900 dark:text-white shadow-lg active:scale-95 transition-transform"
                 >
                     <Menu size={20} />
                 </button>
             </div>
 
-            <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 bg-zinc-950 border-r border-white/5 flex-col z-[50]">
+            <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-white/5 flex-col z-[50]">
                 <SidebarContent
                     pathname={pathname}
                     activeRoutes={activeRoutes}
@@ -107,10 +102,10 @@ export default function Sidebar({ role }: { role: "ADMIN" | "USER" }) {
             {isOpen && (
                 <div className="lg:hidden fixed inset-0 z-[100]">
                     <div
-                        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+                        className="absolute inset-0 bg-zinc-900/60 dark:bg-black/80 backdrop-blur-sm"
                         onClick={() => setIsOpen(false)}
                     />
-                    <aside className="absolute left-0 top-0 h-full w-72 bg-zinc-950 border-r border-white/10 flex flex-col shadow-2xl animate-in slide-in-from-left duration-300">
+                    <aside className="absolute left-0 top-0 h-full w-72 bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-white/10 flex flex-col shadow-2xl animate-in slide-in-from-left duration-300">
                         <SidebarContent
                             pathname={pathname}
                             activeRoutes={activeRoutes}

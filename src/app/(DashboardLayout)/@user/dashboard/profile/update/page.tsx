@@ -63,20 +63,20 @@ export default function ProfileUpdatePage() {
 
     if (isInitialLoading) {
         return (
-            <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center gap-4">
+            <div className="min-h-screen bg-white dark:bg-[#0A0A0A] flex flex-col items-center justify-center gap-4 transition-colors">
                 <Loader2 className="animate-spin text-emerald-500" size={32} />
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600">Accessing Node...</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 dark:text-zinc-600">Accessing Node...</span>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-[#0A0A0A] text-zinc-100 p-6 md:p-12 flex flex-col items-center font-sans">
+        <div className="min-h-screen bg-white dark:bg-[#0A0A0A] text-zinc-900 dark:text-zinc-100 p-6 md:p-12 flex flex-col items-center font-sans transition-colors duration-300">
             <div className="w-full max-w-xl">
                 
                 <button
                     onClick={() => router.back()}
-                    className="flex items-center gap-2 text-zinc-600 hover:text-emerald-500 mb-12 transition-all group text-[10px] font-black uppercase tracking-widest"
+                    className="flex items-center gap-2 text-zinc-400 dark:text-zinc-600 hover:text-emerald-600 dark:hover:text-emerald-500 mb-12 transition-all group text-[10px] font-black uppercase tracking-widest"
                 >
                     <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                     Return to Dashboard
@@ -84,24 +84,24 @@ export default function ProfileUpdatePage() {
 
                 <div className="relative mb-12 flex flex-col items-center md:items-start gap-6">
                     <div className="relative group">
-                        <div className="w-24 h-24 rounded-3xl bg-zinc-900 border border-white/5 overflow-hidden flex items-center justify-center relative">
+                        <div className="w-24 h-24 rounded-3xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 overflow-hidden flex items-center justify-center relative shadow-inner">
                             {formData.image ? (
-                                <Image src={formData.image} alt="Preview" fill className="object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+                                <Image src={formData.image} alt="Preview" fill className="object-cover opacity-80 dark:opacity-60 group-hover:opacity-100 transition-opacity" />
                             ) : (
-                                <User size={32} className="text-zinc-800" />
+                                <User size={32} className="text-zinc-300 dark:text-zinc-800" />
                             )}
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Camera size={20} className="text-emerald-500" />
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/40 dark:bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Camera size={20} className="text-emerald-400" />
                             </div>
                         </div>
                         <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                            <span className="text-black font-black text-[10px]">FIX</span>
+                            <span className="text-white dark:text-black font-black text-[10px]">FIX</span>
                         </div>
                     </div>
 
                     <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                        <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase">Edit Profile</h1>
-                        <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mt-2">Personal Data Configuration</p>
+                        <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase text-zinc-900 dark:text-white">Edit Profile</h1>
+                        <p className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] mt-2">Personal Data Configuration</p>
                     </div>
                 </div>
 
@@ -134,14 +134,14 @@ export default function ProfileUpdatePage() {
                         <button
                             type="button"
                             onClick={() => router.back()}
-                            className="px-8 py-4 text-[10px] font-black text-zinc-600 uppercase tracking-widest hover:text-zinc-300 transition-colors order-2 md:order-1"
+                            className="px-8 py-4 text-[10px] font-black text-zinc-400 dark:text-zinc-600 uppercase tracking-widest hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors order-2 md:order-1"
                         >
                             Abort Changes
                         </button>
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-10 py-4 bg-emerald-600 text-black/90 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-emerald-500 transition-all disabled:opacity-50 active:scale-95 shadow-xl shadow-white/5 order-1 md:order-2"
+                            className="px-10 py-4 bg-emerald-600 text-white dark:text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-emerald-500 transition-all disabled:opacity-50 active:scale-95 shadow-xl shadow-emerald-500/10 dark:shadow-white/5 order-1 md:order-2"
                         >
                             {loading ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
                             {loading ? "Synching..." : "Commit Update"}
@@ -156,11 +156,11 @@ export default function ProfileUpdatePage() {
 function CustomInput({ icon, label, placeholder, value, onChange }: any) {
     return (
         <div className="space-y-2 group">
-            <label className="text-[9px] font-black text-zinc-600 uppercase tracking-[0.3em] ml-2 group-focus-within:text-emerald-500 transition-colors">
+            <label className="text-[9px] font-black text-zinc-400 dark:text-zinc-600 uppercase tracking-[0.3em] ml-2 group-focus-within:text-emerald-600 dark:group-focus-within:text-emerald-500 transition-colors">
                 {label}
             </label>
             <div className="relative">
-                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-700 group-focus-within:text-emerald-500 transition-colors">
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-300 dark:text-zinc-700 group-focus-within:text-emerald-600 dark:group-focus-within:text-emerald-500 transition-colors">
                     {icon}
                 </div>
                 <input
@@ -168,7 +168,7 @@ function CustomInput({ icon, label, placeholder, value, onChange }: any) {
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder={placeholder}
-                    className="w-full bg-[#111111] border border-white/5 rounded-2xl py-5 pl-14 pr-6 text-xs font-bold focus:border-emerald-500/50 outline-none transition-all placeholder:text-zinc-800 text-zinc-200 tracking-tight"
+                    className="w-full bg-zinc-50 dark:bg-[#111111] border border-zinc-200 dark:border-white/5 rounded-2xl py-5 pl-14 pr-6 text-xs font-bold focus:ring-4 focus:ring-emerald-500/5 dark:focus:ring-transparent focus:border-emerald-500/50 outline-none transition-all placeholder:text-zinc-300 dark:placeholder:text-zinc-800 text-zinc-900 dark:text-zinc-200 tracking-tight"
                 />
             </div>
         </div>

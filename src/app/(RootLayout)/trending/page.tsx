@@ -1,82 +1,92 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Image from "next/image";
-import { Play } from "lucide-react";
+import { Play, TrendingUp } from "lucide-react";
 import { getTrending } from "@/actions/new.action";
 
 async function TrendingNow() {
     const trendingData = await getTrending("TRENDING");
 
     const items = trendingData?.data?.data || [];
-    const meta = trendingData?.data?.meta || {};
 
     return (
-        <section className="py-8 px-4 sm:px-6 lg:px-8 bg-black text-white">
-            <div className="flex items-center justify-between mb-6 border-l-4 border-emerald-500 pl-4">
-                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider">
-                    Trending Now
-                </h2>
-                <Link href="/movies" className="text-sm text-gray-400 hover:text-emerald-500 transition-colors uppercase">
-                    View All
-                </Link>
-            </div>
+        <section className="py-12 px-4 sm:px-6 lg:px-8 bg-zinc-50 dark:bg-black text-zinc-900 dark:text-white transition-colors duration-300">
+            <div className="max-w-7xl mx-auto">
+                {/* Section Header */}
+                <div className="flex items-center justify-between mb-8 border-l-4 border-emerald-500 dark:border-emerald-400 pl-4">
+                    <div className="flex items-center gap-2">
+                        <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">
+                            Trending Now
+                        </h2>
+                        <TrendingUp size={24} className="text-emerald-500 animate-bounce hidden md:block" />
+                    </div>
+                    <Link 
+                        href="/movies" 
+                        className="text-xs font-bold text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 transition-all uppercase tracking-widest group flex items-center gap-1"
+                    >
+                        View All
+                        <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                    </Link>
+                </div>
 
-            
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-6">
-                {items && items.length > 0 ? (
-                    items.map((item: any) => (
-                        <Link href={`/movies/details/${item.customid}`} key={item.tmdb_id || item._id}>
-                            <div
-                                
-                                className="group relative bg-[#121212] rounded-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/10"
-                            >
-                                
-                                <div className="aspect-[2/3] relative w-full overflow-hidden">
-                                    <Image
-                                        width={400}
-                                        height={700}
-                                        quality={30}
-                                        src={item.posterUrl}
-                                        alt={item.title}
-                                        className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110 group-hover:opacity-60"
-                                        loading="lazy"
-                                    />
-
+                {/* Movie Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-6">
+                    {items && items.length > 0 ? (
+                        items.map((item: any) => (
+                            <Link href={`/movies/details/${item.customid}`} key={item.tmdb_id || item._id} className="group">
+                                <div className="relative bg-white dark:bg-zinc-900 rounded-[1.5rem] overflow-hidden transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-emerald-500/20 dark:hover:shadow-emerald-500/10 hover:-translate-y-2 border border-zinc-200 dark:border-zinc-800">
                                     
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <div className="bg-emerald-500 p-4 rounded-full shadow-lg shadow-emerald-500/40 transform scale-50 group-hover:scale-100 transition-transform duration-300">
-                                            <Play className="w-8 h-8 text-black fill-current" />
+                                    {/* Thumbnail Container */}
+                                    <div className="aspect-[2/3] relative w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                                        <Image
+                                            width={400}
+                                            height={600}
+                                            src={item.posterUrl}
+                                            alt={item.title}
+                                            className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110 group-hover:opacity-30"
+                                            loading="lazy"
+                                        />
+
+                                        {/* Dynamic Play Button Overlay */}
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                            <div className="bg-emerald-500 p-4 rounded-full shadow-2xl shadow-emerald-500/50 transform scale-75 group-hover:scale-100 transition-all duration-500">
+                                                <Play className="w-6 h-6 md:w-8 md:h-8 text-black fill-current" />
+                                            </div>
                                         </div>
+
+                                        {/* Rating Badge (Optional) */}
+                                        {item.ratingAverage && (
+                                            <div className="absolute top-3 right-3 bg-white/90 dark:bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] md:text-xs font-black text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-lg">
+                                                ★ {item.ratingAverage.toFixed(1)}
+                                            </div>
+                                        )}
                                     </div>
 
-                                    
-                                    {item.ratingAverage && (
-                                        <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-xs font-bold text-emerald-400 border border-emerald-500/30">
-                                            ⭐ {item.ratingAverage.toFixed(1)}
+                                    {/* Meta Information */}
+                                    <div className="p-4">
+                                        <h3 className="text-sm md:text-base font-bold truncate text-zinc-800 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                            {item.title}
+                                        </h3>
+                                        <div className="flex items-center justify-between mt-2">
+                                            <span className="text-[10px] md:text-xs text-zinc-500 font-bold uppercase">
+                                                {item.releaseYear}
+                                            </span>
+                                            <span className="text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700 uppercase tracking-widest">
+                                                {item.type}
+                                            </span>
                                         </div>
-                                    )}
-                                </div>
-
-                                
-                                <div className="p-3">
-                                    <h3 className="text-sm md:text-base font-semibold truncate group-hover:text-emerald-400 transition-colors">
-                                        {item.title}
-                                    </h3>
-                                    <div className="flex items-center justify-between mt-1 text-[10px] md:text-xs text-gray-500 uppercase">
-                                        <span className="group-hover:text-gray-300">{item.releaseYear}</span>
-                                        <span className="border border-gray-700 px-1.5 py-0.5 rounded text-gray-400 group-hover:border-emerald-500/50 group-hover:text-emerald-500 transition-colors">
-                                            {item.type}
-                                        </span>
                                     </div>
                                 </div>
-                            </div>
-                        </Link>
-                    ))
-                ) : (
-                    <p className="col-span-full text-center text-gray-500 py-10 font-medium tracking-wide italic">
-                        No trending content found at the moment.
-                    </p>
-                )}
+                            </Link>
+                        ))
+                    ) : (
+                        <div className="col-span-full text-center py-20 bg-zinc-100/50 dark:bg-zinc-900/20 rounded-[2rem] border-2 border-dashed border-zinc-200 dark:border-zinc-800">
+                            <p className="text-zinc-400 font-bold tracking-widest uppercase text-sm italic">
+                                No trending movies right now.
+                            </p>
+                        </div>
+                    )}
+                </div>
             </div>
         </section>
     );

@@ -10,7 +10,7 @@ import { Loader2, Mail, ArrowLeft, CheckCircle2, Lock, ShieldCheck } from "lucid
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-
+// ... schemas and types (same as before) ...
 const emailSchema = z.object({
     email: z.string().email("Invalid email address").min(1, "Email is required"),
 });
@@ -81,15 +81,16 @@ export default function ForgotPassword() {
     };
 
     return (
-        <div className="h-screen w-full flex items-center justify-center bg-black px-4 relative overflow-hidden select-none">
+        <div className="h-screen w-full flex items-center justify-center bg-white dark:bg-black px-4 relative overflow-hidden select-none transition-colors duration-300">
             
-            <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full -z-10 animate-pulse"></div>
-            <div className="absolute bottom-[-10%] left-[-10%] w-[30%] h-[30%] bg-emerald-500/5 blur-[120px] rounded-full -z-10"></div>
+            {/* Background Glows */}
+            <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%]  dark:bg-emerald-500/10 blur-[120px] rounded-full -z-10 animate-pulse"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[30%] h-[30%] bg-emerald-500/5 dark:bg-emerald-500/5 blur-[120px] rounded-full -z-10"></div>
 
-            <div className="max-w-md w-full bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 shadow-2xl backdrop-blur-md z-10">
+            <div className="max-w-md w-full bg-zinc-50/50 dark:bg-zinc-900/50 p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-2xl backdrop-blur-md z-10">
 
                 {step !== 3 && (
-                    <Link href="/login" className="inline-flex items-center text-sm text-zinc-400 hover:text-emerald-500 transition-colors mb-6 group">
+                    <Link href="/login" className="inline-flex items-center text-sm text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors mb-6 group">
                         <ArrowLeft className="mr-2 size-4 group-hover:-translate-x-1 transition-transform" />
                         Back to login
                     </Link>
@@ -97,43 +98,42 @@ export default function ForgotPassword() {
 
                 {step === 1 && (
                     <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-                        <h1 className="text-3xl font-bold text-white mb-2">Forgot <span className="text-emerald-500">Password?</span></h1>
-                        <p className="text-zinc-400 text-sm mb-8 leading-relaxed">Enter your email and we&apos;ll send you a 6-digit OTP to reset your password.</p>
+                        <h1 className="text-3xl font-bold text-zinc-900 dark:text-white mb-2">Forgot <span className="text-emerald-600 dark:text-emerald-500">Password?</span></h1>
+                        <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-8 leading-relaxed">Enter your email and we&apos;ll send you a 6-digit OTP to reset your password.</p>
 
                         <form onSubmit={emailForm.handleSubmit(onSendOTP)} className="space-y-6">
                             <div className="relative group">
-                                <Mail className="absolute left-3 top-3.5 h-5 w-5 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
+                                <Mail className="absolute left-3 top-3.5 h-5 w-5 text-zinc-400 dark:text-zinc-500 group-focus-within:text-emerald-600 dark:group-focus-within:text-emerald-500 transition-colors" />
                                 <input
                                     {...emailForm.register("email")}
                                     placeholder="name@example.com"
-                                    className="w-full bg-zinc-800/30 border border-zinc-700 text-white rounded-xl py-3.5 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all"
+                                    className="w-full bg-white dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl py-3.5 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-600 dark:focus:border-emerald-500 transition-all"
                                 />
                                 {emailForm.formState.errors.email && <p className="text-red-500 text-xs mt-1.5 ml-1">{emailForm.formState.errors.email.message}</p>}
                             </div>
-                            <Button disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-500 py-6 text-lg font-bold transition-all active:scale-95">
+                            <Button disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700 dark:hover:bg-emerald-500 py-6 text-lg font-bold text-white transition-all active:scale-95 shadow-lg shadow-emerald-500/20">
                                 {loading ? <Loader2 className="animate-spin" /> : "Send OTP"}
                             </Button>
                         </form>
                     </div>
                 )}
 
-                {/* --- STEP 2: Enter OTP & New Password --- */}
                 {step === 2 && (
                     <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-                        <h1 className="text-2xl font-bold text-white mb-1 text-center">Reset <span className="text-emerald-500">Password</span></h1>
-                        <p className="text-zinc-400 text-[11px] text-center mb-6">OTP sent to: <span className="text-white">{userEmail}</span></p>
+                        <h1 className="text-2xl font-bold text-zinc-900 dark:text-white mb-1 text-center">Reset <span className="text-emerald-600 dark:text-emerald-500">Password</span></h1>
+                        <p className="text-zinc-500 dark:text-zinc-400 text-[11px] text-center mb-6">OTP sent to: <span className="text-zinc-900 dark:text-white font-medium">{userEmail}</span></p>
 
                         <form onSubmit={resetForm.handleSubmit(onResetPassword)} className="space-y-4">
                             {/* OTP Field */}
                             <div className="space-y-1">
-                                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">6-Digit OTP</label>
+                                <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest ml-1">6-Digit OTP</label>
                                 <div className="relative">
-                                    <ShieldCheck className="absolute left-3 top-3.5 h-5 w-5 text-zinc-500" />
+                                    <ShieldCheck className="absolute left-3 top-3.5 h-5 w-5 text-zinc-400 dark:text-zinc-500" />
                                     <input
                                         {...resetForm.register("otp")}
                                         maxLength={6}
                                         placeholder="000000"
-                                        className="w-full bg-zinc-800/30 border border-zinc-700 text-white rounded-xl py-3 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 text-center text-lg tracking-[0.4em] font-mono"
+                                        className="w-full bg-white dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl py-3 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-600 dark:focus:border-emerald-500 text-center text-lg tracking-[0.4em] font-mono"
                                     />
                                 </div>
                                 {resetForm.formState.errors.otp && <p className="text-red-500 text-[10px]">{resetForm.formState.errors.otp.message}</p>}
@@ -141,14 +141,14 @@ export default function ForgotPassword() {
 
                             {/* New Password Field */}
                             <div className="space-y-1">
-                                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">New Password</label>
+                                <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest ml-1">New Password</label>
                                 <div className="relative">
-                                    <Lock className="absolute left-3 top-3.5 h-5 w-5 text-zinc-500" />
+                                    <Lock className="absolute left-3 top-3.5 h-5 w-5 text-zinc-400 dark:text-zinc-500" />
                                     <input
                                         {...resetForm.register("password")}
                                         type="password"
                                         placeholder="••••••••"
-                                        className="w-full bg-zinc-800/30 border border-zinc-700 text-white rounded-xl py-3 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500"
+                                        className="w-full bg-white dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl py-3 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-600 dark:focus:border-emerald-500"
                                     />
                                 </div>
                                 {resetForm.formState.errors.password && <p className="text-red-500 text-[10px]">{resetForm.formState.errors.password.message}</p>}
@@ -156,50 +156,48 @@ export default function ForgotPassword() {
 
                             {/* Confirm Password Field */}
                             <div className="space-y-1">
-                                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Confirm</label>
+                                <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest ml-1">Confirm</label>
                                 <div className="relative">
-                                    <Lock className="absolute left-3 top-3.5 h-5 w-5 text-zinc-500" />
+                                    <Lock className="absolute left-3 top-3.5 h-5 w-5 text-zinc-400 dark:text-zinc-500" />
                                     <input
                                         {...resetForm.register("confirmPassword")}
                                         type="password"
                                         placeholder="••••••••"
-                                        className="w-full bg-zinc-800/30 border border-zinc-700 text-white rounded-xl py-3 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500"
+                                        className="w-full bg-white dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl py-3 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-600 dark:focus:border-emerald-500"
                                     />
                                 </div>
                                 {resetForm.formState.errors.confirmPassword && <p className="text-red-500 text-[10px]">{resetForm.formState.errors.confirmPassword.message}</p>}
                             </div>
 
-                            <Button disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-500 py-6 text-lg font-bold shadow-lg shadow-emerald-900/20 active:scale-95 transition-all">
+                            <Button disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700 dark:hover:bg-emerald-500 py-6 text-lg font-bold text-white shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
                                 {loading ? <Loader2 className="animate-spin" /> : "Reset Password"}
                             </Button>
 
-                            <button type="button" onClick={() => setStep(1)} className="w-full text-zinc-500 text-[10px] hover:text-emerald-500 transition-colors uppercase tracking-tight">
+                            <button type="button" onClick={() => setStep(1)} className="w-full text-zinc-500 dark:text-zinc-500 text-[10px] hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors uppercase tracking-tight">
                                 Use different email?
                             </button>
                         </form>
                     </div>
                 )}
 
-                {/* --- STEP 3: Success --- */}
                 {step === 3 && (
                     <div className="text-center py-4 animate-in zoom-in duration-500">
-                        <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <CheckCircle2 className="size-10 text-emerald-500" />
+                        <div className="w-16 h-16 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle2 className="size-10 text-emerald-600 dark:text-emerald-500" />
                         </div>
-                        <h2 className="text-2xl font-bold text-white mb-2">Success!</h2>
-                        <p className="text-zinc-400 text-xs mb-8 leading-relaxed">Your password has been updated. Securely redirecting to login...</p>
-                        <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-500 py-6 text-lg font-bold">
+                        <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">Success!</h2>
+                        <p className="text-zinc-500 dark:text-zinc-400 text-xs mb-8 leading-relaxed">Your password has been updated. Securely redirecting to login...</p>
+                        <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-700 dark:hover:bg-emerald-500 py-6 text-lg font-bold text-white">
                             <Link href="/login">Login Now</Link>
                         </Button>
                     </div>
                 )}
 
-                <div className="mt-8 pt-6 border-t border-zinc-800/50 text-center">
-                    <p className="text-zinc-600 text-[9px] uppercase tracking-widest font-bold">CinemaY Secure Access</p>
+                <div className="mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800/50 text-center">
+                    <p className="text-zinc-400 dark:text-zinc-600 text-[9px] uppercase tracking-widest font-bold">CinemaY Secure Access</p>
                 </div>
             </div>
 
-            {/* Global CSS for Hide Scrollbar */}
             <style jsx global>{`
                 body {
                     overflow: hidden !important;

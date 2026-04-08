@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { Star, Edit2, Trash2, Film, Clock, CheckCircle2, XCircle, Loader2, Save, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { deleteReview, updateReview } from '@/actions/user.action';
+
 export default function MyReviewsClient({ initialReviews }: { initialReviews: any[] }) {
   const [reviews, setReviews] = useState(initialReviews);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -35,11 +35,9 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
 
   const handleSaveEdit = async (id: string) => {
     if (!editContent.trim()) return toast.error("Content cannot be empty");
-
     try {
       setIsUpdating(true);
       const res = await updateReview(id, { content: editContent });
-      
       if (res?.success) {
         setReviews(reviews.map(r => r.id === id ? { ...r, content: editContent, isApproved: false } : r));
         toast.success("Review updated and sent for re-approval");
@@ -56,9 +54,9 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
 
   if (reviews.length === 0) {
     return (
-      <div className="text-center py-20 bg-zinc-900/20 border border-dashed border-zinc-800 rounded-3xl">
-        <Film className="mx-auto text-zinc-700 mb-4" size={48} />
-        <p className="text-zinc-500">You havent reviewed any movies yet.</p>
+      <div className="text-center py-20 bg-zinc-50 dark:bg-zinc-900/20 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl">
+        <Film className="mx-auto text-zinc-400 dark:text-zinc-700 mb-4" size={48} />
+        <p className="text-zinc-500 font-medium">You haven't reviewed any movies yet.</p>
       </div>
     );
   }
@@ -66,17 +64,17 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
   return (
     <div className="grid grid-cols-1 gap-6">
       {reviews.map((review) => (
-        <div key={review.id} className="bg-zinc-900/40 border border-white/5 p-6 rounded-3xl hover:bg-zinc-900/60 transition-all group">
+        <div key={review.id} className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-white/5 p-6 rounded-3xl hover:border-emerald-500/30 dark:hover:bg-zinc-900/60 transition-all group shadow-sm dark:shadow-none">
           <div className="flex flex-col md:flex-row justify-between gap-6">
             
             <div className="flex-1 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-600/10 rounded-lg">
-                  <Film size={18} className="text-blue-500" />
+                <div className="p-2 bg-blue-500/10 rounded-lg">
+                  <Film size={18} className="text-blue-600 dark:text-blue-500" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-zinc-100">{review.movie.title}</h3>
-                  <p className="text-[10px] text-zinc-500 uppercase font-black tracking-widest">
+                  <h3 className="font-bold text-zinc-900 dark:text-zinc-100 leading-tight">{review.movie.title}</h3>
+                  <p className="text-[10px] text-zinc-400 dark:text-zinc-500 uppercase font-black tracking-widest mt-0.5">
                     {review.movie.releaseYear} • {review.movie.genre.join(", ")}
                   </p>
                 </div>
@@ -87,17 +85,16 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
                   <Star 
                     key={i} 
                     size={12} 
-                    className={`${i < review.rating ? 'text-amber-400 fill-amber-400' : 'text-zinc-800'}`} 
+                    className={`${i < review.rating ? 'text-amber-400 fill-amber-400' : 'text-zinc-200 dark:text-zinc-800'}`} 
                   />
                 ))}
-                <span className="ml-2 text-xs font-bold text-amber-400">{review.rating}/10</span>
+                <span className="ml-2 text-xs font-bold text-amber-500">{review.rating}/10</span>
               </div>
 
-              
               {editingId === review.id ? (
                 <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
                   <textarea 
-                    className="w-full bg-black border border-zinc-700 rounded-xl p-3 text-sm text-zinc-200 focus:border-blue-500 outline-none min-h-[100px]"
+                    className="w-full bg-zinc-50 dark:bg-black border border-zinc-200 dark:border-zinc-700 rounded-xl p-3 text-sm text-zinc-900 dark:text-zinc-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none min-h-[100px] transition-all"
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
                   />
@@ -105,14 +102,14 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
                     <button 
                       onClick={() => handleSaveEdit(review.id)}
                       disabled={isUpdating}
-                      className="flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-500 disabled:opacity-50"
+                      className="flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700 disabled:opacity-50 shadow-lg shadow-blue-500/20"
                     >
                       {isUpdating ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
                       Save
                     </button>
                     <button 
                       onClick={() => setEditingId(null)}
-                      className="flex items-center gap-1 px-4 py-2 bg-zinc-800 text-zinc-400 rounded-lg text-xs font-bold hover:bg-zinc-700"
+                      className="flex items-center gap-1 px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg text-xs font-bold hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
                     >
                       <X size={14} />
                       Cancel
@@ -120,28 +117,27 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
                   </div>
                 </div>
               ) : (
-                <p className="text-zinc-400 text-sm italic leading-relaxed">
+                <p className="text-zinc-600 dark:text-zinc-400 text-sm italic leading-relaxed">
                   {review.content}
                 </p>
               )}
 
-              <div className="flex items-center gap-4 pt-2">
-                <div className="flex items-center gap-1.5 text-zinc-600">
+              <div className="flex items-center gap-4 pt-2 border-t border-zinc-50 dark:border-white/5">
+                <div className="flex items-center gap-1.5 text-zinc-400 dark:text-zinc-600">
                   <Clock size={12} />
-                  <span className="text-[10px]">{new Date(review.createdAt).toLocaleDateString()}</span>
+                  <span className="text-[10px] font-medium">{new Date(review.createdAt).toLocaleDateString()}</span>
                 </div>
-                <div className={`flex items-center gap-1.5 text-[10px] font-bold uppercase ${review.isApproved ? 'text-emerald-500' : 'text-amber-500'}`}>
+                <div className={`flex items-center gap-1.5 text-[10px] font-black uppercase tracking-tighter ${review.isApproved ? 'text-emerald-600 dark:text-emerald-500' : 'text-amber-600 dark:text-amber-500'}`}>
                   {review.isApproved ? <CheckCircle2 size={12} /> : <XCircle size={12} />}
                   {review.isApproved ? 'Approved' : 'Pending Approval'}
                 </div>
               </div>
             </div>
 
-            
-            <div className="flex md:flex-col justify-end gap-2 border-t md:border-t-0 md:border-l border-white/5 pt-4 md:pt-0 md:pl-6">
+            <div className="flex md:flex-col justify-end gap-2 border-t md:border-t-0 md:border-l border-zinc-100 dark:border-white/5 pt-4 md:pt-0 md:pl-6">
               <button 
                 disabled={editingId === review.id}
-                className="flex-1 md:flex-none p-3 bg-zinc-800 hover:bg-blue-600/20 hover:text-blue-400 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs font-bold disabled:opacity-30"
+                className="flex-1 md:flex-none p-3 bg-zinc-50 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-blue-50 dark:hover:bg-blue-600/20 hover:text-blue-600 dark:hover:text-blue-400 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs font-bold disabled:opacity-30"
                 onClick={() => startEditing(review.id, review.content)}
               >
                 <Edit2 size={16} />
@@ -150,7 +146,7 @@ export default function MyReviewsClient({ initialReviews }: { initialReviews: an
               
               <button 
                 disabled={deletingId === review.id}
-                className="flex-1 md:flex-none p-3 bg-zinc-800 hover:bg-rose-600/20 hover:text-rose-400 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs font-bold disabled:opacity-50"
+                className="flex-1 md:flex-none p-3 bg-zinc-50 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-rose-50 dark:hover:bg-rose-600/20 hover:text-rose-600 dark:hover:text-rose-400 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs font-bold disabled:opacity-50"
                 onClick={() => handleDelete(review.id)}
               >
                 {deletingId === review.id ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}

@@ -4,6 +4,7 @@ import { HelpSupportSection } from "@/components/dashboard/HelpAndSupport";
 import { PricingSection } from "@/components/dashboard/PricingSection";
 import HomePageCarousel from "@/components/home/HomePageCarousel";
 import MultiHomeSection from "@/components/home/MultiHomeSection";
+import TestimonialsPage from "@/components/Testimonials";
 
 async function HomePage() {
 
@@ -15,6 +16,7 @@ async function HomePage() {
         <PricingSection />
         <AppDownloadBanner />
         <FeatureHighlights />
+        <TestimonialsPage />
         <HelpSupportSection />
       </div>
     </div>

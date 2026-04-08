@@ -13,9 +13,7 @@ export default function PaymentSuccess() {
     const paymentIntentId = searchParams.get('payment_intent');
     const status = searchParams.get('redirect_status');
 
-
     useEffect(() => {
-
         const duration = 5 * 1000;
         const animationEnd = Date.now() + duration;
         const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -53,57 +51,57 @@ export default function PaymentSuccess() {
     }, [paymentIntentId, status]);
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center p-6 text-white font-sans">
+        <div className="min-h-screen bg-zinc-50 dark:bg-black flex items-center justify-center p-6 text-zinc-900 dark:text-white font-sans transition-colors duration-300">
             <div className="max-w-2xl w-full text-center space-y-8">
 
-                
+                {/* Success Icon with Glow */}
                 <div className="relative inline-block">
-                    <div className="absolute inset-0 bg-blue-600 blur-3xl opacity-20 animate-pulse"></div>
-                    <CheckCircle2 size={100} className="text-blue-500 relative z-10 mx-auto" strokeWidth={1.5} />
+                    <div className="absolute inset-0 bg-emerald-500 blur-3xl opacity-20 animate-pulse"></div>
+                    <CheckCircle2 size={100} className="text-emerald-500 dark:text-emerald-400 relative z-10 mx-auto" strokeWidth={1.5} />
                 </div>
 
-                
+                {/* Header */}
                 <div className="space-y-4">
-                    <h1 className="text-5xl font-black uppercase tracking-tighter italic">
-                        Welcome to the <span className="text-blue-500">Pro Club!</span>
+                    <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter italic">
+                        Welcome to the <span className="text-emerald-600 dark:text-emerald-400">Pro Club!</span>
                     </h1>
-                    <p className="text-zinc-500 text-lg max-w-md mx-auto leading-relaxed">
+                    <p className="text-zinc-500 dark:text-zinc-400 text-lg max-w-md mx-auto leading-relaxed font-medium">
                         Your subscription is now active. Get ready to experience movies in 4K with no limits.
                     </p>
                 </div>
 
-                
+                {/* Features Highlights */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8">
-                    <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl text-left space-y-2">
-                        <Sparkles className="text-amber-400" size={24} />
+                    <div className="p-6 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 rounded-3xl text-left space-y-2 shadow-sm">
+                        <Sparkles className="text-amber-500" size={24} />
                         <h3 className="font-bold">Premium Unlocked</h3>
-                        <p className="text-zinc-500 text-sm">Access to all exclusive 4K content and early releases.</p>
+                        <p className="text-zinc-500 dark:text-zinc-400 text-sm">Access to all exclusive 4K content and early releases.</p>
                     </div>
-                    <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl text-left space-y-2">
-                        <MoveUpIcon className="text-blue-400" size={24} />
+                    <div className="p-6 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 rounded-3xl text-left space-y-2 shadow-sm">
+                        <MoveUpIcon className="text-blue-500" size={24} />
                         <h3 className="font-bold">Ad-Free Experience</h3>
-                        <p className="text-zinc-500 text-sm">No interruptions. Just you and your favorite cinema.</p>
+                        <p className="text-zinc-500 dark:text-zinc-400 text-sm">No interruptions. Just you and your favorite cinema.</p>
                     </div>
                 </div>
 
-                
+                {/* Actions */}
                 <div className="pt-10 flex flex-col md:flex-row items-center justify-center gap-4">
                     <Link
                         href="/dashboard"
-                        className="w-full md:w-auto px-10 py-4 bg-white text-black font-black uppercase tracking-widest rounded-2xl hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 group"
+                        className="w-full md:w-auto px-10 py-4 bg-emerald-600 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-emerald-500 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-emerald-600/20 active:scale-95"
                     >
                         Go to Dashboard
                         <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                     <Link
                         href="/movies"
-                        className="w-full md:w-auto px-10 py-4 bg-zinc-900 text-white font-black uppercase tracking-widest rounded-2xl border border-white/5 hover:bg-zinc-800 transition-all"
+                        className="w-full md:w-auto px-10 py-4 bg-zinc-200 dark:bg-zinc-900 text-zinc-900 dark:text-white font-black uppercase tracking-widest rounded-2xl border border-zinc-300 dark:border-white/5 hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-all active:scale-95"
                     >
                         Start Watching
                     </Link>
                 </div>
 
-                <p className="text-zinc-700 text-xs pt-8">
+                <p className="text-zinc-400 dark:text-zinc-700 text-xs pt-8 font-medium">
                     A confirmation email has been sent to your registered address.
                 </p>
             </div>

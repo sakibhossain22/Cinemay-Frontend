@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import React, { useState } from 'react';
-import { Check, Zap, Crown, Rocket, Star, X } from 'lucide-react';
+import { Check, Zap, Crown, Rocket, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { subscribeToPlan } from '@/actions/subcscription.action';
 import { Elements } from '@stripe/react-stripe-js';
@@ -17,7 +17,6 @@ function Subscriptions() {
     const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
     const handleSubscription = async (planType: string) => {
-
         const user = await getSession();
         if (!user?.user?.id) {
             toast.error("You must be logged in to subscribe to a plan.");
@@ -56,18 +55,19 @@ function Subscriptions() {
     };
 
     return (
-        <div className="p-6 bg-black min-h-screen text-white relative font-sans">
+        <div className="p-6 bg-zinc-50 dark:bg-black min-h-screen text-zinc-900 dark:text-white relative font-sans transition-colors duration-300">
             <div className="max-w-6xl mx-auto">
                 <header className="text-center mb-16 space-y-4">
-                    <h1 className="text-5xl font-black uppercase tracking-tighter bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent italic">
+                    <h1 className="text-5xl font-black uppercase tracking-tighter bg-gradient-to-b from-zinc-800 to-zinc-400 dark:from-white dark:to-zinc-500 bg-clip-text text-transparent ">
                         Choose Your Plan
                     </h1>
+                    <p className="text-zinc-500 dark:text-zinc-400 font-medium">Unlock premium features and exclusive content</p>
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <PricingCard
                         title="Free" price="0" description="Perfect for getting started"
-                        icon={<Rocket className="text-zinc-400" size={24} />}
+                        icon={<Rocket className="text-zinc-400 dark:text-zinc-500" size={24} />}
                         features={["720p Quality", "Contains Ads", "1 Device"]}
                         buttonText="Current Plan" isCurrent={true}
                         onSelect={() => handleSubscription("Free")}
@@ -75,7 +75,7 @@ function Subscriptions() {
 
                     <PricingCard
                         title="Monthly" price="19" description="Best for enthusiasts"
-                        icon={<Zap className="text-blue-500" size={24} />}
+                        icon={<Zap className="text-blue-600 dark:text-blue-500" size={24} />}
                         features={["4K Streaming", "Ad-Free", "2 Devices"]}
                         buttonText={loadingPlan === "Monthly" ? "Loading..." : "Upgrade to Monthly"}
                         highlighted={true} badge="Popular"
@@ -83,8 +83,8 @@ function Subscriptions() {
                     />
 
                     <PricingCard
-                        title="Yearly" price="199" description="Save big annually"
-                        icon={<Crown className="text-amber-400" size={24} />}
+                        title="Yearly" price="1999" description="Save big annually"
+                        icon={<Crown className="text-amber-500 dark:text-amber-400" size={24} />}
                         features={["Everything in Monthly", "Family Sharing", "4 Devices"]}
                         buttonText={loadingPlan === "Yearly" ? "Loading..." : "Get Yearly Pro"}
                         badge="Best Value" yearly={true}
@@ -93,13 +93,12 @@ function Subscriptions() {
                 </div>
             </div>
 
-            
             {paymentSecret && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
-                    <div className="max-w-md w-full bg-zinc-950 border border-white/10 rounded-[2.5rem] p-8 shadow-2xl relative">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 dark:bg-black/90 backdrop-blur-md p-4">
+                    <div className="max-w-md w-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-white/10 rounded-[2.5rem] p-8 shadow-2xl relative">
                         <button
                             onClick={() => setPaymentSecret(null)}
-                            className="absolute top-6 right-6 text-zinc-500 hover:text-white transition-colors"
+                            className="absolute top-6 right-6 text-zinc-400 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-white transition-colors"
                         >
                             <X size={24} />
                         </button>
@@ -108,7 +107,10 @@ function Subscriptions() {
                             stripe={stripePromise}
                             options={{
                                 clientSecret: paymentSecret,
-                                appearance: { theme: 'night', variables: { colorPrimary: '#2563eb' } }
+                                appearance: { 
+                                    theme: 'stripe', // Light/Dark based on system or explicit night
+                                    variables: { colorPrimary: '#059669' } 
+                                }
                             }}
                         >
                             <CheckoutForm clientSecret={paymentSecret} transactionId={transactionId!} />
@@ -123,27 +125,27 @@ function Subscriptions() {
 function PricingCard({ title, price, description, icon, features, buttonText, highlighted = false, isCurrent = false, badge, yearly = false, onSelect }: any) {
     return (
         <div className={`relative p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col ${highlighted
-            ? 'bg-zinc-900/50 border-blue-600/50 shadow-2xl shadow-blue-600/10 scale-105 z-10'
-            : 'bg-zinc-900/20 border-white/5 hover:border-zinc-700'
+            ? 'bg-white dark:bg-zinc-900/50 border-blue-600/50 shadow-xl dark:shadow-blue-600/10 scale-105 z-10'
+            : 'bg-white/50 dark:bg-zinc-900/20 border-zinc-200 dark:border-white/5 hover:border-zinc-300 dark:hover:border-zinc-700'
             }`}>
             {badge && (
-                <span className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${highlighted ? 'bg-blue-600 text-white' : 'bg-zinc-800 text-zinc-400 border border-zinc-700'}`}>
+                <span className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${highlighted ? 'bg-blue-600 text-white' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-300 dark:border-zinc-700'}`}>
                     {badge}
                 </span>
             )}
             <div className="mb-8">
                 <div className="mb-4">{icon}</div>
                 <h3 className="text-2xl font-bold mb-2">{title}</h3>
-                <p className="text-zinc-500 text-sm leading-relaxed">{description}</p>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">{description}</p>
             </div>
             <div className="mb-8 flex items-baseline gap-1">
                 <span className="text-4xl font-black">${price}</span>
-                <span className="text-zinc-500 text-sm font-medium">/{yearly ? 'year' : 'month'}</span>
+                <span className="text-zinc-500 dark:text-zinc-400 text-sm font-medium">/{yearly ? 'year' : 'month'}</span>
             </div>
             <ul className="space-y-4 mb-10 flex-1">
                 {features.map((feature: string, index: number) => (
-                    <li key={index} className="flex items-center gap-3 text-sm text-zinc-300">
-                        <Check size={14} className={highlighted ? 'text-blue-500' : 'text-zinc-500'} />
+                    <li key={index} className="flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-300">
+                        <Check size={14} className={highlighted ? 'text-blue-600 dark:text-blue-500' : 'text-zinc-400 dark:text-zinc-500'} />
                         {feature}
                     </li>
                 ))}
@@ -152,10 +154,10 @@ function PricingCard({ title, price, description, icon, features, buttonText, hi
                 disabled={isCurrent}
                 onClick={onSelect}
                 className={`w-full py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all active:scale-95 ${isCurrent
-                    ? 'bg-zinc-800 text-zinc-500 cursor-default'
+                    ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 cursor-default'
                     : highlighted
                         ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20'
-                        : 'bg-white text-black hover:bg-zinc-200'
+                        : 'bg-zinc-900 dark:bg-white text-white dark:text-black hover:bg-zinc-800 dark:hover:bg-zinc-200'
                     }`}
             >
                 {buttonText}

@@ -11,7 +11,7 @@ async function UpdateMovie({ params }: { params: { id: string } }) {
     }
 
     return (
-        <div className="min-h-screen bg-black p-4 md:p-10">
+        <div className="min-h-screen  p-4 md:p-10">
             <div className="max-w-4xl mx-auto mb-10 text-center">
                 <h1 className="lg:text-4xl text-2xl md:text-3xl font-black text-white tracking-tighter">
                     EDIT <span className="text-emerald-500">MOVIE</span>

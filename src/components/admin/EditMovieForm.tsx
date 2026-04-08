@@ -27,7 +27,6 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
         e.preventDefault();
         setLoading(true);
         try {
-
             const body = new FormData();
             Object.entries(formData).forEach(([key, value]) => {
                 body.append(key, value.toString());
@@ -38,13 +37,10 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
                 return;
             }
             toast.success("Movie updated successfully!");
-            if (res.success) {
-                router.push("/dashboard/admin/manage-movies");
-                
-                setTimeout(() => {
-                    router.refresh();
-                }, 300)
-            }
+            router.push("/dashboard/admin/manage-movies");
+            setTimeout(() => {
+                router.refresh();
+            }, 300);
         } catch (error) {
             toast.error("Something went wrong!");
         } finally {
@@ -52,24 +48,26 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
         }
     };
 
-    const inputStyle = "w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 transition-all placeholder:text-zinc-600";
-    const labelStyle = "block text-[11px] uppercase tracking-widest font-black text-zinc-500 mb-2 ml-1";
+    // শাকিব, এখানে ডাইনামিক স্টাইল ভ্যারিয়েবলগুলো ডিফাইন করা হয়েছে
+    const inputStyle = "w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-xl px-4 py-3 text-zinc-900 dark:text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600 shadow-sm dark:shadow-none";
+    const labelStyle = "block text-[11px] uppercase tracking-widest font-black text-zinc-400 dark:text-zinc-500 mb-2 ml-1";
+    const cardStyle = "space-y-6 bg-white dark:bg-zinc-900/30 p-6 rounded-3xl border border-zinc-100 dark:border-white/5 shadow-sm dark:shadow-none";
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 transition-colors duration-300">
             
             <div className="flex justify-between items-center mb-10">
                 <button
                     type="button"
                     onClick={() => router.back()}
-                    className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-bold"
+                    className="flex items-center gap-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors font-bold"
                 >
                     <ArrowLeft size={20} /> Back
                 </button>
                 <button
                     type="submit"
                     disabled={loading}
-                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 lg:px-8  lg:py-3 rounded-2xl font-black transition-all shadow-lg shadow-emerald-900/20 disabled:opacity-50"
+                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 lg:px-8 lg:py-3 rounded-2xl font-black transition-all shadow-lg shadow-emerald-900/20 disabled:opacity-50"
                 >
                     {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
                     UPDATE MOVIE
@@ -78,8 +76,9 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                <div className="space-y-6 bg-zinc-900/30 p-6 rounded-3xl border border-white/5">
-                    <h3 className="text-emerald-500 font-black text-xs uppercase tracking-[0.2em] mb-4">Identity & Visuals</h3>
+                {/* Identity Section */}
+                <div className={cardStyle}>
+                    <h3 className="text-emerald-600 dark:text-emerald-500 font-black text-xs uppercase tracking-[0.2em] mb-4">Identity & Visuals</h3>
 
                     <div>
                         <label className={labelStyle}>Movie Title</label>
@@ -108,28 +107,28 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
                     <div>
                         <label className={labelStyle}>Poster URL</label>
                         <div className="relative">
-                            <Globe className="absolute left-4 top-3.5 text-zinc-600" size={18} />
+                            <Globe className="absolute left-4 top-3.5 text-zinc-400 dark:text-zinc-600" size={18} />
                             <input className={`${inputStyle} pl-12`} value={formData.posterUrl} onChange={(e) => setFormData({ ...formData, posterUrl: e.target.value })} />
                         </div>
                     </div>
                 </div>
 
-                
-                <div className="space-y-6 bg-zinc-900/30 p-6 rounded-3xl border border-white/5">
-                    <h3 className="text-blue-500 font-black text-xs uppercase tracking-[0.2em] mb-4">Monetization & Access</h3>
+                {/* Monetization Section */}
+                <div className={cardStyle}>
+                    <h3 className="text-blue-600 dark:text-blue-500 font-black text-xs uppercase tracking-[0.2em] mb-4">Monetization & Access</h3>
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className={labelStyle}>Buy Price ($)</label>
                             <div className="relative">
-                                <DollarSign className="absolute left-4 top-3.5 text-zinc-600" size={18} />
+                                <DollarSign className="absolute left-4 top-3.5 text-zinc-400 dark:text-zinc-600" size={18} />
                                 <input type="number" className={`${inputStyle} pl-12`} value={formData.buyPrice} onChange={(e) => setFormData({ ...formData, buyPrice: Number(e.target.value) })} />
                             </div>
                         </div>
                         <div>
                             <label className={labelStyle}>Rent Price ($)</label>
                             <div className="relative">
-                                <DollarSign className="absolute left-4 top-3.5 text-zinc-600" size={18} />
+                                <DollarSign className="absolute left-4 top-3.5 text-zinc-400 dark:text-zinc-600" size={18} />
                                 <input type="number" className={`${inputStyle} pl-12`} value={formData.rentPrice} onChange={(e) => setFormData({ ...formData, rentPrice: Number(e.target.value) })} />
                             </div>
                         </div>
@@ -138,7 +137,7 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
                     <div>
                         <label className={labelStyle}>Streaming Link</label>
                         <div className="relative">
-                            <PlayCircle className="absolute left-4 top-3.5 text-zinc-600" size={18} />
+                            <PlayCircle className="absolute left-4 top-3.5 text-zinc-400 dark:text-zinc-600" size={18} />
                             <input className={`${inputStyle} pl-12`} value={formData.streamingLink} onChange={(e) => setFormData({ ...formData, streamingLink: e.target.value })} />
                         </div>
                     </div>
@@ -149,8 +148,8 @@ export default function EditMovieForm({ initialData }: { initialData: any }) {
                     </div>
                 </div>
 
-                
-                <div className="md:col-span-2 bg-zinc-900/30 p-6 rounded-3xl border border-white/5">
+                {/* Synopsis Section */}
+                <div className={`${cardStyle} md:col-span-2`}>
                     <label className={labelStyle}>Synopsis / Storyline</label>
                     <textarea
                         rows={4}

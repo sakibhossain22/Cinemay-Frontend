@@ -22,16 +22,15 @@ const Footer = () => {
             title: "Legal",
             links: [
                 { name: "Terms of Service", href: "/terms" },
-                { name: "Privacy Policy", href: "/privacy" },
-                { name: "DMCA", href: "/dmca" },
+                { name: "Privacy Policy", href: "/terms" },
             ],
         },
         {
             title: "Support",
             links: [
                 { name: "FAQ", href: "/faq" },
-                { name: "Help Center", href: "/help" },
-                { name: "Contact Us", href: "/contact" },
+                { name: "Help Center", href: "/contact-us" },
+                { name: "Contact Us", href: "/contact-us" },
             ],
         },
     ];
@@ -44,55 +43,59 @@ const Footer = () => {
     ];
 
     return (
-        <footer className="w-full bg-zinc-950 border-t border-zinc-800/50 mt-16 relative overflow-hidden">
+        <footer className="w-full bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800/50 mt-20 relative overflow-hidden transition-colors duration-500">
             {/* Background Glow Effect */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-emerald-600/10 blur-[120px] rounded-full -z-10"></div>
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-emerald-600/5 dark:bg-emerald-600/10 blur-[120px] rounded-full -z-10"></div>
 
-            <div className="container mx-auto px-4 py-12 md:py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+            <div className="container mx-auto px-6 py-16 md:py-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16 lg:gap-12">
                     
                     {/* 1. Logo & About Section */}
-                    <div className="lg:col-span-2 space-y-5">
-                        <Link href="/" className="flex items-center gap-2.5 group">
-                            <div className="w-11 h-11 bg-emerald-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)] group-hover:rotate-6 transition-transform duration-300">
-                                <span className="text-white font-black text-2xl italic">C</span>
+                    <div className="lg:col-span-2 space-y-6">
+                        <Link href="/" className="flex items-center gap-3 group">
+                            <div className="w-12 h-12 bg-emerald-600 rounded-[1rem] flex items-center justify-center shadow-lg shadow-emerald-600/20 group-hover:scale-110 transition-transform duration-500">
+                                <span className="text-white font-black text-2xl uppercase">C</span>
                             </div>
-                            <span className="text-2xl font-bold tracking-tighter bg-gradient-to-r from-white to-emerald-400 bg-clip-text text-transparent">
+                            <span className="text-2xl font-black tracking-tighter bg-gradient-to-r from-zinc-900 to-emerald-600 dark:from-white dark:to-emerald-400 bg-clip-text text-transparent uppercase">
                                 CinemaY
                             </span>
                         </Link>
-                        <p className="text-zinc-400 text-sm leading-relaxed max-w-md">
-                            Your ultimate destination for movies, series, and entertainment. Stream your favorites anytime, anywhere. Experience the magic of cinema.
+                        <p className="text-zinc-500 dark:text-zinc-400 text-sm font-medium leading-relaxed max-w-sm">
+                            Your ultimate destination for movies, series, and entertainment. Stream your favorites anytime, anywhere. Experience the magic of cinema in high definition.
                         </p>
                         
                         {/* Contact Info */}
-                        <div className="space-y-3 pt-2 text-sm text-zinc-500">
-                            <div className="flex items-center gap-3">
-                                <MapPin className="size-4 text-emerald-500" />
-                                <span>123 Movie Lane, Film City, CA 90210</span>
+                        <div className="space-y-4 pt-2">
+                            <div className="flex items-center gap-4 text-zinc-600 dark:text-zinc-400">
+                                <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center border border-zinc-200 dark:border-zinc-800">
+                                    <MapPin className="size-4 text-emerald-600 dark:text-emerald-500" />
+                                </div>
+                                <span className="text-sm font-bold uppercase tracking-tight">Sherpur, Dhaka, Bangladesh</span>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <Mail className="size-4 text-emerald-500" />
-                                <a href="mailto:support@cinemay.com" className="hover:text-emerald-400 transition-colors">support@cinemay.com</a>
+                            <div className="flex items-center gap-4 text-zinc-600 dark:text-zinc-400">
+                                <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center border border-zinc-200 dark:border-zinc-800">
+                                    <Mail className="size-4 text-emerald-600 dark:text-emerald-500" />
+                                </div>
+                                <a href="mailto:support@cinemay.com" className="text-sm font-bold hover:text-emerald-600 transition-colors uppercase tracking-tight">support@cinemay.com</a>
                             </div>
                         </div>
                     </div>
 
                     {/* 2. Link Sections */}
                     {footerLinks.map((section) => (
-                        <div key={section.title} className="space-y-5">
-                            <h3 className="text-sm font-bold text-zinc-100 uppercase tracking-widest relative inline-block">
+                        <div key={section.title} className="space-y-7">
+                            <h3 className="text-xs font-black text-zinc-900 dark:text-zinc-100 uppercase tracking-[0.2em] relative inline-block">
                                 {section.title}
-                                <span className="absolute -bottom-1.5 left-0 w-8 h-0.5 bg-emerald-500 rounded-full"></span>
+                                <span className="absolute -bottom-2 left-0 w-6 h-1 bg-emerald-500 rounded-full"></span>
                             </h3>
-                            <ul className="space-y-3.5">
+                            <ul className="space-y-4">
                                 {section.links.map((link) => (
                                     <li key={link.name}>
                                         <Link 
                                             href={link.href} 
-                                            className="text-zinc-400 hover:text-emerald-400 text-sm transition-colors duration-200 flex items-center group"
+                                            className="text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center group"
                                         >
-                                            <span className="w-0 group-hover:w-2.5 h-0.5 bg-emerald-500 rounded-full mr-0 group-hover:mr-2 transition-all duration-200"></span>
+                                            <span className="w-0 group-hover:w-3 h-0.5 bg-emerald-500 rounded-full mr-0 group-hover:mr-2 transition-all duration-300"></span>
                                             {link.name}
                                         </Link>
                                     </li>
@@ -103,17 +106,16 @@ const Footer = () => {
                 </div>
 
                 {/* 3. Divider */}
-                <div className="border-t border-zinc-800/80 my-10 md:my-12"></div>
+                <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-200 dark:via-zinc-800 to-transparent my-12"></div>
 
-                {/* 4. Bottom Section: Copyright & Socials */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-zinc-500">
-                    <p className="text-center md:text-left">
-                        &copy; {currentYear} <span className="text-emerald-500 font-medium">CinemaY Inc.</span> All rights reserved. 
-                        <span className="hidden md:inline"> | Crafted with ❤️ for movie lovers.</span>
+                {/* 4. Bottom Section */}
+                <div className="flex flex-col md:row items-center justify-between gap-8 md:gap-4">
+                    <p className="text-[11px] font-black uppercase tracking-[0.15em] text-zinc-400 dark:text-zinc-500 text-center md:text-left">
+                        &copy; {currentYear} <span className="text-emerald-600 dark:text-emerald-500">CinemaY Inc.</span> All rights reserved.
                     </p>
 
                     {/* Social Media Icons */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3">
                         {socialLinks.map((social) => {
                             const Icon = social.icon;
                             return (
@@ -122,10 +124,9 @@ const Footer = () => {
                                     href={social.href} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    title={social.name}
-                                    className="w-10 h-10 flex items-center justify-center rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-emerald-600 hover:border-emerald-500 hover:-translate-y-1 transition-all duration-300 shadow-md"
+                                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-white hover:bg-emerald-600 hover:border-emerald-500 hover:-translate-y-1 transition-all duration-500 shadow-sm"
                                 >
-                                    <Icon className="size-5" />
+                                    <Icon className="size-4" />
                                 </Link>
                             );
                         })}

@@ -1,43 +1,56 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPurchaseHistory } from "@/actions/user.action";
 import Countdown from "@/components/user/CountDown";
-import { Clock, CreditCard, Film, CheckCircle2, Calendar } from 'lucide-react';
+import { Clock, CreditCard, Film, CheckCircle2, Calendar, Receipt } from 'lucide-react';
 import Image from "next/image";
 
 async function PurchaseHistory() {
   const { success, data } = await getPurchaseHistory();
 
-  if (!success || !data) return <div className="p-10 text-white text-center font-black uppercase tracking-widest">No history found.</div>;
+  if (!success || !data) return (
+    <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center p-10">
+      <div className="text-zinc-400 dark:text-zinc-600 text-center font-black uppercase tracking-[0.4em] animate-pulse">
+        No history found.
+      </div>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-black text-zinc-300 p-4 sm:p-6 md:p-12 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-zinc-50 dark:bg-black text-zinc-900 dark:text-zinc-300 p-4 sm:p-6 md:p-12 font-sans overflow-x-hidden transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-8 md:space-y-12">
 
-        <header className="text-left">
-          <h1 className="lg:text-4xl text-2xl md:text-3xl flex items-center gap-3 font-black uppercase tracking-tighter text-white">
-            <CreditCard size={35} className="text-emerald-500 flex-shrink-0" />
-            <span className="truncate">Billing & <span className="text-emerald-500">History</span></span>
-          </h1>
-          <p className="text-zinc-500 text-[10px] sm:text-xs lg:text-base mt-2 max-w-md">
-            Manage your movie purchases and active subscriptions.
-          </p>
+        {/* Header */}
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h1 className="lg:text-4xl text-2xl md:text-3xl flex items-center gap-3 font-black uppercase tracking-tighter text-zinc-900 dark:text-white">
+              <CreditCard size={35} className="text-emerald-500 flex-shrink-0" />
+              <span className="truncate">Billing & <span className="text-emerald-500">History</span></span>
+            </h1>
+            <p className="text-zinc-500 text-[10px] sm:text-xs lg:text-sm mt-2 max-w-md font-medium">
+              Manage your movie purchases and active subscriptions across all nodes.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 px-4 py-2 rounded-xl">
+             <Receipt size={16} className="text-emerald-500" />
+             <span className="text-[10px] font-black uppercase tracking-widest">{data.movies.length} Transactions</span>
+          </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10">
 
           {/* Left Column: Movies & Rentals */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-center gap-2 mb-4 border-l-2 border-blue-500 pl-4">
+            <div className="flex items-center gap-2 mb-4 border-l-4 border-blue-500 pl-4">
               <Film className="text-blue-500 flex-shrink-0" size={20} />
-              <h2 className="text-lg md:text-xl font-bold text-white uppercase tracking-tight">Movies & Rentals</h2>
+              <h2 className="text-lg md:text-xl font-bold text-zinc-900 dark:text-white uppercase tracking-tight">Movies & Rentals</h2>
             </div>
 
             <div className="grid gap-4">
               {data.movies.map((item: any) => (
-                <div key={item.id} className="bg-zinc-900/40 border border-white/5 p-3 sm:p-4 rounded-2xl flex flex-col sm:flex-row gap-4 hover:border-zinc-700 transition-all group relative">
+                <div key={item.id} className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-white/5 p-3 sm:p-4 rounded-2xl flex flex-col sm:flex-row gap-4 hover:border-emerald-500/30 dark:hover:border-zinc-700 transition-all group relative shadow-sm dark:shadow-none">
                   
                   {/* Poster Section */}
-                  <div className="relative h-48 sm:h-32 w-full sm:w-24 flex-shrink-0 overflow-hidden rounded-xl border border-white/10">
+                  <div className="relative h-48 sm:h-32 w-full sm:w-24 flex-shrink-0 overflow-hidden rounded-xl border border-zinc-100 dark:border-white/10">
                     <Image 
                       width={400} 
                       height={700} 
@@ -47,7 +60,7 @@ async function PurchaseHistory() {
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" 
                     />
                     <div className="absolute top-2 right-2 sm:top-1 sm:right-1">
-                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase shadow-xl ${item.type === 'BUY' ? 'bg-green-500 text-black' : 'bg-blue-600 text-white'}`}>
+                      <span className={`text-[9px] font-black px-2 py-0.5 rounded-md uppercase shadow-xl ${item.type === 'BUY' ? 'bg-emerald-500 text-white dark:text-black' : 'bg-blue-600 text-white'}`}>
                         {item.type}
                       </span>
                     </div>
@@ -56,31 +69,33 @@ async function PurchaseHistory() {
                   {/* Info Section */}
                   <div className="flex-1 flex flex-col justify-between py-1">
                     <div>
-                      <h3 className="text-lg font-bold text-white leading-tight mb-1">{item.movie.title}</h3>
-                      <div className="flex items-center gap-3 text-xs text-zinc-500 font-medium">
+                      <h3 className="text-lg font-bold text-zinc-900 dark:text-white leading-tight mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-500 transition-colors">
+                        {item.movie.title}
+                      </h3>
+                      <div className="flex items-center gap-3 text-xs text-zinc-500 font-bold uppercase tracking-tighter">
                         <span>{item.movie.releaseYear}</span>
-                        <span className="text-zinc-800">•</span>
+                        <span className="text-zinc-300 dark:text-zinc-800">•</span>
                         <span className="truncate">{item.movie.genre[0]}</span>
                       </div>
                     </div>
 
                     <div className="flex flex-wrap items-center justify-between gap-3 mt-4 sm:mt-0">
-                      <div className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-lg">
-                        <CreditCard size={14} className="text-zinc-600" />
-                        <span className="text-sm font-black text-white">${item.amount}</span>
+                      <div className="flex items-center gap-2 bg-zinc-100 dark:bg-white/5 px-3 py-1 rounded-lg">
+                        <CreditCard size={14} className="text-zinc-400 dark:text-zinc-600" />
+                        <span className="text-sm font-black text-zinc-900 dark:text-white">${item.amount}</span>
                       </div>
 
                       {item.type === 'RENT' && item.expiresAt && (
                         <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-lg w-full sm:w-auto justify-center sm:justify-start">
-                          <Clock size={12} className="text-amber-500 flex-shrink-0" />
-                          <div className="text-xs font-bold text-amber-200">
+                          <Clock size={12} className="text-amber-600 dark:text-amber-500 flex-shrink-0" />
+                          <div className="text-xs font-black text-amber-700 dark:text-amber-200">
                              <Countdown expiresAt={item.expiresAt} />
                           </div>
                         </div>
                       )}
 
                       {item.type === 'BUY' && (
-                        <div className="flex items-center gap-1 text-[10px] text-emerald-500 uppercase font-black tracking-widest">
+                        <div className="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-500 uppercase font-black tracking-widest">
                           <CheckCircle2 size={12} className="flex-shrink-0" />
                           Lifetime Access
                         </div>
@@ -94,13 +109,13 @@ async function PurchaseHistory() {
 
           {/* Right Column: Active Plan */}
           <div className="space-y-6">
-            <div className="flex items-center gap-2 mb-4 border-l-2 border-emerald-500 pl-4">
+            <div className="flex items-center gap-2 mb-4 border-l-4 border-emerald-500 pl-4">
               <CreditCard className="text-emerald-500 flex-shrink-0" size={20} />
-              <h2 className="text-lg md:text-xl font-bold text-white uppercase tracking-tight">Active Plan</h2>
+              <h2 className="text-lg md:text-xl font-bold text-zinc-900 dark:text-white uppercase tracking-tight">Active Plan</h2>
             </div>
 
             {data.userSubscriptions.map((sub: any) => (
-              <div key={sub.id} className="relative bg-gradient-to-br from-emerald-600 to-emerald-800 p-6 sm:p-8 rounded-[2rem] text-white shadow-2xl shadow-emerald-900/20 overflow-hidden group">
+              <div key={sub.id} className="relative bg-gradient-to-br from-emerald-600 to-emerald-900 p-6 sm:p-8 rounded-[2rem] text-white shadow-2xl shadow-emerald-500/20 dark:shadow-emerald-900/20 overflow-hidden group border border-white/10">
                 <div className="absolute -right-4 -top-4 text-white/10 group-hover:rotate-12 transition-transform duration-700 select-none">
                   <CheckCircle2 size={120} />
                 </div>
@@ -130,22 +145,23 @@ async function PurchaseHistory() {
 
                   <div className="bg-black/30 p-4 rounded-2xl border border-white/5 group-hover:bg-black/40 transition-colors">
                     <p className="text-[9px] opacity-40 mb-1 uppercase font-black tracking-widest">Digital Transaction ID</p>
-                    <p className="text-[10px] font-mono break-all opacity-70 leading-relaxed tracking-tighter">{sub.transactionId}</p>
+                    <p className="text-[10px] font-mono break-all opacity-70 leading-relaxed tracking-tighter select-all cursor-copy">{sub.transactionId}</p>
                   </div>
                 </div>
               </div>
             ))}
 
-            <div className="bg-zinc-900/50 border border-white/5 p-6 rounded-[2rem] space-y-4 backdrop-blur-sm">
-              <h4 className="text-xs font-black text-white uppercase tracking-[0.2em] flex items-center gap-2">
+            {/* Perks Section */}
+            <div className="bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 p-6 rounded-[2rem] space-y-4 backdrop-blur-sm shadow-sm dark:shadow-none">
+              <h4 className="text-xs font-black text-zinc-900 dark:text-white uppercase tracking-[0.2em] flex items-center gap-2">
                 <span className="w-1 h-3 bg-emerald-500 rounded-full" />
                 Subscription Perks
               </h4>
               <ul className="space-y-4">
                 {['4K Ultra HD Streaming', 'No Advertisements', 'Multi-device Access', 'Early Content Access'].map((perk) => (
-                  <li key={perk} className="flex items-center gap-3 text-xs text-zinc-400 font-bold group">
-                    <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                    <span className="group-hover:text-zinc-200 transition-colors">{perk}</span>
+                  <li key={perk} className="flex items-center gap-3 text-[11px] text-zinc-500 dark:text-zinc-400 font-black uppercase tracking-tight group">
+                    <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0 group-hover:scale-125 transition-transform" />
+                    <span className="group-hover:text-emerald-600 dark:group-hover:text-zinc-200 transition-colors">{perk}</span>
                   </li>
                 ))}
               </ul>

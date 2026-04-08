@@ -22,5 +22,5 @@ export default async function MediaPage({
         next: { revalidate: 3600 }
     });
     const initialData = await res.json();
-    return <AdminMediaLibrary initialData={initialData} />;
+    return <AdminMediaLibrary initialData={initialData || []} />;
 }
