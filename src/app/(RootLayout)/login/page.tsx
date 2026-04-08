@@ -33,10 +33,11 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
+
   const handleGitHubLogin = async () => {
     const res = await authClient.signIn.social({
       provider: "github",
-      callbackURL: "/dashboard", 
+      callbackURL: "https://cinemay.vercel.app/dashboard", 
     });
     console.log("GitHub login response:", res);
 
