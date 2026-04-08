@@ -34,12 +34,12 @@ const LoginPage = () => {
   });
 
   const handleGitHubLogin = async () => {
-    await authClient.signIn.social({
+    const res = await authClient.signIn.social({
       provider: "github",
-      callbackURL: "https://cinemay.vercel.app/dashboard", 
+      callbackURL: "/dashboard", 
     });
+    console.log("GitHub login response:", res);
   };
-
   // Demo Login Handler
   const handleDemoLogin = (role: 'admin' | 'user') => {
     if (role === 'admin') {
