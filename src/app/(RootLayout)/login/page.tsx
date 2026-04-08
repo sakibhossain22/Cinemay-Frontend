@@ -39,6 +39,7 @@ const LoginPage = () => {
       callbackURL: "/dashboard", 
     });
     console.log("GitHub login response:", res);
+
   };
   // Demo Login Handler
   const handleDemoLogin = (role: 'admin' | 'user') => {

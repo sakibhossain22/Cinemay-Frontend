@@ -122,7 +122,7 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
             <div className="relative invisible lg:visible" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl  transition-all text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-emerald-500 border border-transparent"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl  transition-all text-[10px] font-black uppercase tracking-widest text-zinc-300 hover:text-emerald-500 border border-transparent"
               >
 
                 <span className="text-xs font-black uppercase tracking-widest transition-all hover:text-emerald-600 dark:hover:text-emerald-300">Resources</span>
