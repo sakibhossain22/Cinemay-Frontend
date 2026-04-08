@@ -36,7 +36,7 @@ const LoginPage = () => {
   const handleGitHubLogin = async () => {
     await authClient.signIn.social({
       provider: "github",
-      callbackURL: "http://localhost:3000/dashboard", 
+      callbackURL: "https://cinemay.vercel.app/dashboard", 
     });
   };
 
