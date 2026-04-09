@@ -1,8 +1,8 @@
 "use server";
 
-export async function getTrendingMoviesForCarousel() {
+export async function getTrendingMoviesForCarousel(category: string = "TRENDING") {
     try {
-        const response = await fetch(`${process.env.API_URL}/media/all-media?category=TRENDING&limit=8`,{
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=${category}&limit=8`,{
         next: { revalidate: 3600 }
     });
         const data = await response.json();
