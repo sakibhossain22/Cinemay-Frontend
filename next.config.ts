@@ -6,10 +6,13 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return [
+      // {
+      //   source: "/api/auth/:path*",
+      //   destination: process.env.BACKEND_URL + "/api/auth/:path*",
+      // },
       {
-        // Explicitly map auth requests
         source: "/api/auth/:path*",
-        destination: process.env.BACKEND_URL + "/api/auth/:path*",
+        destination: process.env.BACKEND_URL + "/:path*",
       },
       {
         // Explicitly map v1 API requests
@@ -25,7 +28,7 @@ const nextConfig: NextConfig = {
       { protocol: 'http', hostname: '**' },
     ],
     qualities: [20, 30, 40, 50, 60, 70, 75, 80],
-    minimumCacheTTL : 60
+    minimumCacheTTL: 60
   },
 };
 

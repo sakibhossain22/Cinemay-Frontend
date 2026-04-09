@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Loader2, Mail, Lock, ShieldCheck, UserCircle } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/authClient";
+import Image from "next/image";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address").min(1, "Email is required"),
@@ -37,7 +38,7 @@ const LoginPage = () => {
   const handleGoogleLogin = async () => {
     const res = await authClient.signIn.social({
       provider: "google",
-      callbackURL: "/dashboard",
+      callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL,
     });
     console.log("Google login response:", res);
 
@@ -89,22 +90,44 @@ const LoginPage = () => {
       </div>
 
       <div className="max-w-md w-full bg-zinc-50/50 dark:bg-zinc-900/50 p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xl backdrop-blur-md">
+        {/* Demo Login Buttons */}
+
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-zinc-900 dark:text-white tracking-tight">Welcome Back</h1>
           <p className="text-zinc-500 dark:text-zinc-400 mt-2">Sign in to continue to CinemaY</p>
         </div>
         {/* Social Login Buttons */}
+        <div className="space-y-3 pt-2">
+          <div className="flex items-center gap-2">
+            <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800"></div>
+            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500 whitespace-nowrap">Quick Login</span>
+            <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800"></div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => handleDemoLogin('admin')}
+              className="flex items-center justify-center gap-2 p-2.5 text-xs font-bold rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-emerald-500/50 hover:text-emerald-500 transition-all active:scale-95"
+            >
+              <ShieldCheck size={14} /> Admin Access
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemoLogin('user')}
+              className="flex items-center justify-center gap-2 p-2.5 text-xs font-bold rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-emerald-500/50 hover:text-emerald-500 transition-all active:scale-95"
+            >
+              <UserCircle size={14} /> User Access
+            </button>
+          </div>
+        </div>
         <div>
           <button
             onClick={handleGoogleLogin}
             className="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-lg transition-all flex items-center justify-center gap-2 mb-5 active:scale-[0.98] shadow-lg shadow-gray-800/20"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-              <path fillRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.787.605-3.375-1.343
--3.375-1.343-.455-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.528 2.341 1.086
-1.459.83.045-.644.35-1.086.636-1.336-2.221-.252-4.555-1.111-4.555-4.945 0-1.091.39-1.984 1.032-2.681-.103-.253-.448-1.27.098-2.647 0 0 .844-.27 2.77 1.032a9.66 9.66 0 012.523-.339c.856 0 1.713.115 2.513.337 1.926-1.303 2.768-1.032 2.768-1.032 .548 1.377 .202 2.394 .099 2.647 .642 .697 1.031 1.59 1.031 2.681 0 3.842 -2.337 4.69 -4.565 4.938 .36 .31 .68 .923 .68 1.86 0 1 .01 1.805 .01 2s .18 .487 .688 .404C19.135 20.163 22 16.415 22 12c0 -5.523 -4.477 -10 -10 -10z" clipRule="evenodd" />
-            </svg>
-            Sign in with GitHub
+            <Image src="/google.png" alt="Google" width={16} height={16} className="h-4 w-4" />
+            Sign in with Google
           </button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -159,31 +182,7 @@ const LoginPage = () => {
             {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Sign In"}
           </button>
 
-          {/* Demo Login Buttons */}
-          <div className="space-y-3 pt-2">
-            <div className="flex items-center gap-2">
-              <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800"></div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500 whitespace-nowrap">Quick Demo</span>
-              <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800"></div>
-            </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('admin')}
-                className="flex items-center justify-center gap-2 p-2.5 text-xs font-bold rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-emerald-500/50 hover:text-emerald-500 transition-all active:scale-95"
-              >
-                <ShieldCheck size={14} /> Admin Access
-              </button>
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('user')}
-                className="flex items-center justify-center gap-2 p-2.5 text-xs font-bold rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-emerald-500/50 hover:text-emerald-500 transition-all active:scale-95"
-              >
-                <UserCircle size={14} /> User Access
-              </button>
-            </div>
-          </div>
         </form>
 
         <div className="mt-8 text-center">
