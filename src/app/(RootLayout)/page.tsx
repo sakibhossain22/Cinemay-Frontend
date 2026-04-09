@@ -1,3 +1,4 @@
+import ChatBot from "@/components/ChatBot";
 import { AppDownloadBanner } from "@/components/dashboard/AppDownloadBanner";
 import { FeatureHighlights } from "@/components/dashboard/FeatureHighLight";
 import { HelpSupportSection } from "@/components/dashboard/HelpAndSupport";
@@ -18,6 +19,7 @@ async function HomePage() {
         <FeatureHighlights />
         <TestimonialsPage />
         <HelpSupportSection />
+        <ChatBot />
       </div>
     </div>
   )

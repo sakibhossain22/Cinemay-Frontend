@@ -34,10 +34,10 @@ const LoginPage = () => {
   });
 
 
-  const handleGitHubLogin = async () => {
+  const handleGoogleLogin = async () => {
     const res = await authClient.signIn.social({
       provider: "google",
-      callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL + "/dashboard",
+      callbackURL: "/dashboard",
     });
     console.log("Google login response:", res);
 
@@ -96,7 +96,7 @@ const LoginPage = () => {
         {/* Social Login Buttons */}
         <div>
           <button
-            onClick={handleGitHubLogin}
+            onClick={handleGoogleLogin}
             className="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-lg transition-all flex items-center justify-center gap-2 mb-5 active:scale-[0.98] shadow-lg shadow-gray-800/20"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">

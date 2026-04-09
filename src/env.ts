@@ -6,13 +6,15 @@ export const env = createEnv({
         FRONTEND_URL: z.url(),
         API_URL: z.url(),
         AUTH_URL: z.url(),
+        DATABASE_URL: z.string(),
     },
   
     runtimeEnv: {
         BACKEND_URL: process.env.BACKEND_URL,
         FRONTEND_URL: process.env.FRONTEND_URL,
         API_URL: process.env.API_URL,
-        AUTH_URL: process.env.AUTH_URL
+        AUTH_URL: process.env.AUTH_URL,
+        DATABASE_URL: process.env.DATABASE_URL,
 
     }
 })
