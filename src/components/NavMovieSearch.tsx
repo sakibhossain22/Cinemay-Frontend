@@ -23,8 +23,11 @@ function NavMovieSearch() {
 
             setLoading(true);
             try {
-                const response = await fetch(`${process.env.BACKEND_URL}/api/media/all-media?searchTerm=${encodeURIComponent(searchTerm)}`);
+                // console.log("Fetching movies for search term:", process.env.NEXT_PUBLIC_API_URL, searchTerm);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/media/all-media?searchTerm=${encodeURIComponent(searchTerm)}`);
+                
                 const data = await response.json();
+                console.log("Movies fetched:", data);
                 setMovies(data.data.data || []);
             }
             catch (error) {
