@@ -78,8 +78,9 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const apiUrl = process.env.API_URL || 'https://cinemay-server.vercel.app/api';
-
+      // const apiUrl = 'http://localhost:5000/api';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      console.log(apiUrl)
       const res = await fetch(`${apiUrl}/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -163,8 +164,8 @@ export default function ChatBot() {
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[88%] p-4 rounded-2xl text-[13px] shadow-sm whitespace-pre-wrap ${msg.role === 'user'
-                    ? 'bg-emerald-600 text-white rounded-tr-none'
-                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-tl-none'
+                  ? 'bg-emerald-600 text-white rounded-tr-none'
+                  : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-tl-none'
                   }`}>
                   {msg.role === 'model' ? renderMessageWithLinks(msg.text) : msg.text}
                 </div>
