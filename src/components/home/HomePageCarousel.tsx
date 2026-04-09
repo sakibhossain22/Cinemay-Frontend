@@ -2,19 +2,12 @@
 import { getTrendingMoviesForCarousel } from "@/services/movieService";
 import MovieSlider from "./EmblaCarousel";
 import { getMovieBackDrop } from "@/services/getMovieCast";
-import { getUserHistory } from "@/actions/history.action";
 
 export default async function HomePageCarousel() {
-// const userWatchHistory = await getUserHistory();
-// // console.log("User watch history:", userWatchHistory?.data[0]?.media?.genre[0]);
-// const category =userWatchHistory?.data[0]?.media?.genre[0] || "TRENDING";
-// // console.log("User watch history category:", category);
-const { data: movieData = [] } =
-  await getTrendingMoviesForCarousel("TRENDING");
 
-    if (!Array.isArray(movieData) || movieData.length === 0) {
-        return null;
-    }
+const { data: movieData = [] } =
+  await getTrendingMoviesForCarousel();
+
 
     const moviesWithBackdrops = await Promise.all(
         movieData.map(async (movie: any) => {

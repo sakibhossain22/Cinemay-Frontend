@@ -78,8 +78,8 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      // const apiUrl = 'http://localhost:5000/api';
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const apiUrl = 'https://cinemay-server.vercel.app/api';
+      // const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       console.log(apiUrl)
       const res = await fetch(`${apiUrl}/ai/chat`, {
         method: 'POST',
