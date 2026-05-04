@@ -6,7 +6,7 @@ import { getAllMedia } from "@/actions/adminAction";
 
 export default async function ManageMovies() {
   const res = await getAllMedia();
-  const movies = res.data.media || [];
+  const movies = res?.data?.media || [];
 
   return (
     <div className="space-y-6 p-2 max-w-full overflow-x-hidden transition-colors duration-300">

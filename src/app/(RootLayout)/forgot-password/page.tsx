@@ -110,7 +110,7 @@ export default function ForgotPassword() {
                                     placeholder="name@example.com"
                                     className="w-full bg-white dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl py-3.5 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-600 dark:focus:border-emerald-500 transition-all"
                                 />
-                                {emailForm.formState.errors.email && <p className="text-red-500 text-xs mt-1.5 ml-1">{emailForm.formState.errors.email.message}</p>}
+                                {emailForm.formState?.errors?.email && <p className="text-red-500 text-xs mt-1.5 ml-1">{emailForm.formState?.errors?.email?.message}</p>}
                             </div>
                             <Button disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700 dark:hover:bg-emerald-500 py-6 text-lg font-bold text-white transition-all active:scale-95 shadow-lg shadow-emerald-500/20">
                                 {loading ? <Loader2 className="animate-spin" /> : "Send OTP"}
@@ -137,7 +137,7 @@ export default function ForgotPassword() {
                                         className="w-full bg-white dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl py-3 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-600 dark:focus:border-emerald-500 text-center text-lg tracking-[0.4em] font-mono"
                                     />
                                 </div>
-                                {resetForm.formState.errors.otp && <p className="text-red-500 text-[10px]">{resetForm.formState.errors.otp.message}</p>}
+                                {resetForm.formState?.errors?.otp && <p className="text-red-500 text-[10px]">{resetForm.formState?.errors?.otp?.message}</p>}
                             </div>
 
                             {/* New Password Field */}
@@ -152,7 +152,7 @@ export default function ForgotPassword() {
                                         className="w-full bg-white dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl py-3 pl-10 pr-4 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-600 dark:focus:border-emerald-500"
                                     />
                                 </div>
-                                {resetForm.formState.errors.password && <p className="text-red-500 text-[10px]">{resetForm.formState.errors.password.message}</p>}
+                                {resetForm.formState?.errors?.password && <p className="text-red-500 text-[10px]">{resetForm.formState?.errors?.password?.message}</p>}
                             </div>
 
                             {/* Confirm Password Field */}

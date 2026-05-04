@@ -36,7 +36,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
   }
 
   const data = await getPurchaseHistory();
-  const purchasedMovies = data?.data?.movies.map((item: any) => item.movie);
+  const purchasedMovies = data?.data?.movies?.map((item: any) => item.movie);
 
   let hasPurchased = purchasedMovies?.some((m: any) => m.id === movie.id);
 

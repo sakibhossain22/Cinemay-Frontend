@@ -31,7 +31,7 @@ export default function PlayMovie({ params }: { params: any }) {
             setRelatedMovies(catMovies.filter((m: any) => m.id !== movieResponse.id).slice(0, 6));
 
             const purchaseHistory = await getPurchaseHistory();
-            const purchasedMovies = purchaseHistory?.data?.movies.map((item: any) => item.movie);
+            const purchasedMovies = purchaseHistory?.data?.movies?.map((item: any) => item.movie);
             const isAlreadyPurchased = purchasedMovies?.some((m: any) => m.id === movieResponse.id);
 
             if (movieResponse.contentType === "FREE" || isAlreadyPurchased) {

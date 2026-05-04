@@ -24,7 +24,7 @@ export async function toggleLike(reviewId: string, userId: string, customid: str
     return {
       success: res.success,
       ok: res.ok,
-      isLiked: res.data.liked
+      isLiked: res?.data?.liked
     };
   }
 

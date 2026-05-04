@@ -146,10 +146,10 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
         </div>
 
         {/* Media Grid */}
-        {movies.length > 0 ? (
+        {movies?.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-6">
             {movies.map((movie: any) => (
-              <Link key={movie.id} href={`/movies/details/${movie.customid}`} className="group hover:cursor-pointer relative flex flex-col bg-white dark:bg-zinc-900/20 rounded-[2rem] border border-zinc-200 dark:border-white/5 overflow-hidden hover:border-emerald-500/30 transition-all duration-500 shadow-sm dark:shadow-none">
+              <Link key={movie.id} href={`/movies/details/${movie?.customid}`} className="group hover:cursor-pointer relative flex flex-col bg-white dark:bg-zinc-900/20 rounded-[2rem] border border-zinc-200 dark:border-white/5 overflow-hidden hover:border-emerald-500/30 transition-all duration-500 shadow-sm dark:shadow-none">
                 <div className="relative aspect-[2/3] overflow-hidden">
                   <Image
                     fill

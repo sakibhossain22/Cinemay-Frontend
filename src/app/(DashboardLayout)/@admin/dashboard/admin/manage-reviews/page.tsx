@@ -5,7 +5,7 @@ import ReviewList from '@/components/admin/ReviewList';
 
 async function ManageReviews() {
   const response = await getAllReviews();
-  const reviews = response.success ? response.data.reviews : [];
+  const reviews = response.success ? response?.data?.reviews : [];
   const totalReviews = response.data?.totalReviews || 0;
 
   return (

@@ -87,7 +87,7 @@ const RegisterPage = () => {
                 className={`w-full bg-zinc-100 dark:bg-zinc-800/30 border ${errors.name ? 'border-red-500' : 'border-zinc-300 dark:border-zinc-700'} text-zinc-900 dark:text-white rounded-xl py-3.5 pl-11 pr-4 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
               />
             </div>
-            {errors.name && <p className="text-red-500 text-xs mt-1.5 ml-1 font-medium">{errors.name.message}</p>}
+            {errors?.name && <p className="text-red-500 text-xs mt-1.5 ml-1 font-medium">{errors?.name?.message}</p>}
           </div>
 
           {/* Email Address */}
@@ -102,7 +102,7 @@ const RegisterPage = () => {
                 className={`w-full bg-zinc-100 dark:bg-zinc-800/30 border ${errors.email ? 'border-red-500' : 'border-zinc-300 dark:border-zinc-700'} text-zinc-900 dark:text-white rounded-xl py-3.5 pl-11 pr-4 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
               />
             </div>
-            {errors.email && <p className="text-red-500 text-xs mt-1.5 ml-1 font-medium">{errors.email.message}</p>}
+            {errors?.email && <p className="text-red-500 text-xs mt-1.5 ml-1 font-medium">{errors?.email?.message}</p>}
           </div>
 
           {/* Phone Number */}
@@ -117,7 +117,7 @@ const RegisterPage = () => {
                 className={`w-full bg-zinc-100 dark:bg-zinc-800/30 border ${errors.phone ? 'border-red-500' : 'border-zinc-300 dark:border-zinc-700'} text-zinc-900 dark:text-white rounded-xl py-3.5 pl-11 pr-4 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
               />
             </div>
-            {errors.phone && <p className="text-red-500 text-xs mt-1.5 ml-1 font-medium">{errors.phone.message}</p>}
+            {errors?.phone && <p className="text-red-500 text-xs mt-1.5 ml-1 font-medium">{errors?.phone?.message}</p>}
           </div>
 
           {/* Password */}
@@ -132,7 +132,7 @@ const RegisterPage = () => {
                 className={`w-full bg-zinc-100 dark:bg-zinc-800/30 border ${errors.password ? 'border-red-500' : 'border-zinc-300 dark:border-zinc-700'} text-zinc-900 dark:text-white rounded-xl py-3.5 pl-11 pr-4 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
               />
             </div>
-            {errors.password && <p className="text-red-500 text-xs mt-1.5 ml-1 font-medium">{errors.password.message}</p>}
+            {errors?.password && <p className="text-red-500 text-xs mt-1.5 ml-1 font-medium">{errors?.password?.message}</p>}
           </div>
 
           {error && (

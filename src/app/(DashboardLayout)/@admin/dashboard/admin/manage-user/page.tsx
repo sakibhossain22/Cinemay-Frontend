@@ -20,7 +20,7 @@ export default function ManageUser() {
       setLoading(true);
       const res = await getAllUsers();
       if (res.success) {
-        setUsers(res.data.users || []);
+        setUsers(res?.data?.users || []);
       } else {
         toast.error(res.message || "Failed to fetch users");
       }

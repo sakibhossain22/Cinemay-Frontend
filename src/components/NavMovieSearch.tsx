@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import { Search, Loader2, ChevronDown, Scale, HelpCircle, LifeBuoy } from "lucide-react"
-import { useEffect, useState, useRef } from "react"
+import { Search, Loader2 } from "lucide-react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -11,7 +11,6 @@ function NavMovieSearch() {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
-
 
 
     useEffect(() => {
@@ -28,7 +27,7 @@ function NavMovieSearch() {
                 
                 const data = await response.json();
                 console.log("Movies fetched:", data);
-                setMovies(data.data.data || []);
+                setMovies(data?.data?.data || []);
             }
             catch (error) {
                 console.error("Error fetching movies:", error);

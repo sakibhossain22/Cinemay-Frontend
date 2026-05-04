@@ -36,7 +36,7 @@ export default function WatchTrailer({ params }: { params: any }) {
     }, [params]);
 
     if (!movieData) return (
-        <div className="min-h-screen bg-[#050505] dark:bg-[#050505] bg-white flex items-center justify-center text-emerald-500 animate-pulse font-black uppercase tracking-tighter">
+        <div className="min-h-screen dark:bg-[#050505] bg-white flex items-center justify-center text-emerald-500 animate-pulse font-black uppercase tracking-tighter">
             Loading Trailer...
         </div>
     );
