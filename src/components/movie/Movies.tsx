@@ -84,7 +84,7 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
             </div>
             <button
               onClick={() => handleFilterChange('searchTerm', searchInput)}
-              className="bg-emerald-600 hover:bg-emerald-500 text-white dark:text-black font-black lg:px-8 px-4 py-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20 active:scale-95"
+              className="bg-emerald-600 cursor-pointer hover:bg-emerald-500 text-white dark:text-black font-black lg:px-8 px-4 py-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20 active:scale-95"
             >
               Search
             </button>
@@ -153,9 +153,10 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
                 <div className="relative aspect-[2/3] overflow-hidden">
                   <Image
                     fill
-                    quality={30}
+                    quality={70}
                     src={movie.posterUrl}
                     alt={movie.title}
+                    sizes='250px'
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
@@ -228,7 +229,7 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
             <button
               disabled={meta.page === 1}
               onClick={() => handleFilterChange('page', (meta.page - 1).toString())}
-              className="px-6 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 rounded-2xl hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-20 transition-all text-[10px] font-black uppercase text-zinc-600 dark:text-zinc-300 flex items-center gap-2 shadow-sm"
+              className="px-6 py-3 cursor-pointer bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 rounded-2xl hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-20 transition-all text-[10px] font-black uppercase text-zinc-600 dark:text-zinc-300 flex items-center gap-2 shadow-sm"
             >
               <ChevronLeft size={16} /> Prev
             </button>
@@ -237,7 +238,7 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
                 <button
                   key={i}
                   onClick={() => handleFilterChange('page', (i + 1).toString())}
-                  className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all ${meta.page === i + 1 ? 'bg-emerald-600 text-white' : 'hover:bg-zinc-100 dark:hover:bg-white/5 text-zinc-500'}`}
+                  className={`w-10 h-10 rounded-xl cursor-pointer text-[10px] font-black transition-all ${meta.page === i + 1 ? 'bg-emerald-600 text-white' : 'hover:bg-zinc-100 dark:hover:bg-white/5 hover:text-white/70 text-zinc-500'}`}
                 >
                   {i + 1}
                 </button>
@@ -246,7 +247,7 @@ export default function AdminMediaLibrary({ initialData }: MediaLibraryProps) {
             <button
               disabled={meta.page === meta.totalPage}
               onClick={() => handleFilterChange('page', (meta.page + 1).toString())}
-              className="px-6 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 rounded-2xl hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-20 transition-all text-[10px] font-black uppercase text-zinc-600 dark:text-zinc-300 flex items-center gap-2 shadow-sm"
+              className="px-6 py-3 cursor-pointer bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 rounded-2xl hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-20 transition-all text-[10px] font-black uppercase text-zinc-600 dark:text-zinc-300 flex items-center gap-2 shadow-sm"
             >
               Next <ChevronRight size={16} />
             </button>
@@ -261,7 +262,7 @@ function FilterButton({ label, active, onClick, icon }: any) {
   return (
     <button
       onClick={onClick}
-      className={`flex-shrink-0 mx-2 flex items-center gap-2 lg:px-6 px-2 my-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${active
+      className={`flex-shrink-0 cursor-pointer mx-2 flex items-center gap-2 lg:px-6 px-2 my-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${active
         ? 'bg-emerald-500 text-white dark:text-black/80 shadow-lg shadow-emerald-500/20 scale-105'
         : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5'
         }`}

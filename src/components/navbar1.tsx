@@ -33,7 +33,6 @@ const Navbar = () => {
   const [user, setUser] = useState<any>(null);
 
   const isLoading = user === undefined;
-  console.log(user)
   // Handle clicking outside to close the resources dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -134,10 +133,10 @@ const Navbar = () => {
             <div className="relative invisible lg:visible" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl  transition-all text-[10px] font-black uppercase tracking-widest text-zinc-300 hover:text-emerald-500 border border-transparent"
+                className="flex items-center gap-2 py-2 rounded-xl  transition-all text-[10px] font-black uppercase tracking-widest  hover:text-emerald-500 border border-transparent cursor-pointer"
               >
 
-                <span className="text-xs font-black uppercase tracking-widest transition-all hover:text-emerald-600 dark:hover:text-emerald-300">Resources</span>
+                <span className="text-xs text-zinc-400 font-black uppercase tracking-widest transition-all hover:text-emerald-600 dark:hover:text-emerald-300">Resources</span>
                 <ChevronDown size={14} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 

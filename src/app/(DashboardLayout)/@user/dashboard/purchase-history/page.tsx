@@ -54,7 +54,7 @@ async function PurchaseHistory() {
                     <Image 
                       width={400} 
                       height={700} 
-                      quality={30}
+                      quality={70}
                       src={item.movie.posterUrl} 
                       alt={item.movie.title} 
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" 

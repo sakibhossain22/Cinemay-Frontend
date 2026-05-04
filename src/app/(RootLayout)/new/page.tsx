@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+export const dynamic = 'force-static'; 
+
 import Link from "next/link";
 import Image from "next/image";
 import { Play } from "lucide-react";
@@ -32,7 +34,7 @@ async function NewReleases() {
                                         height={700}
                                         src={item.posterUrl}
                                         alt={item.title}
-                                        quality={30}
+                                        quality={70}
                                         className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110 group-hover:opacity-60"
                                         loading="lazy"
                                     />

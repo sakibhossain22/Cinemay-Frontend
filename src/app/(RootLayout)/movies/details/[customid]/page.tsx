@@ -66,11 +66,11 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
             alt="backdrop"
             width={1280}
             height={720}
-            quality={50}
+            quality={70}
             className="absolute right-0 top-0 h-full w-auto object-cover object-right opacity-80 dark:opacity-70 blur-[1px] dark:blur-[2px] transition-all"
             priority
           />
-          {/* ২. গ্রেডিয়েন্ট থিম অনুযায়ী পরিবর্তন হবে */}
+          {/* ২. গ্রেডিয়েন্ট থিম অনুযায়ী পরিবর্তন হবে */}
           <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 dark:from-black dark:via-black/80 to-transparent" />
         </div>
 
@@ -83,7 +83,7 @@ async function MovieDetails({ params, searchParams }: { params: Promise<{ custom
                 src={movie.posterUrl}
                 alt={movie.title}
                 fill
-                quality={30}
+                quality={70}
                 priority
                 className="object-cover"
                 sizes="(max-width: 768px) 144px, 192px"

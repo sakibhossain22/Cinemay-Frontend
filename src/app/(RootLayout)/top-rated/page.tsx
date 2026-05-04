@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+export const dynamic = 'force-static'; 
+
 import Link from "next/link";
 import Image from "next/image";
 import { Play, Star } from "lucide-react";

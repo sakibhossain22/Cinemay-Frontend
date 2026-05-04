@@ -49,13 +49,13 @@ export default function PlayMovie({ params }: { params: any }) {
         fetchData();
     }, [params]);
 
-    if (!movieData) return (
-        <div className="min-h-screen bg-white dark:bg-[#050505] flex items-center justify-center text-emerald-500 animate-pulse font-bold uppercase tracking-tighter">
-            Initializing Cinemay Player...
-        </div>
-    );
+    // if (!movieData) return (
+    //     <div className="min-h-screen bg-white dark:bg-[#050505] flex items-center justify-center text-emerald-500 animate-pulse font-bold uppercase tracking-tighter">
+    //         Initializing Cinemay Player...
+    //     </div>
+    // );
 
-    const isSeries = movieData.episodeLinks && movieData.episodeLinks.length > 0;
+    const isSeries = movieData?.episodeLinks && movieData?.episodeLinks.length > 0;
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#050505] text-zinc-900 dark:text-white transition-colors duration-300">
@@ -79,7 +79,7 @@ export default function PlayMovie({ params }: { params: any }) {
                                         <Lock className="text-red-500 mb-6 animate-bounce" size={48} />
                                         <h2 className="text-2xl font-black uppercase mb-3 text-white">Premium Content</h2>
                                         <p className="text-zinc-400 mb-8 max-w-sm text-sm font-medium">Please purchase the movie to unlock streaming and downloads.</p>
-                                        <Link href={`/movies/details/${movieData.customid}`} className="bg-emerald-500 text-black px-8 py-3 rounded-full font-black text-xs hover:scale-105 transition-transform">
+                                        <Link href={`/movies/details/${movieData?.customid}`} className="bg-emerald-500 text-black px-8 py-3 rounded-full font-black text-xs hover:scale-105 transition-transform">
                                             BUY NOW
                                         </Link>
                                     </div>
@@ -88,12 +88,12 @@ export default function PlayMovie({ params }: { params: any }) {
                         </div>
 
                         <div className="p-4 lg:px-0 mt-4">
-                            <h1 className="text-xl md:text-2xl font-black uppercase tracking-tighter text-zinc-900 dark:text-white">{movieData.title}</h1>
+                            <h1 className="text-xl md:text-2xl font-black uppercase tracking-tighter text-zinc-900 dark:text-white">{movieData?.title}</h1>
                             <div className="flex flex-wrap items-center gap-4 mt-3 pb-6 border-b border-zinc-200 dark:border-zinc-800/50">
                                 <div className="flex items-center gap-1 text-emerald-500 font-bold text-sm bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                                    <Star size={14} fill="currentColor" /> {movieData.ratingAverage}
+                                    <Star size={14} fill="currentColor" /> {movieData?.ratingAverage}
                                 </div>
-                                <span className="text-zinc-500 dark:text-zinc-500 text-xs font-black border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded">{movieData.contentType}</span>
+                                <span className="text-zinc-500 dark:text-zinc-500 text-xs font-black border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded">{movieData?.contentType}</span>
                                 {hasPurchased && (
                                     <a href={`https://drive.google.com/uc?export=download&id=${activeVideoId}`} className="ml-auto flex items-center gap-2 bg-emerald-600 hover:bg-emerald-800 text-white px-5 py-2 rounded-full font-bold text-[10px] transition-all">
                                         <Download size={14} /> DOWNLOAD
@@ -102,7 +102,7 @@ export default function PlayMovie({ params }: { params: any }) {
                             </div>
 
                             <div className="mt-6 bg-zinc-50 dark:bg-zinc-900/30 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800/50">
-                                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed font-medium">{movieData.synopsis}</p>
+                                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed font-medium">{movieData?.synopsis}</p>
                             </div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@ export default function PlayMovie({ params }: { params: any }) {
 
                             <div className="max-h-[600px] lg:max-h-[800px] overflow-y-auto custom-scrollbar">
                                 {isSeries ? (
-                                    movieData?.episodeLinks.map((link: string, index: number) => {
+                                    movieData?.episodeLinks?.map((link: string, index: number) => {
                                         const epId = getDriveId(link);
                                         const isActive = activeVideoId === epId;
                                         return (
@@ -145,14 +145,14 @@ export default function PlayMovie({ params }: { params: any }) {
                                 ) : (
                                     relatedMovies?.map((movie: any) => (
                                         <Link
-                                            key={movie.id}
-                                            href={`/movies/details/${movie.customid}`}
+                                            key={movie?.id}
+                                            href={`/movies/details/${movie?.customid}`}
                                             className="flex gap-3 p-3 hover:bg-zinc-200 dark:hover:bg-white/5 transition-all border-b border-zinc-200 dark:border-zinc-800/30 group"
                                         >
                                             <div className="relative w-32 aspect-video rounded-lg overflow-hidden shrink-0 bg-zinc-200 dark:bg-zinc-800">
                                                 <Image 
-                                                    src={movie.backdropUrl || movie.posterUrl} 
-                                                    alt={movie.title} 
+                                                    src={movie?.backdropUrl || movie?.posterUrl} 
+                                                    alt={movie?.title} 
                                                     fill 
                                                     quality={30}
                                                     className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -160,12 +160,12 @@ export default function PlayMovie({ params }: { params: any }) {
                                             </div>
                                             <div className="flex flex-col justify-center">
                                                 <h4 className="text-[11px] font-black uppercase line-clamp-2 leading-tight text-zinc-800 dark:text-zinc-100 group-hover:text-emerald-500 transition-colors">
-                                                    {movie.title}
+                                                    {movie?.title}
                                                 </h4>
                                                 <div className="flex items-center gap-2 mt-1.5">
-                                                    <span className="text-[9px] text-zinc-500 font-bold uppercase">{movie.releaseYear}</span>
+                                                    <span className="text-[9px] text-zinc-500 font-bold uppercase">{movie?.releaseYear}</span>
                                                     <div className="flex items-center gap-0.5 text-yellow-500 text-[9px] font-bold">
-                                                        <Star size={10} fill="currentColor" /> {movie.ratingAverage}
+                                                        <Star size={10} fill="currentColor" /> {movie?.ratingAverage}
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,8 +176,8 @@ export default function PlayMovie({ params }: { params: any }) {
                         </div>
 
                         <div className="space-y-3">
-                            <SidebarInfoItem icon={<User size={14} />} label="Director" value={movieData.director} />
-                            <SidebarInfoItem icon={<Calendar size={14} />} label="Release" value={movieData.releaseYear} />
+                            <SidebarInfoItem icon={<User size={14} />} label="Director" value={movieData?.director} />
+                            <SidebarInfoItem icon={<Calendar size={14} />} label="Release" value={movieData?.releaseYear} />
                         </div>
                     </div>
 
