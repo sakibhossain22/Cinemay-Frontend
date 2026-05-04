@@ -1,4 +1,6 @@
 "use client"
+export const dynamic = 'force-static'; // এটি যোগ করুন
+
 import React, { useState } from 'react';
 import { 
   LifeBuoy, 

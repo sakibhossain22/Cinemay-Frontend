@@ -3,14 +3,28 @@ import { getTrendingMoviesForCarousel } from "@/services/movieService";
 import MovieSlider from "./EmblaCarousel";
 import { getMovieBackDrop } from "@/services/getMovieCast";
 
+export async function getStaticProps() {
+
+    try {
+        const response = await fetch(`${process.env.API_URL}/media/all-media?category=TRENDING&limit=8`);
+        const data = await response.json();
+            return {
+        props: {
+            data: data.data, // Pass the fetched data as props
+        },
+        revalidate: 3600, // 1 hour
+    };
+    } catch (error) {
+        console.error('Error fetching trending movies:', error);
+        return [];
+    }
+
+}
+
 export default async function HomePageCarousel() {
-
-const { data: movieData = [] } =
-  await getTrendingMoviesForCarousel();
-
-
+    const movieData = await getTrendingMoviesForCarousel();
     const moviesWithBackdrops = await Promise.all(
-        movieData?.map(async (movie: any) => {
+        movieData?.data?.map(async (movie: any) => {
             try {
                 const backdropUrl = await getMovieBackDrop(
                     movie.tmdb_id,

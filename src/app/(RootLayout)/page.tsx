@@ -1,3 +1,5 @@
+export const dynamic = 'force-static'; // এটি যোগ করুন
+
 import ChatBot from "@/components/ChatBot";
 import { AppDownloadBanner } from "@/components/dashboard/AppDownloadBanner";
 import { FeatureHighlights } from "@/components/dashboard/FeatureHighLight";

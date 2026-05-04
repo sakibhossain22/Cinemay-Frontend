@@ -4,8 +4,6 @@ import "../globals.css";
 import Navbar from "@/components/navbar1";
 import { AppSidebar } from "@/components/home/app-sidebar";
 import BottomNav from "@/components/home/BottomNav";
-import { getSession } from "@/services/userService";
-import { authClient } from "@/lib/authClient";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider"; // ১. থিম প্রোভাইডার ইমপোর্ট করো
 
@@ -14,7 +12,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
 
   return (
     // ২. এখান থেকে 'bg-black' এবং 'dark' ক্লাস দুটি সরিয়ে ফেলো। 
@@ -26,7 +23,7 @@ export default async function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <Navbar userInfo={session} />
+        <Navbar />
 
         <SidebarProvider>
           <div className="flex flex-1 w-full overflow-hidden">

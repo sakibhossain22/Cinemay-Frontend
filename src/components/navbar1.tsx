@@ -19,8 +19,9 @@ import { cn } from "@/lib/utils";
 import NavMovieSearch from "./NavMovieSearch";
 import { LogOutFunc } from "@/actions/user.action";
 import { authClient } from "@/lib/authClient";
+import { getSession } from "@/services/userService";
 
-const Navbar = ({ userInfo }: { userInfo: any }) => {
+const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -29,10 +30,10 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
-  const user = userInfo?.user;
-  const isLoading = userInfo === undefined;
-
+  const isLoading = user === undefined;
+  console.log(user)
   // Handle clicking outside to close the resources dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,6 +52,17 @@ const Navbar = ({ userInfo }: { userInfo: any }) => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const session = await getSession();
+        setUser(session.user);
+      } catch (error) {
+        console.error("Error fetching user session:", error);
+      }
+    }
+    fetchUser();
   }, []);
 
   const navLinks = [
