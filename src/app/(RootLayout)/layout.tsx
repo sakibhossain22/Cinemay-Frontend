@@ -15,7 +15,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getSession();
-  const betterSession = await authClient.getSession();
 
   return (
     // ২. এখান থেকে 'bg-black' এবং 'dark' ক্লাস দুটি সরিয়ে ফেলো। 

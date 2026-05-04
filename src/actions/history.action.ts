@@ -10,7 +10,7 @@ const API_URL = process.env.API_URL
 export async function trackMovieView(mediaId: string) {
     try {
         const cookieStore = await cookies();
-       const res = await fetch(`${API_URL}/history`, {
+        await fetch(`${API_URL}/history`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export async function getUserHistory() {
     }
 }
 export async function clearAllHistory() {
-    try {        
+    try {
         const cookieStore = await cookies();
         const res = await fetch(`${API_URL}/history/clear`, {
             method: 'DELETE',
@@ -52,7 +52,7 @@ export async function clearAllHistory() {
             cache: 'no-store'
         });
         const result = await res.json();
-        revalidatePath('/history'); 
+        revalidatePath('/history');
         return result;
     } catch (error) {
         console.error("Failed to clear user history:", error);

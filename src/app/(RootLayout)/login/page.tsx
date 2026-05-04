@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -11,6 +12,8 @@ import { Loader2, Mail, Lock, ShieldCheck, UserCircle } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/authClient";
 import Image from "next/image";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebase";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address").min(1, "Email is required"),
@@ -35,14 +38,47 @@ const LoginPage = () => {
   });
 
 
-  const handleGoogleLogin = async () => {
-    const res = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL,
-    });
-    console.log("Google login response:", res);
+const handleGoogleLogin = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result?.user;
 
-  };
+    if (!user) return;
+
+    // ১. প্রথমে সাইন-আপ করার চেষ্টা করুন
+    const { data, error } = await authClient.signUp.email({
+      email: user.email as string,
+      password: user.email as string, // পাসওয়ার্ড হিসেবে ইমেইল ব্যবহার করা সিকিউর নয়, তবে আপনার লজিক অনুযায়ী
+      name: user?.displayName as string,
+      image: user?.photoURL as string,
+      //@ts-expect-error
+      status: "ACTIVE",
+      role: "USER",
+      isPremium: false,
+      phone: ""
+    });
+
+    // ২. যদি ইউজার আগে থেকেই থাকে অথবা সাইন-আপ সফল হয়, তবে সাইন-ইন করুন
+    if (data?.user || error?.message === "User already exists. Use another email.") {
+      const { data: signInData, error: signInError } = await authClient.signIn.email({
+        email: user.email as string,
+        password: user.email as string,
+      });
+
+      if (signInData?.user) {
+        toast.success("Login Successful");
+        router.push('/dashboard');
+      } else {
+        toast.error(signInError?.message || "Sign in failed");
+      }
+    } else if (error) {
+      toast.error(error.message);
+    }
+  } catch (err: any) {
+    console.error(err);
+    toast.error(err.message || "Google login failed");
+  }
+};
   // Demo Login Handler
   const handleDemoLogin = (role: 'admin' | 'user') => {
     if (role === 'admin') {
@@ -100,24 +136,25 @@ const LoginPage = () => {
         <div className="space-y-3 pt-2">
           <div className="flex items-center gap-2">
             <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800"></div>
-            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500 whitespace-nowrap">Quick Login</span>
+            <span className="text-[16px] font-black uppercase tracking-widest text-zinc-500 whitespace-nowrap">Quick Login</span>
             <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800"></div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid mb-4 grid-cols-2 gap-3">
             <button
               type="button"
               onClick={() => handleDemoLogin('admin')}
-              className="flex items-center justify-center gap-2 p-2.5 text-xs font-bold rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-emerald-500/50 hover:text-emerald-500 transition-all active:scale-95"
+              className="flex flex-1 items-center justify-center gap-2 p-3 text-xs font-black uppercase tracking-wider rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all active:scale-95"
             >
-              <ShieldCheck size={14} /> Admin Access
+              <ShieldCheck size={16} /> Admin Access
             </button>
+
             <button
               type="button"
               onClick={() => handleDemoLogin('user')}
-              className="flex items-center justify-center gap-2 p-2.5 text-xs font-bold rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-emerald-500/50 hover:text-emerald-500 transition-all active:scale-95"
+              className="flex flex-1 items-center justify-center gap-2 p-3 text-xs font-black uppercase tracking-wider rounded-xl bg-gradient-to-r from-zinc-800 to-zinc-900 dark:from-zinc-100 dark:to-white text-white dark:text-black shadow-lg hover:-translate-y-0.5 transition-all active:scale-95"
             >
-              <UserCircle size={14} /> User Access
+              <UserCircle size={16} /> User Access
             </button>
           </div>
         </div>

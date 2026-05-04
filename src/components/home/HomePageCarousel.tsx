@@ -10,7 +10,7 @@ const { data: movieData = [] } =
 
 
     const moviesWithBackdrops = await Promise.all(
-        movieData.map(async (movie: any) => {
+        movieData?.map(async (movie: any) => {
             try {
                 const backdropUrl = await getMovieBackDrop(
                     movie.tmdb_id,

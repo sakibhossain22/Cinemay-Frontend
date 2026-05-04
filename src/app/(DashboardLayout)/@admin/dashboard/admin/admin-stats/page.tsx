@@ -26,7 +26,7 @@ function AdminStats() {
 
   if (!stats) return (
     <div className="flex h-screen items-center justify-center bg-white dark:bg-black text-emerald-500 font-mono animate-pulse">
-      [LOADING_SYSTEM_DATA...]
+      [LOADING_SYSTEM_DATA....]
     </div>
   );
 
@@ -45,7 +45,7 @@ function AdminStats() {
     return acc;
   }, []) || [];
 
-  const finalChartData = processedChartData.sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
+  const finalChartData = processedChartData.sort((a:any, b:any) => new Date(a.name).getTime() - new Date(b.name).getTime());
 
   return (
     <div className="p-4 md:p-8 space-y-8 bg-zinc-50 dark:bg-[#050505] min-h-screen text-zinc-600 dark:text-zinc-300 selection:bg-emerald-500/30 transition-colors duration-300">
@@ -140,7 +140,7 @@ function AdminStats() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <StatCard
           title="Total Revenue"
-          value={`$${summary?.totalRevenue}`}
+          value={`$${summary?.totalRevenue?.toFixed(2)}`}
           subValue={summary.revenueGrowth}
           icon={<DollarSign className="text-emerald-500 dark:text-emerald-400" />}
           trend={summary.revenueGrowth.includes('-') ? 'down' : 'up'}
